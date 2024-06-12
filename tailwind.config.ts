@@ -21,7 +21,8 @@ const config = {
       colors: {
         primary:{
           1:"#32A852",
-          2:"#288E44"
+          2:"#288E44",
+          3:"#3EC663"
         },
         secondary:{
           1:"#3772AD",
@@ -42,6 +43,10 @@ const config = {
         },
         green:{
           1:"#44D464",
+        },
+        blue:{
+          1:"#030614",
+          2:"#00030F"
         }
       },
       backgroundImage: {

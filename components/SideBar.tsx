@@ -27,17 +27,17 @@ const SideBar = () => {
 
           return (
             <div key={label}>
-              <Link href={route} className={cn("flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start w-full", {
-                'bg-nav-focus': isActive && !pathname.startsWith(`${route}/`)
+              <Link href={route} className={cn("flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start w-full text-white-2/60", {
+                'bg-nav-focus text-white-2': isActive && !pathname.startsWith(`${route}/`)
               })}>
                 <Image src={imgURL} alt={label} width={24} height={24} />
-                <p>{label}</p>
+                <p className='text-base'>{label}</p>
                 {hasSubMenu && (
                   <button
                     onClick={(event) => handleToggleSubMenu(label, event)}
                     className="p-2 focus:outline-none ml-auto"
                   >
-                    {isSubMenuOpen ? '▲' : '▼'}
+                    {isSubMenuOpen ? <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} /> : '▼'}
                   </button>
                 )}
               </Link>
@@ -47,11 +47,11 @@ const SideBar = () => {
                     const isSubActive = pathname === subRoute || pathname.startsWith(`${subRoute}/`);
 
                     return (
-                      <Link href={subRoute} key={subLabel} className={cn("flex gap-3 items-center py-2", {
-                        'bg-nav-focus': isSubActive
+                      <Link href={subRoute} key={subLabel} className={cn("flex gap-3 items-center py-2 text-white-2/60", {
+                        'bg-nav-focus text-white-2': isSubActive
                       })}>
-                        <Image src={subImgURL} alt={subLabel} width={20} height={20} />
-                        <p>{subLabel}</p>
+                        {/* <Image src={subImgURL} alt={subLabel} width={20} height={20} /> */}
+                        <p className='text-xs'>{subLabel}</p>
                       </Link>
                     );
                   })}

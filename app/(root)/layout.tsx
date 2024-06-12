@@ -12,7 +12,7 @@ export default function RootLayout({
     <div className="relative flex flex-col">
       <Header />
 
-      <main className="relative flex bg-black-3">
+      <main className="relative flex bg-black-3 bg-slate-700">
         <SideBar />
 
         <section className="flex min-h-screen flex-1 flex-col px-4 sm:px-14">
