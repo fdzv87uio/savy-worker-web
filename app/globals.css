@@ -9,7 +9,35 @@
 }
 
 html {
-  background-color: #101114;
+  background-color: #030614;
+}
+
+.custom-rectangle {
+  width: 258px;
+  height: 1063px;
+  gap: 10px;
+  border-radius: 0px 10px 10px 0px;
+  opacity: 0px;
+  background: #64646433;
+  box-shadow: 0px 64px 64px -32px #290F008F;
+}
+
+.shadow{
+  box-shadow: 0px 0px 16px 0px #FFFFFF;
+}
+
+.custom-image {
+  background: url("/images/sidebar-background.png");
+  border: 0px 10px 0px 0px;
+  opacity: 1;
+  width: 258px;
+  height: 1061px;
+  gap: 0px;
+  border-radius: 0px 10px 10px 0px;
+  /* opacity: 0px; */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.084) 0%, rgba(217, 217, 217, 0.042) 100%);
+  border: 1px solid #FFFFFF33;
+  box-shadow: 0px 4px 20px -1px #00000000;
 }
 
 @layer utilities {
@@ -20,7 +48,10 @@ html {
     @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
   }
   .left_sidebar {
-    @apply flex w-fit flex-col  justify-between  border-none  bg-slate-800 pt-8 text-white-1 max-md:hidden lg:w-[270px] lg:pl-8;
+    @apply custom-rectangle;
+  }
+  .image_container{
+    @apply custom-image;
   }
   .generate_thumbnail {
     @apply mt-[30px] flex w-full max-w-[520px] flex-col justify-between gap-2 rounded-lg border border-black-6 bg-black-1 px-2.5 py-2 md:flex-row md:gap-0;

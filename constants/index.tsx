@@ -44,9 +44,9 @@ export const sidebarLinks: SidebarLink[] = [
     route: "/events",
     label: "Events",
   },
-  {
-    imgURL: "/icons/logout.svg",
-    route: "#",
-    label: "Log out",
-  },
+  // {
+  //   imgURL: "/icons/logout.svg",
+  //   route: "#",
+  //   label: "Log out",
+  // },
 ];

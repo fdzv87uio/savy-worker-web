@@ -2,9 +2,9 @@ import React from 'react'
 import { Button } from './ui/button'
 
 import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 import Image from 'next/image';
 import Link from 'next/link';
-const inter = Inter({ subsets: ["latin"] });
 
 const Header = () => {
   return (
