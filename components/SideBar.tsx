@@ -38,7 +38,7 @@ const SideBar = () => {
 
             return (
               <div key={label}>
-                <Link href={route} className={cn("flex gap-3 items-center py-4 justify-start w-[208px] text-white-2/40  px-4", {
+                <Link href={route} className={cn("flex gap-3 items-center py-4 justify-start w-[208px] text-white-2/40  px-4 h-[56px]", {
                   'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isActive && !pathname.startsWith(`${route}/`)
                 })}>
                   <Image src={imgURL} alt={label} width={24} height={24} />

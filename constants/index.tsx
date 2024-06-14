@@ -43,6 +43,23 @@ export const sidebarLinks: SidebarLink[] = [
     imgURL: "/icons/events.svg",
     route: "/events",
     label: "Events",
+    subMenu: [
+      {
+        imgURL: "/",
+        route: "/events/create-event",
+        label: "Create Event",
+      },
+      {
+        imgURL: "/",
+        route: "/events/my-events",
+        label: "My events",
+      },
+      {
+        imgURL: "/",
+        route: "/events/upcomming-events",
+        label: "Upcomming events",
+      },
+    ],
   },
   // {
   //   imgURL: "/icons/logout.svg",
