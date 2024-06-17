@@ -48,7 +48,7 @@ const SideBar = () => {
                       onClick={(event) => handleToggleSubMenu(label, event)}
                       className="p-2 focus:outline-none ml-auto"
                     >
-                      {isSubMenuOpen ? <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} /> : '▼'}
+                      {isSubMenuOpen ? <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} /> : <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} className='rotate-180' />}
                     </button>
                   )}
                 </Link>
