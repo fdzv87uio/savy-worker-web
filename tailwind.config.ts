@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const plugin = require('tailwindcss/plugin');
 
 const config = {
   darkMode: ["class"],
@@ -19,31 +20,45 @@ const config = {
     },
     extend: {
       colors: {
+        primary:{
+          1:"#32A852",
+          2:"#288E44",
+          3:"#3EC663"
+        },
+        secondary:{
+          1:"#3772AD",
+          2:"#306295"
+        },
         white: {
-          1: "#FFFFFF",
-          2: "rgba(255, 255, 255, 0.72)",
-          3: "rgba(255, 255, 255, 0.4)",
-          4: "rgba(255, 255, 255, 0.64)",
-          5: "rgba(255, 255, 255, 0.80)",
+          1: "#EBEBEB",
+          2: "#FFFFFF",
         },
         black: {
-          1: "#15171C",
-          2: "#222429",
-          3: "#101114",
-          4: "#252525",
-          5: "#2E3036",
-          6: "#24272C",
+          1: "#00030F",
         },
         orange: {
           1: "#F97535",
         },
         gray: {
-          1: "#71788B",
+          1: "#E9E9E9",
         },
+        green:{
+          1:"#44D464",
+        },
+        blue:{
+          1:"#030614",
+          2:"#00030F",
+          3:"#0D0A2C"
+        }
       },
       backgroundImage: {
-        "nav-focus":
-          "linear-gradient(270deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
+        "nav-focus": "linear-gradient(270deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      textShadow: {
+        sm: '0 1px 2px var(--tw-shadow-color)',
+        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
+        lg: '0 8px 16px var(--tw-shadow-color)',
       },
       keyframes: {
         "accordion-down": {
@@ -59,9 +74,24 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      h_auto: {
+        "hauto": { height: "100px" }
+      }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') }
+      )
+    }),
+  ],
 } satisfies Config;
 
 export default config;
