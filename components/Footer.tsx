@@ -1,13 +1,14 @@
 import React from 'react'
 
 import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 import Image from 'next/image';
 import { Button } from './ui/button';
-const inter = Inter({ subsets: ["latin"] });
+
 
 const Footer = () => {
   return (
-    <div className="flex h-[138px] bg-blue-1">
+    <div className="flex h-[138px] bg-blue-1 relative">
       <section className="flex justify-between items-center w-full gap-10 px-16">
         <p className={`text-base ${inter.className} text-primary-1`}>
           Copyright 2024 Curcleup
