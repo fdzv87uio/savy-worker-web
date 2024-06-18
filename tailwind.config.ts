@@ -76,6 +76,9 @@ const config = {
       },
       h_auto: {
         "hauto": { height: "100px" }
+      },
+      boxShadow: {
+        'custom': '3px 3px 1px 1px #306295',
       }
     },
   },
