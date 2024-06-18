@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="sticky top-0 flex size-full z-50 w-full bg-blue-2 border-spacing-0">
+    <div className="sticky top-0 flex size-full z-[99] w-full bg-blue-2 border-spacing-0">
       <section className="flex h-[83px] w-full items-center justify-between px-4">
         <div className="flex items-center w-full">
           <div className="flex justify-between w-full px-16">
