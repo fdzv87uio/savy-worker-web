@@ -49,6 +49,10 @@ const config = {
           1:"#030614",
           2:"#00030F",
           3:"#0D0A2C"
+        },
+        neutral:{
+          1:"#8B8B8B",
+          2:"#D8D8D8"
         }
       },
       backgroundImage: {
@@ -76,6 +80,10 @@ const config = {
       },
       h_auto: {
         "hauto": { height: "100px" }
+      },
+      boxShadow: {
+        'custom-primary': '3px 3px 1px 1px #306295',
+        'custom-secondary': '3px 3px 1px 1px #288E44'
       }
     },
   },
