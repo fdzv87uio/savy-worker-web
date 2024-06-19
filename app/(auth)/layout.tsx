@@ -10,7 +10,6 @@ export default function RootLayout({
   return (
     <div className="relative flex flex-col">
       <Header />
-
       <main className="relative flex bg-[#0D0A2C00]">
         <section className="flex min-h-screen flex-1 flex-col px-4 sm:px-14">
           <div className="mx-auto flex w-full max-w-8xl flex-col max-sm:px-4">
@@ -21,7 +20,6 @@ export default function RootLayout({
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
