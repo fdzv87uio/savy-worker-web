@@ -1,3 +1,4 @@
+//@ts-ignore
 import type { Config } from "tailwindcss";
 const plugin = require('tailwindcss/plugin');
 
@@ -20,14 +21,14 @@ const config = {
     },
     extend: {
       colors: {
-        primary:{
-          1:"#32A852",
-          2:"#288E44",
-          3:"#3EC663"
+        primary: {
+          1: "#32A852",
+          2: "#288E44",
+          3: "#3EC663"
         },
-        secondary:{
-          1:"#3772AD",
-          2:"#306295"
+        secondary: {
+          1: "#3772AD",
+          2: "#306295"
         },
         white: {
           1: "#EBEBEB",
@@ -42,17 +43,17 @@ const config = {
         gray: {
           1: "#E9E9E9",
         },
-        green:{
-          1:"#44D464",
+        green: {
+          1: "#44D464",
         },
-        blue:{
-          1:"#030614",
-          2:"#00030F",
-          3:"#0D0A2C"
+        blue: {
+          1: "#030614",
+          2: "#00030F",
+          3: "#0D0A2C"
         },
-        neutral:{
-          1:"#8B8B8B",
-          2:"#D8D8D8"
+        neutral: {
+          1: "#8B8B8B",
+          2: "#D8D8D8"
         }
       },
       backgroundImage: {
@@ -89,10 +90,11 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
+    //@ts-ignore
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {
-          'text-shadow': (value) => ({
+          'text-shadow': (value: any) => ({
             textShadow: value,
           }),
         },
