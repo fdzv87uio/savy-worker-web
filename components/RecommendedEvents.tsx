@@ -33,7 +33,7 @@ const RecommendedEvents = () => {
   return (
     <div className="text-white-1 mt-10 max-w-[1123px] min-h-[525px]">
       <h2 className="text-4xl font-normal text-center">Recommended Events</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-20">
         {events.map((event) => (
           <div key={event.id} className="h-[407px] w-[361px] bg-white-1 rounded-xl overflow-hidden shadow-xl transform transition-all hover:scale-105">
             <div className="relative">
@@ -44,7 +44,7 @@ const RecommendedEvents = () => {
             </div>
             <div className="p-4">
               <div className="relative mb-4">
-                <div className="bg-secondary-1 py-2 px-4 transform -skew-x-12 shadow-custom">
+                <div className="bg-secondary-1 py-2 px-4 transform -skew-x-12 shadow-custom-primary">
                   <h3 className="text-2xl text-center transform  skew-x-12 text-white-1">{event.title}</h3>
                 </div>
               </div>
