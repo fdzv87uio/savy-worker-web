@@ -89,10 +89,11 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    plugin(function ({ matchUtilities, theme }) {
+
+    plugin(function ({ matchUtilities, theme }:{matchUtilities:any,theme:any} ) {
       matchUtilities(
         {
-          'text-shadow': (value) => ({
+          'text-shadow': (value:any) => ({
             textShadow: value,
           }),
         },
