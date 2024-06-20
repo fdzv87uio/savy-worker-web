@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Audiowide } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
@@ -21,6 +22,7 @@ export default function RootLayout({
         <div className={audiowide.className}>
           {children}
         </div>
+        <Toaster position='top-center' richColors />
       </body>
     </html>
   );
