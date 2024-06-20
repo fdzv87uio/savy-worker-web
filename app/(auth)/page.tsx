@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import Hero from '@/components/Hero';
 import RecommendedEvents from '@/components/RecommendedEvents';
 import SignUpForFree from '@/components/SignUpForFree';
 import Image from 'next/image';
 import PopularCategories from '@/components/PopularCategories';
 import UserReviews from '@/components/UserReviews';
+import { useAuthStore } from '@/stores/authStore';
 
 const Home = () => {
-
+  const authStore: any = useAuthStore();
+  useEffect(() => {
+    console.log('auth-token:');
+    console.log(authStore.authToken);
+  }, [])
   return (
     <div className='flex flex-col justify-center items-center relative'>
 
@@ -82,9 +89,9 @@ const Home = () => {
       {/* SignUp*/}
       <SignUpForFree />
       {/* Categories */}
-      <PopularCategories/>
+      <PopularCategories />
       {/* User Reviews */}
-      <UserReviews/>
+      <UserReviews />
     </div>
   )
 }

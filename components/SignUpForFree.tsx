@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-// import CustomInput from './ui/customInput'
 import { Button } from './ui/button'
 import { Inter } from "next/font/google";
 import Image from 'next/image';
@@ -21,10 +20,10 @@ const SignUpForFree = () => {
           <h1 className='text-4xl'>Sign Up for Free</h1>
           <h3 className={`text-base ${inter.className}`}>Create your account to access all event features</h3>
           <div className='flex flex-col gap-3 mt-3'>
-            {/* <CustomInput placeholder={'Email'} value={email} onChange={setEmail} disabled={false} instructions={'Enter your email address'} /> */}
-            {/* <CustomInput placeholder={'Password'} value={password} onChange={setPassword} disabled={false} instructions={'Enter your password'} /> */}
-            <Input placeholder={'Email'} value={email}  disabled={false}  />
-            <Input placeholder={'Password'} value={password}  disabled={false}  />
+            <Input placeholder={'Email'} value={email} onChange={(e) => setEmail(e.target.value)} disabled={false} />
+            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>
+            <Input placeholder={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} disabled={false} />
+            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
             <Button variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
               Sign up
             </Button>

@@ -11,7 +11,7 @@ export default function RootLayout({
     <div className="relative flex flex-col">
       <Header />
       <main className="relative flex bg-[#0D0A2C00]">
-        <section className="flex min-h-screen flex-1 flex-col px-4 sm:px-14">
+        <section className="flex min-h-screen flex-1 flex-col">
           <div className="mx-auto flex w-full max-w-8xl flex-col max-sm:px-4">
             <div className="flex flex-col md:pb-14">
               {/* <Toaster /> */}
