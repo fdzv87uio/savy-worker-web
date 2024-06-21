@@ -13,7 +13,7 @@ export default function RootLayout({
       <main className="relative flex bg-[#0D0A2C00]">
         <section className="flex min-h-screen flex-1 flex-col">
           <div className="mx-auto flex w-full max-w-8xl flex-col max-sm:px-4">
-            <div className="flex flex-col md:pb-14">
+            <div className="flex flex-col justify-center items-center">
               {/* <Toaster /> */}
               {children}
             </div>

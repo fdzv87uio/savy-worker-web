@@ -10,26 +10,44 @@ const inter = Inter({ subsets: ["latin"] });
 const SignUpForFree = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const isUser = true;
   return (
-    <div className='flex gap-8 mt-32'>
-      <div
-        style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
-        className='min-h-[420px] w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-        <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[300px] left-0 z-10' />
-        <div className='w-full flex flex-col h-auto pt-[46px] pb-[49px] pl-[21px] pr-[60px] z-50 gap-[20px] text-white-1'>
-          <h1 className='text-4xl'>Sign Up for Free</h1>
-          <h3 className={`text-base ${inter.className}`}>Create your account to access all event features</h3>
-          <div className='flex flex-col gap-3 mt-3'>
-            <Input placeholder={'Email'} value={email} onChange={(e) => setEmail(e.target.value)} disabled={false} />
-            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>
-            <Input placeholder={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} disabled={false} />
-            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
-            <Button variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
-              Sign up
-            </Button>
+    <div className='flex gap-8 mt-32 relative'>
+      {isUser ? (
+        <div className='min-h-[331px] w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[331px]">
+          </div>
+          <div className='absolute w-[543px] h-[331px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
+            <h1 className='text-4xl'>Join an Event</h1>
+            <h3 className={`text-2xl ${inter.className}`}>Fill in the details to join an event</h3>
+            <div className='flex flex-col gap-3 mt-3'>
+              <Input placeholder={'Category'} disabled={false} />
+              <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Search by name or category</p>
+              <Button variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
+                Sign up
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className='min-h-[420px] w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[420px]">
+          </div>
+          <div className='absolute w-[543px] h-[420px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
+            <h1 className='text-4xl'>Sign Up for Free</h1>
+            <h3 className={`text-base ${inter.className}`}>Create your account to access all event features</h3>
+            <div className='flex flex-col gap-3 mt-3'>
+              <Input placeholder={'Email'} value={email} onChange={(e) => setEmail(e.target.value)} disabled={false} />
+              <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>
+              <Input placeholder={'Password'} value={password} onChange={(e) => setPassword(e.target.value)} disabled={false} />
+              <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
+              <Button variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
+                Sign up
+              </Button>
+            </div>
+          </div>
+        </div>)}
+
       <div className="w-[694px]">
         <div className='relative'>
           <div className='absolute w-[388px] h-[278px]'>
