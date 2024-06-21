@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Audiowide } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Image from "next/image";
+import CheckWhite from "@/public/icons/check-white.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
@@ -22,7 +24,22 @@ export default function RootLayout({
         <div className={audiowide.className}>
           {children}
         </div>
-        <Toaster position='top-center' richColors />
+        <Toaster
+          position='top-center'
+          visibleToasts={1}
+          toastOptions={{
+            unstyled: true,
+            duration: 3000,
+            classNames: {
+              success: "bg-[#32A852] text-[#ffffff] text-bold flex flex-row items-center rounded-md h-[50px] px-4 shadow-md w-[360px]",
+              error: "bg-red-600 text-[#ffffff] text-bold flex flex-row items-center rounded-md h-[50px] px-4 shadow-md w-[360px]",
+            },
+          }}
+          icons={{
+            success: <Image src={CheckWhite} alt="icon" width={40} height={40} />,
+            error: <Image src={CheckWhite} alt="icon" width={40} height={40} />
+          }}
+        />
       </body>
     </html>
   );
