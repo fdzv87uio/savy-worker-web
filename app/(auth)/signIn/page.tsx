@@ -27,9 +27,11 @@ const SignIn = () => {
   // Zustand Auth Store
   const authStore: any = useAuthStore();
   // Yup validation rules
+
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required('Email is required')
+      .matches(emailRegex, "Invalid email")
       .email('Email is invalid'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
