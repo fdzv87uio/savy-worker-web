@@ -13,7 +13,7 @@ import ScheduledEvents from '@/components/ScheduledEvents';
 
 const Home = () => {
   const authStore: any = useAuthStore();
-  const isUser = true;
+  const isUser = false;
   useEffect(() => {
     console.log('auth-token:');
     console.log(authStore.authToken);
@@ -32,7 +32,7 @@ const Home = () => {
         alt="Ellipse"
         width={699}
         height={430}
-        className="absolute top-[630px] left-[700px] object-cover blur-xl"
+        className="hidden md:absolute top-[630px] left-[400px] md:left-[700px] object-cover blur-xl"
       />
       <Image
         src="/images/vector3.svg"
@@ -46,7 +46,7 @@ const Home = () => {
         alt="Ellipse"
         width={324}
         height={364}
-        className="absolute top-[1550px] left-[1000px] object-cover blur-md"
+        className="hidden md:absolute top-[1550px] md:left-[1000px] object-cover blur-md"
       />
       {isUser ? (
         <Image
@@ -54,7 +54,7 @@ const Home = () => {
           alt="Ellipse"
           width={581}
           height={306}
-          className="absolute top-[1900px] left-[150px] object-cover blur-2xl"
+          className="hidden md:absolute top-[1900px] left-[150px] object-cover blur-2xl"
         />
       ) : (
         <Image
@@ -62,7 +62,7 @@ const Home = () => {
           alt="Ellipse"
           width={581}
           height={306}
-          className="absolute top-[2050px] left-[150px] object-cover blur-2xl"
+            className="hidden md:absolute top-[2050px] left-[150px] object-cover blur-2xl"
         />)}
       {!isUser &&
         <>
@@ -71,28 +71,28 @@ const Home = () => {
             alt="Ellipse"
             width={354}
             height={276}
-            className="absolute top-[2450px] left-[300px] object-cover blur-xl"
+          className="hidden md:absolute absolute top-[2450px] left-[300px] object-cover blur-xl"
           />
           <Image
             src="/images/vector7.svg"
             alt="Ellipse"
             width={290}
             height={306}
-            className="absolute top-[2450px] left-[200px] object-cover blur-xl"
+            className="hidden md:absolute top-[2450px] left-[200px] object-cover blur-xl"
           />
           <Image
             src="/images/vector6.svg"
             alt="Ellipse"
             width={354}
             height={276}
-            className="absolute top-[2450px] left-[830px] object-cover blur-xl"
+            className="hidden md:absolute top-[2450px] left-[830px] object-cover blur-xl"
           />
           <Image
             src="/images/vector7.svg"
             alt="Ellipse"
             width={290}
             height={306}
-            className="absolute top-[2450px] left-[700px] object-cover blur-xl"
+            className="hidden md:absolute top-[2450px] left-[700px] object-cover blur-xl"
           />
         </>
       }
