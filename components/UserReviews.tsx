@@ -61,10 +61,10 @@ const profileData = [
 const UserReviews = () => {
   return (
     <div className='text-white-1 mt-28'>
-      <h2 className='text-4xl text-center'>
+      <h2 className='text-3xl md:text-4xl text-center'>
         UserReviews
       </h2>
-      <div className='w-[1024px] mt-10'>
+      <div className='w-[250px] md:w-[1024px] mt-10'>
         <Carousel
           opts={{
             align: "start",
@@ -75,14 +75,14 @@ const UserReviews = () => {
             {profileData.map((profile) => (
               <CarouselItem key={profile.id} className="md:basis-1/2 lg:basis-1/2">
                 <Card className='flex items-center justify-center bg-gradient-to-r from-[#FFFFFF]/10 to-[#D9D9D9]/10 border border-gray-600'>
-                    <CardContent className="flex items-start justify-center w-[525px] h-[289px] flex-col">
+                    <CardContent className="flex items-start justify-center w-[525px] md:h-[289px] flex-col">
                       <div className="flex items-center space-x-4">
                         <div className="relative h-12 w-12">
                           <Image src={profile.image} alt={profile.name} width={65} height={65} className="rounded-full"/>
                         </div>
                         <div>
                           <div className='flex justify-start items-start'>
-                            <h3 className="text-2xl">{profile.name}</h3>
+                            <h3 className="text-lg md:text-2xl">{profile.name}</h3>
                             <Image src="/icons/check.svg" alt="check" width={14} height={14} />
                           </div>
                           <p className={`text-neutral-1 ${inter.className}`}>{profile.username}</p>
@@ -106,13 +106,13 @@ const UserReviews = () => {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-        <div className="flex mt-4 space-x-1 justify-center gap-3">
+        {/* <div className="flex mt-4 space-x-1 justify-center gap-3">
           <span className="block w-4 h-4 bg-gray-400 rounded-full"></span>
           <span className="block w-4 h-4 bg-gray-400 rounded-full"></span>
           <span className="block w-4 h-4 bg-blue-500 rounded-full"></span>
           <span className="block w-4 h-4 bg-gray-400 rounded-full"></span>
           <span className="block w-4 h-4 bg-gray-400 rounded-full"></span>
-        </div>
+        </div> */}
       </div>
     </div>
   )
