@@ -27,7 +27,7 @@ const Hero = () => {
       </div>
       <div className='absolute h-[60] top-[-10px] left-1/2 transform -translate-x-1/2 w-full'>
         {/* <Image src="/images/hero.png" alt='hero' width={2201} height={1467} />*/}
-        <img src="/images/hero.png" alt="hero" className='object-none opacity-80 h-[605px] w-full' />
+        <img src="/images/hero.png" alt="hero" className='object-none opacity-30 h-[605px] w-full' />
       </div>
     </div>
   )
