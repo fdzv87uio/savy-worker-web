@@ -69,13 +69,13 @@ const Header = () => {
               {isUser ? (
                 <>
                   <Link href="#">
-                    <Button variant="primary" size="xs" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                    <Button variant="primary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
                       <Image src="/icons/create.svg" alt='icon' width={15} height={15} />
                       Create Event
                     </Button>
                   </Link>
                   <Link href="#">
-                    <Button variant="secondary" size="xs" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                    <Button variant="secondary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
                       Join Event
                       <Image src="/icons/loupe.svg" alt='icon' width={15} height={15} />
                     </Button>
@@ -84,13 +84,13 @@ const Header = () => {
               ) : (
                 <>
                   <Link href="/signUp">
-                    <Button variant="primary" size="xs" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                    <Button variant="primary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
                       <Image src="/icons/signUp.svg" alt='icon' width={20} height={20} />
                       Sign Up
                     </Button>
                   </Link>
                   <Link href="/signIn">
-                    <Button variant="secondary" size="xs" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                    <Button variant="secondary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
                       Sign In
                       <Image src="/icons/signIn.svg" alt='icon' width={20} height={20} />
                     </Button>
