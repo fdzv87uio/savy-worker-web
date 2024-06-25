@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Inter } from "next/font/google";
+import Image from 'next/image';
 const inter = Inter({ subsets: ["latin"] });
 const events = [
   {
@@ -30,12 +31,14 @@ const events = [
 ];
 
 const RecommendedEvents = () => {
+
+  const isUser = true;
   return (
-    <div className="text-white-1 mt-10 max-w-[1123px] min-h-[525px]">
-      <h2 className="text-4xl font-normal text-center">Recommended Events</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-20">
+    <div className="flex flex-col  justify-center items-center text-white-1 mt-10 max-w-[1123px] md:min-h-[525px] z-10">
+      <h2 className="text-3xl md:text-4xl font-normal text-center">Recommended Events</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-20">
         {events.map((event) => (
-          <div key={event.id} className="h-[407px] w-[361px] bg-white-1 rounded-xl overflow-hidden shadow-xl transform transition-all hover:scale-105">
+          <div key={event.id} className="min-h-[407px] w-[350px] md:w-[361px] bg-white-1 rounded-xl overflow-hidden shadow-xl transform transition-all hover:scale-105">
             <div className="relative">
               <img src={event.image} alt={event.title} className="w-full h-64 object-cover rounded-xl" />
               <div className="absolute bottom-[-30px] left-0 bg-green-600 p-2 rounded-full m-4">
@@ -45,13 +48,26 @@ const RecommendedEvents = () => {
             <div className="p-4">
               <div className="relative mb-4">
                 <div className="bg-secondary-1 py-2 px-4 transform -skew-x-12 shadow-custom-primary">
-                  <h3 className="text-2xl text-center transform  skew-x-12 text-white-1">{event.title}</h3>
+                  <h3 className="text-xl md:text-2xl text-center transform  skew-x-12 text-white-1">{event.title}</h3>
                 </div>
               </div>
+              {isUser &&
+                <div className='flex flex-col justify-center items-center gap-3'>
+                  <Image src="/images/userExample.png" alt="Profile photo" className="rounded-full" width={53} height={53} />
+                  <h2 className='text-black-1 text-xl md:text-2xl'>Cameron Williamson</h2>
+                </div>
+              }
               <div className="text-center mt-4">
-                <p className={`${inter.className} text-black-1`}>Location: {event.location}</p>
-                <p className={`${inter.className} text-black-1`}>{event.city}</p>
+                <p className={`${inter.className} text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
+                <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}</p>
               </div>
+              {isUser &&
+                <div className='flex justify-center gap-10 mt-3'>
+                  <Image src="/icons/heart.svg" alt="heart" className="rounded-full" width={53} height={53} />
+                  <Image src="/icons/calendar.svg" alt="calendat" className="rounded-full" width={53} height={53} />
+                  <Image src="/icons/thumb.svg" alt="thumb" className="rounded-full" width={53} height={53} />
+                </div>
+              }
             </div>
           </div>
         ))}

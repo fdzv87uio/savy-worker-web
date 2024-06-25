@@ -9,11 +9,11 @@ import { Button } from './ui/button';
 const Footer = () => {
   return (
     <div className="flex h-[138px] bg-blue-1 relative">
-      <section className="flex justify-between items-center w-full gap-10 px-16">
-        <p className={`text-base ${inter.className} text-primary-1`}>
+      <section className="flex justify-between items-center w-full gap-10 px-3 md:px-16">
+        <p className={`text-sm md:text-base ${inter.className} text-primary-1`}>
           Copyright 2024 Curcleup
         </p>
-        <div className='flex max-w-[485px] w-full justify-between'>
+        <div className='hidden xl:flex max-w-[485px] w-full justify-between'>
           <div className='flex gap-4 text-xs text-white-2'>
             <p>Terms & Conditions</p>
             <p>Privacy Policy</p>
@@ -24,7 +24,7 @@ const Footer = () => {
             <Image src="/icons/instagram.svg" alt='icon' width={8} height={8} />
           </div>
         </div>
-        <div className='flex gap-2 items-center max-w-[198px] w-full justify-between'>
+        <div className='hidden xl:flex gap-2 items-center max-w-[198px] w-full justify-between'>
           <p className='text-xs text-white-2 w-full'>
             Ready to explore?
           </p>
@@ -32,7 +32,7 @@ const Footer = () => {
             Get Started
           </Button>
         </div>
-        <p className='text-xs text-white-2 max-w-[145px]'>
+        <p className='hidden md:flex text-xs text-white-2 max-w-[145px]'>
           Get updates on your favourite games
         </p>
         <div className='flex gap-4'>
