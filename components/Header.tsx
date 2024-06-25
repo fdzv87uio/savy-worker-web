@@ -7,16 +7,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Header = () => {
-  const isUser = false;
+  const isUser = true;
   return (
     <div className="sticky top-0 flex size-full z-[99] w-full bg-blue-2 border-spacing-0">
       <section className="flex h-[83px] w-full items-center justify-between px-4">
         <div className="flex items-center w-full">
           <div className="flex justify-between w-full md:px-16">
             <div className='flex justify-center items-center gap-3'>
-              <h1 className="text-2xl md:text-4xl font-normal text-gray-1 uppercase">
-                Curcleup
-              </h1>
+              <Link href="/">
+                <h1 className="text-2xl md:text-4xl font-normal text-gray-1 uppercase">
+                  Curcleup
+                </h1>
+              </Link>
               {/* <div className='w-[7px] h-[7px] bg-primary-1 rounded-full'></div> */}
             </div>
             <ul className='hidden xl:flex md:gap-7'>
