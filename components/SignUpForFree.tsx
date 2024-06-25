@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const SignUpForFree = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const isUser = true;
+  const isUser = false;
   return (
     <div className='flex gap-8 mt-32 relative flex-col md:flex-row'>
       {isUser ? (
@@ -30,12 +30,12 @@ const SignUpForFree = () => {
           </div>
         </div>
       ) : (
-        <div className='min-h-[420px] w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[420px]">
+          <div className='min-h-[420px] w-[350px] md:w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[450px] md:h-[420px]">
           </div>
-          <div className='absolute w-[543px] h-[420px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
-            <h1 className='text-4xl'>Sign Up for Free</h1>
-            <h3 className={`text-base ${inter.className}`}>Create your account to access all event features</h3>
+          <div className='absolute w-[350px] md:w-[543px] h-[450px] md:h-[420px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
+            <h1 className='text-3xl md:text-4xl'>Sign Up for Free</h1>
+            <h3 className={`text-sm md:text-base ${inter.className}`}>Create your account to access all event features</h3>
             <div className='flex flex-col gap-3 mt-3'>
               <Input placeholder={'Email'} value={email} onChange={(e) => setEmail(e.target.value)} disabled={false} />
               <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>

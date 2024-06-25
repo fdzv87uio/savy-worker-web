@@ -64,7 +64,7 @@ const UserReviews = () => {
       <h2 className='text-3xl md:text-4xl text-center'>
         UserReviews
       </h2>
-      <div className='w-[250px] md:w-[1024px] mt-10'>
+      <div className='w-[250px] md:w-[650px] xl:w-[1024px] mt-10'>
         <Carousel
           opts={{
             align: "start",
@@ -75,7 +75,7 @@ const UserReviews = () => {
             {profileData.map((profile) => (
               <CarouselItem key={profile.id} className="md:basis-1/2 lg:basis-1/2">
                 <Card className='flex items-center justify-center bg-gradient-to-r from-[#FFFFFF]/10 to-[#D9D9D9]/10 border border-gray-600'>
-                    <CardContent className="flex items-start justify-center w-[525px] md:h-[289px] flex-col">
+                    <CardContent className="flex items-start justify-center w-[525px] xl:h-[289px] flex-col">
                       <div className="flex items-center space-x-4">
                         <div className="relative h-12 w-12">
                           <Image src={profile.image} alt={profile.name} width={65} height={65} className="rounded-full"/>

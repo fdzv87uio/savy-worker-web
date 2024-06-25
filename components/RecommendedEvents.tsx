@@ -34,7 +34,7 @@ const RecommendedEvents = () => {
 
   const isUser = true;
   return (
-    <div className="flex flex-col  justify-center items-center text-white-1 mt-10 max-w-[1123px] md:min-h-[525px]">
+    <div className="flex flex-col  justify-center items-center text-white-1 mt-10 max-w-[1123px] md:min-h-[525px] z-10">
       <h2 className="text-3xl md:text-4xl font-normal text-center">Recommended Events</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-20">
         {events.map((event) => (

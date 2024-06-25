@@ -25,7 +25,7 @@ const PopularCategories = () => {
       <h1 className='text-white-1 text-center text-3xl md:text-4xl'>
         PopularCategories
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-20 w-[300px] md:w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-20 w-[300px] md:w-full">
         {events.map((event) => (
           <div key={event.id} className="transform transition-all hover:scale-105">
             <div className="relative">
