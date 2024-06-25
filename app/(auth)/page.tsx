@@ -7,16 +7,27 @@ import SignUpForFree from '@/components/SignUpForFree';
 import Image from 'next/image';
 import PopularCategories from '@/components/PopularCategories';
 import UserReviews from '@/components/UserReviews';
-import { useAuthStore } from '@/stores/authStore';
+import { getCookie } from 'cookies-next';
+import platform from 'platform';
 import UserBanner from '@/components/UserBanner';
 import ScheduledEvents from '@/components/ScheduledEvents';
 
+
 const Home = () => {
-  const authStore: any = useAuthStore();
   const isUser = false;
   useEffect(() => {
+    console.log("OS:");
+    console.log(platform.os?.family);
+    console.log("Browser:");
+    console.log(platform.name);
+    console.log("Version:");
+    console.log(platform.version);
+    console.log("Device:");
+    console.log(platform.product);
+    const token = getCookie('curcle-auth-token')
     console.log('auth-token:');
-    console.log(authStore.authToken);
+    console.log(token);
+
   }, [])
   return (
     <div className='flex flex-col justify-center items-center relative'>

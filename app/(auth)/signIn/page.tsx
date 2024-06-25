@@ -17,19 +17,19 @@ import Image from 'next/image';
 import { standardLogin } from '@/utils/authUtils';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/stores/authStore';
+import { setCookie } from 'cookies-next';
 
 
 const SignIn = () => {
   const [authId, setAuthId] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  // Zustand Auth Store
-  const authStore: any = useAuthStore();
   // Yup validation rules
+
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required('Email is required')
+      .matches(emailRegex, "Invalid email")
       .email('Email is invalid'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
@@ -52,12 +52,15 @@ const SignIn = () => {
       console.log(res);
       if (res.status === 'error') {
         setLoading(false);
-        const msg = res.error.response.data.message ? res.error.response.data.message : 'Error: Invalid Credentials';
+        const msg = res.error.response.data.message ? res.error.response.data.message : 'Invalid Credentials';
         toast.error("Error: " + msg);
       } else if (res.status === "success") {
         setLoading(false);
         const newToken = res.data.dataAuth.accessToken;
-        authStore.setToken(newToken);
+        setCookie('curcle-auth-token', newToken, {
+          maxAge: 604800,
+          path: '/',
+        });
         toast.success("Login Successful!");
         router.push('/');
       }
