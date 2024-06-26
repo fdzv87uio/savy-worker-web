@@ -7,18 +7,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Header = () => {
+  const isUser = true;
   return (
     <div className="sticky top-0 flex size-full z-[94] w-full bg-blue-2 border-spacing-0">
       <section className="flex h-[83px] w-full items-center justify-between px-4">
         <div className="flex items-center w-full">
-          <div className="flex justify-between w-full px-16">
+          <div className="flex justify-between w-full md:px-16">
             <div className='flex justify-center items-center gap-3'>
-              <h1 className="text-4xl font-normal text-gray-1 uppercase">
-                Curcleup
-              </h1>
-              <div className='w-[7px] h-[7px] bg-primary-1 rounded-full'></div>
+              <Link href="/">
+                <h1 className="text-2xl md:text-4xl font-normal text-gray-1 uppercase">
+                  Curcleup
+                </h1>
+              </Link>
+              {/* <div className='w-[7px] h-[7px] bg-primary-1 rounded-full'></div> */}
             </div>
-            <ul className='flex gap-7'>
+            <ul className='hidden xl:flex md:gap-7'>
               <Link href="/">
                 <li className='text-2xl font-normal text-green-1 uppercase'>Home</li>
               </Link>
@@ -29,24 +32,84 @@ const Header = () => {
                 <li className='text-2xl font-normal text-white-1 uppercase'>Tournaments</li>
               </Link>
             </ul>
-            <div className='flex gap-5'>
-              <Link href="/signUp">
-                <Button variant="primary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
-                  <Image src="/icons/signUp.svg" alt='icon' width={20} height={20} />
-                  Sign Up
-                </Button>
-              </Link>
-              <Link href="/signIn">
+            <div className='hidden md:flex md:gap-5'>
+              {isUser ? (
+                <>
+                  <Link href="#">
+                    <Button variant="primary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      <Image src="/icons/create.svg" alt='icon' width={20} height={20} />
+                      Create Event
+                    </Button>
+                  </Link>
+                  <Link href="#">
+                    <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      Join event
+                      <Image src="/icons/loupe.svg" alt='icon' width={20} height={20} />
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/signUp">
+                    <Button variant="primary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      <Image src="/icons/signUp.svg" alt='icon' width={20} height={20} />
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Link href="/signIn">
+                    <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      Sign In
+                      <Image src="/icons/signIn.svg" alt='icon' width={20} height={20} />
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+            <div className='flex flex-col md:hidden'>
+              {isUser ? (
+                <>
+                  <Link href="#">
+                    <Button variant="primary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      <Image src="/icons/create.svg" alt='icon' width={15} height={15} />
+                      Create Event
+                    </Button>
+                  </Link>
+                  <Link href="#">
+                    <Button variant="secondary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      Join Event
+                      <Image src="/icons/loupe.svg" alt='icon' width={15} height={15} />
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/signUp">
+                    <Button variant="primary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      <Image src="/icons/signUp.svg" alt='icon' width={20} height={20} />
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Link href="/signIn">
+                    <Button variant="secondary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      Sign In
+                      <Image src="/icons/signIn.svg" alt='icon' width={20} height={20} />
+                    </Button>
+                  </Link>
+                </>
+
+              )}
+
+              {/* <Link href="/signIn">
                 <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
                   Sign In
                   <Image src="/icons/signIn.svg" alt='icon' width={20} height={20} />
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </div >
+      </section >
+    </div >
   )
 }
 
