@@ -19,11 +19,11 @@ html {
   border-radius: 0px 10px 10px 0px;
   opacity: 0px;
   background: #64646433;
-  box-shadow: 0px 64px 64px -32px #290F008F;
+  box-shadow: 0px 64px 64px -32px #290f008f;
 }
 
-.shadow{
-  box-shadow: 0px 0px 16px 0px #FFFFFF;
+.shadow {
+  box-shadow: 0px 0px 16px 0px #ffffff;
 }
 
 .custom-image {
@@ -35,8 +35,12 @@ html {
   gap: 0px;
   border-radius: 0px 10px 10px 0px;
   /* opacity: 0px; */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.084) 0%, rgba(217, 217, 217, 0.042) 100%);
-  border: 1px solid #FFFFFF33;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.084) 0%,
+    rgba(217, 217, 217, 0.042) 100%
+  );
+  border: 1px solid #ffffff33;
   box-shadow: 0px 4px 20px -1px #00000000;
 }
 
@@ -50,7 +54,7 @@ html {
   .left_sidebar {
     @apply custom-rectangle;
   }
-  .image_container{
+  .image_container {
     @apply custom-image;
   }
   .generate_thumbnail {
