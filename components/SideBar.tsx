@@ -29,7 +29,7 @@ const SideBar = () => {
   };
 
   return (
-    <section className="left_sidebar w-[208px] h-svh">
+    <section className="w-[208px] h-svh">
       <div className='flex flex-col justify-start items-center bg-slate-800 h-svh'>
         <div className='flex gap-1 mt-20'>
           <Image className='rounded-full' src="/images/userExample.png" alt="profile" width={61} height={61} />
