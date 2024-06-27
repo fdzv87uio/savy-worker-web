@@ -1,16 +1,21 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Inter } from "next/font/google";
 import Image from 'next/image';
 import { Input } from './ui/input';
 const inter = Inter({ subsets: ["latin"] });
+import { getCookie } from 'cookies-next';
 
 
 const SignUpForFree = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const isUser = false;
+  const [isUser, setIsUser] = useState(false);
+  useEffect(() => {
+    const token = getCookie('curcle-auth-token')
+    setIsUser(!!token);
+  }, [])
   return (
     <div className='flex gap-8 mt-32 relative flex-col md:flex-row'>
       {isUser ? (

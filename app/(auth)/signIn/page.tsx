@@ -29,6 +29,7 @@ import { getIpData } from '@/utils/ipUtils';
 import { TransactionType } from '@/interfaces/transactionInterfaces';
 import { NewDeviceModal } from '@/components/NewDeviceModal';
 
+import { useAuthTokenStore } from '@/stores/authTokenStore';
 
 
 const SignIn = () => {
@@ -50,6 +51,7 @@ const SignIn = () => {
 
   }
 
+  const { setAuthToken } = useAuthTokenStore();
   // Yup validation rules
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
@@ -186,6 +188,7 @@ const SignIn = () => {
           path: '/',
         });
         setModalOpen(false);
+        setAuthToken(newToken);
         toast.success("Login Successful!");
         router.push('/');
       } else {
