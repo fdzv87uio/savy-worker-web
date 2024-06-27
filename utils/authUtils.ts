@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { TransactionType } from '../interfaces/transactionInterfaces';
+
 
 export async function standardLogin(email: string, password: string) {
     try {
@@ -28,3 +30,4 @@ export async function standardLogin(email: string, password: string) {
         return res;
     }
 };
+
