@@ -97,7 +97,7 @@ const SignUp = () => {
         alt="Ellipse"
         width={800}
         height={429}
-        className="hidden md:flex absolute top-[40px] left-[450px] object-cover blur-xl"
+        className="hidden xl:flex absolute top-[40px] left-[450px] object-cover blur-xl"
       />
       <Image
         src="/images/vector5.2.svg"
@@ -106,15 +106,15 @@ const SignUp = () => {
         height={250}
         className="absolute top-[400px] left-[60px] object-cover blur-md"
       />
-      <div className="flex flex-col md:flex-row justify-center items-center gap-5 text-white-1 mt-32 max-w-[1123px] md:min-h-[700px] z-10">
+      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 md:mt-3 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[750px] z-10">
         <div className='flex flex-col'>
-          <h2 className="text-4xl md:text-5xl font-normal text-center md:text-start">Create Your Account</h2>
-          <p className={`text-2xl ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
+          <h2 className="text-2xl md:text-5xl font-normal text-center md:text-start">Create Your Account</h2>
+          <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
         </div>
-        <div className='min-w-[543px] min-h-[516px] border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[700px] ">
+        <div className='w-[350px] md:min-w-[543px] min-h-[516px] border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[750px] ">
           </div>
-          <form className='absolute top-10 left-10 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+          <form className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
             {/* name */}
             <div className="flex flex-col items-left gap-[5px]">
               <Controller
@@ -254,9 +254,11 @@ const SignUp = () => {
               {errors.preferences && errors.preferences.message && (
                 <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.preferences.message}`}</p>
               )}
-              <div className='flex gap-3 mt-1'>
+              <div className='relative flex flex-wrap md:flex-nowrap w-[250px] gap-3 mt-1'>
                 {preferences.map((preference) => (
-                  <p key={preference.id} className={`${inter.className} text-sm bg-primary-1 rounded-full px-3`}>{preference.title}</p>
+                  <div key={preference.id} className={`${inter.className} text-sm bg-primary-1 rounded-full px-3`}>
+                    <p >{preference.title}</p>
+                  </div>
                 )
                 )}
               </div>
