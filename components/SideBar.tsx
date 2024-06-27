@@ -3,13 +3,16 @@ import { sidebarLinks } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
-
+import { deleteCookie } from 'cookies-next';
+import { useAuthTokenStore } from '@/stores/authTokenStore'
 const SideBar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { clearAuthToken } = useAuthTokenStore();
 
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
 
@@ -17,6 +20,12 @@ const SideBar = () => {
     event.preventDefault();
     event.stopPropagation();
     setOpenSubMenu(openSubMenu === label ? null : label);
+  };
+
+  const handleLogout = () => {
+    deleteCookie('curcle-auth-token')
+    clearAuthToken();
+    router.push('/');
   };
 
   return (
@@ -84,10 +93,10 @@ const SideBar = () => {
         </nav>
         <div className='h-[1px] w-[208px] bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60 my-3'></div>
         <div>
-          <Link href="/#" className="flex gap-3 items-center py-4 justify-start w-[208px] text-white-2/40  px-4">
+          <div onClick={handleLogout} className="flex gap-3 items-center py-4 justify-start w-[208px] text-white-2/40  px-4 cursor-pointer">
             <Image src="/icons/logout.svg" alt="Log Out" width={24} height={24} />
             <p className='text-base shadow-white-2/50 text-shadow-sm'>Log out</p>
-          </Link>
+          </div>
         </div>
       </div>
     </section>

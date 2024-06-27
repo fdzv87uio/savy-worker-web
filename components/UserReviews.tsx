@@ -49,7 +49,7 @@ const profileData = [
     image: '/images/userExample2.png',
   },
   {
-    id: 1,
+    id: 6,
     name: "Adam Smith",
     username: "ortayblack",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure.",
@@ -60,7 +60,7 @@ const profileData = [
 
 const UserReviews = () => {
   return (
-    <div className='text-white-1 mt-28'>
+    <div className='text-white-1 mt-28 z-10'>
       <h2 className='text-3xl md:text-4xl text-center'>
         UserReviews
       </h2>
@@ -87,11 +87,11 @@ const UserReviews = () => {
                           </div>
                           <p className={`text-neutral-1 ${inter.className}`}>{profile.username}</p>
                           <div className='flex'>
-                            <Image src="/icons/star.svg" alt="start" width={12} height={12} />
-                            <Image src="/icons/star.svg" alt="start" width={12} height={12} />
-                            <Image src="/icons/star.svg" alt="start" width={12} height={12} />
-                            <Image src="/icons/star.svg" alt="start" width={12} height={12} />
-                            <Image src="/icons/star.svg" alt="start" width={12} height={12} />
+                          <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
+                          <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
+                          <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
+                          <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
+                          <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
                           </div>
                         </div>
                       </div>

@@ -63,9 +63,9 @@ const RecommendedEvents = () => {
               </div>
               {isUser &&
                 <div className='flex justify-center gap-10 mt-3'>
-                  <Image src="/icons/heart.svg" alt="heart" className="rounded-full" width={53} height={53} />
-                  <Image src="/icons/calendar.svg" alt="calendat" className="rounded-full" width={53} height={53} />
-                  <Image src="/icons/thumb.svg" alt="thumb" className="rounded-full" width={53} height={53} />
+                  <Image src="/icons/heart.svg" alt="heart" className="rounded-full w-[53px] h-[53px]" width={53} height={53} />
+                  <Image src="/icons/calendar.svg" alt="calendat" className="rounded-full w-[53px] h-[53px]" width={53} height={53} />
+                  <Image src="/icons/dislike.svg" alt="thumb" className="rounded-full w-[53px] h-[53px]" width={53} height={53} />
                 </div>
               }
             </div>

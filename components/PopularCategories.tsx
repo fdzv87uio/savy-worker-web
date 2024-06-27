@@ -29,7 +29,7 @@ const PopularCategories = () => {
         {events.map((event) => (
           <div key={event.id} className="transform transition-all hover:scale-105">
             <div className="relative">
-              <div className='h-[265px] w-[300px] md:w-[361px]'>
+              <div className='relative h-[265px] w-[300px] md:w-[361px]'>
                 <Image
                   src={event.image}
                   alt={event.title}

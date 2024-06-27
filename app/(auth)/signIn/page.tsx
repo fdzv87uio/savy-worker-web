@@ -18,12 +18,14 @@ import { standardLogin } from '@/utils/authUtils';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
+import { useAuthTokenStore } from '@/stores/authTokenStore';
 
 
 const SignIn = () => {
   const [authId, setAuthId] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { setAuthToken } = useAuthTokenStore();
   // Yup validation rules
 
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -61,6 +63,7 @@ const SignIn = () => {
           maxAge: 604800,
           path: '/',
         });
+        setAuthToken(newToken);
         toast.success("Login Successful!");
         router.push('/');
       }
