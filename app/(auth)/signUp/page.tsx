@@ -37,12 +37,14 @@ const preferences = [
     title: "Swimming",
   },
 ];
+
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
+  const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
   const router = useRouter();
-  const { setAuthToken }= useAuthTokenStore();
-  // Yup validation rules
+  const { setAuthToken } = useAuthTokenStore();
 
+  // Yup validation rules
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -52,19 +54,28 @@ const SignUp = () => {
       .min(8, 'Password must be at least 8 characters long')
       .required('Password is required'),
   });
-  //Form options
+
+  // Form options
   const formOptions: any = {
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
   };
-  //react-hook-forms 
-  const { control, handleSubmit, formState: { errors } } = useForm(formOptions);
 
+  // React Hook Form
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm(formOptions);
 
-  //Submission handler
+  // Function to format date to yyyy-mm-dd
+  const formatDate = (date: Date) => {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Submission handler
   async function onSubmit(data: any) {
     console.log('data', data);
-    data.birthDate = new Date();
+    data.birthDate = formatDate(new Date(data.dateBirth));
     data.documentType = 'Driver Licenses';
     setLoading(true);
     if (data.email && data.password) {
@@ -88,6 +99,14 @@ const SignUp = () => {
         router.push('/');
       }
     }
+  }
+
+  const handlePreferenceClick = (preference: string) => {
+    setSelectedPreferences(prev => {
+      const newPreferences = [...prev, preference];
+      setValue("preferences", newPreferences.join(", "));
+      return newPreferences;
+    });
   }
 
   return (
@@ -245,22 +264,27 @@ const SignUp = () => {
                     {...field}
                     type="text"
                     placeholder='Preferences'
+                    value={selectedPreferences.join(", ")}
+                    readOnly
                   />
                 )}
               />
               {!errors.preferences && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your preferences</p>
+                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Select your preferences</p>
               )}
               {errors.preferences && errors.preferences.message && (
                 <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.preferences.message}`}</p>
               )}
               <div className='relative flex flex-wrap md:flex-nowrap w-[250px] gap-3 mt-1'>
                 {preferences.map((preference) => (
-                  <div key={preference.id} className={`${inter.className} text-sm bg-primary-1 rounded-full px-3`}>
-                    <p >{preference.title}</p>
+                  <div
+                    key={preference.id}
+                    className={`${inter.className} text-sm bg-primary-1 rounded-full px-3 cursor-pointer`}
+                    onClick={() => handlePreferenceClick(preference.title)}
+                  >
+                    <p>{preference.title}</p>
                   </div>
-                )
-                )}
+                ))}
               </div>
             </div>
             <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
@@ -273,4 +297,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignUp;
