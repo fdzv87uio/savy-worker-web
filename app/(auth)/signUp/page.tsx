@@ -48,10 +48,8 @@ const SignUp = () => {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .min(2, 'Name is too small')
       .required('Name is required'),
     lastname: Yup.string()
-      .min(2, 'Lastname is too small')
       .required('Lastname is required'),
     dateBirth: Yup.date()
       .max(new Date(), 'Future date not allowed')
