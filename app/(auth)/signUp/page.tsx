@@ -69,6 +69,8 @@ const SignUp = () => {
     address: Yup.string()
       .min(2, 'Address is too small')
       .required('Address is required'),
+    preferences: Yup.string()
+      .required('Preferences are required'),
   });
 
   // Form options
@@ -80,7 +82,7 @@ const SignUp = () => {
   //Submit button activator
   function isButtonDisabled() {
     const formData = control._formValues;
-    if (!formData.email || !formData.password || !formData.name || !formData.lastname || !formData.dateBirth || !formData.address) {
+    if (!formData.email || !formData.password || !formData.name || !formData.lastname || !formData.dateBirth || !formData.address || !formData.preferences) {
       return true;
     } else {
       return false;
