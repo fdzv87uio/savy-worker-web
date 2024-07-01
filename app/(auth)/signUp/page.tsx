@@ -47,12 +47,30 @@ const SignUp = () => {
   // Yup validation rules
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Name is required'),
+    lastname: Yup.string()
+      .required('Lastname is required'),
+    dateBirth: Yup.date()
+      .max(new Date(), 'Future date not allowed')
+      .required('Date of Birth is required')
+      .test('is-adult', 'You must be at least 18 years old', (value) => {
+        const currentDate = new Date();
+        const eighteenYearsAgo = new Date(currentDate);
+        eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+        return value <= eighteenYearsAgo;
+      }),
     email: Yup.string()
       .matches(emailRegex, "Invalid email")
       .email('Email is invalid'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
       .required('Password is required'),
+    address: Yup.string()
+      .min(2, 'Address is too small')
+      .required('Address is required'),
+    preferences: Yup.string()
+      .required('Preferences are required'),
   });
 
   // Form options
@@ -60,6 +78,16 @@ const SignUp = () => {
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
   };
+
+  //Submit button activator
+  function isButtonDisabled() {
+    const formData = control._formValues;
+    if (!formData.email || !formData.password || !formData.name || !formData.lastname || !formData.dateBirth || !formData.address || !formData.preferences) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   // React Hook Form
   const { control, handleSubmit, setValue, formState: { errors } } = useForm(formOptions);
@@ -287,7 +315,7 @@ const SignUp = () => {
                 ))}
               </div>
             </div>
-            <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+            <Button disabled={isButtonDisabled()} type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
               {loading ? "..." : "Sign Up"}
             </Button>
           </form>
