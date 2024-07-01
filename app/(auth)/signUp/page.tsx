@@ -40,17 +40,31 @@ const preferences = [
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { setAuthToken }= useAuthTokenStore();
+  const { setAuthToken } = useAuthTokenStore();
   // Yup validation rules
 
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, 'Name is too small')
+      .required('Name is required'),
+    lastname: Yup.string()
+      .min(2, 'Lastname is too small')
+      .required('Lastname is required'),
+    dateBirth: Yup.date()
+      .min(new Date(), 'Later date not allowed')
+      .required('Date of Birth is required'),
     email: Yup.string()
       .matches(emailRegex, "Invalid email")
       .email('Email is invalid'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
       .required('Password is required'),
+    address: Yup.string()
+      .min(2, 'Address is too small')
+      .required('Address is required'),
+    preferences: Yup.string()
+      .required('Preferences are required'),
   });
   //Form options
   const formOptions: any = {
@@ -59,6 +73,16 @@ const SignUp = () => {
   };
   //react-hook-forms 
   const { control, handleSubmit, formState: { errors } } = useForm(formOptions);
+
+  //Submit button activator
+  function isButtonDisabled() {
+    const formData = control._formValues;
+    if (!formData.email || !formData.password || !formData.name || !formData.lastname || !formData.dateBirth || !formData.address || !formData.preferences) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
   //Submission handler
@@ -263,7 +287,7 @@ const SignUp = () => {
                 )}
               </div>
             </div>
-            <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+            <Button disabled={isButtonDisabled()} type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${isButtonDisabled() === true ? 'cursor-not-allowed' : 'cursor-pointer'} ${inter.className} mt-3`}>
               {loading ? "..." : "Sign Up"}
             </Button>
           </form>
