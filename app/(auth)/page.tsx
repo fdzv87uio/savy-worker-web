@@ -8,29 +8,40 @@ import Image from 'next/image';
 import PopularCategories from '@/components/PopularCategories';
 import UserReviews from '@/components/UserReviews';
 import { getCookie } from 'cookies-next';
-import platform from 'platform';
 import UserBanner from '@/components/UserBanner';
 import ScheduledEvents from '@/components/ScheduledEvents';
 import { Skeleton } from '@/components/ui/skeleton';
+import { findUserByEmail } from '@/utils/authUtils';
 
 
 const Home = () => {
   const [isUser, setIsUser] = useState<boolean | null>(null);
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
   useEffect(() => {
-    console.log("OS:");
-    console.log(platform.os?.family);
-    console.log("Browser:");
-    console.log(platform.name);
-    console.log("Version:");
-    console.log(platform.version);
-    console.log("Device:");
-    console.log(platform.product);
     const token = getCookie('curcle-auth-token')
-    console.log('auth-token:');
-    console.log(token);
-    // Establecer isUser basado en la presencia del token
-    setIsUser(!!token);
+    const userEmail = getCookie('curcle-user-email')
+    if (token && userEmail) {
+      // Si existe token, traer la info del usuario con email
+      getUserInfo(userEmail, token);
+    } else {
+      setIsUser(false);
+    }
   }, [])
+
+  async function getUserInfo(email: string, token: string) {
+    const res: any = await findUserByEmail(email, token);
+    if (res && res.status === "success") {
+      setName(res.data.name);
+      setLastname(res.data.lastname);
+      setEmail(res.data.email);
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+
+  }
   return (
     <div className='flex flex-col justify-center items-center relative'>
       <Image
@@ -75,7 +86,7 @@ const Home = () => {
           alt="Ellipse"
           width={581}
           height={306}
-            className="hidden xl:flex absolute top-[2250px] left-[150px] object-cover blur-2xl"
+          className="hidden xl:flex absolute top-[2250px] left-[150px] object-cover blur-2xl"
         />)}
       {!isUser &&
         <>
@@ -84,7 +95,7 @@ const Home = () => {
             alt="Ellipse"
             width={354}
             height={276}
-          className="hidden xl:flex absolute top-[2650px] left-[300px] object-cover blur-xl"
+            className="hidden xl:flex absolute top-[2650px] left-[300px] object-cover blur-xl"
           />
           <Image
             src="/images/vector7.svg"
@@ -114,7 +125,7 @@ const Home = () => {
       {isUser === null ? (
         <Skeleton className="h-[116px] w-full rounded-full mt-10" />
       ) : isUser ? (
-        <UserBanner />
+        <UserBanner name={name} lastname={lastname} email={email} />
       ) : (
         <Hero />
       )}

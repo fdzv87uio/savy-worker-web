@@ -114,8 +114,16 @@ const SignIn = () => {
           const newTransaction = await createTransaction(newData);
           if (newTransaction.status === 'success') {
             setLoading(false);
+            // set token cookie
             const newToken = res.data.dataAuth.accessToken;
             setCookie('curcle-auth-token', newToken, {
+              maxAge: 604800,
+              path: '/',
+            });
+            //set Email Cookie
+            const newEmail = data.email;
+            console.log(newEmail);
+            setCookie('curcle-user-email', newEmail, {
               maxAge: 604800,
               path: '/',
             });
@@ -151,6 +159,12 @@ const SignIn = () => {
                 maxAge: 604800,
                 path: '/',
               });
+              //set Email Cookie
+              const newEmail = data.email;
+              setCookie('curcle-user-email', newEmail, {
+                maxAge: 604800,
+                path: '/',
+              });
               setLoading(false);
               toast.success("Login Successful!");
               router.push('/');
@@ -182,8 +196,15 @@ const SignIn = () => {
       const newTransaction = await createTransaction(transactionData);
       if (newTransaction.status === 'success') {
         setLoading(false);
+        //set Token Cookie
         const newToken = res.data.dataAuth.accessToken;
         setCookie('curcle-auth-token', newToken, {
+          maxAge: 604800,
+          path: '/',
+        });
+        //set Email Cookie
+        const newEmail = formData.email;
+        setCookie('curcle-user-email', newEmail, {
           maxAge: 604800,
           path: '/',
         });
