@@ -15,7 +15,8 @@ import { findUserByEmail } from '@/utils/authUtils';
 
 
 const Home = () => {
-  const [isUser, setIsUser] = useState<boolean | null>(null);
+  const [isUser, setIsUser] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState()
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -30,9 +31,11 @@ const Home = () => {
     }
   }, [])
 
+  // Get User info
   async function getUserInfo(email: string, token: string) {
     const res: any = await findUserByEmail(email, token);
     if (res && res.status === "success") {
+      setUserInfo(res.data);
       setName(res.data.name);
       setLastname(res.data.lastname);
       setEmail(res.data.email);
@@ -130,7 +133,7 @@ const Home = () => {
         <Hero />
       )}
       {/* Recommended Events */}
-      <RecommendedEvents />
+      <RecommendedEvents isUser={isUser} userInfo={userInfo} />
       {/* SignUp*/}
       <SignUpForFree />
       {/* Categories */}
@@ -138,11 +141,13 @@ const Home = () => {
         <PopularCategories />
       }
       {/* User Reviews */}
-      {isUser ? (
-        <ScheduledEvents />
-      ) : (
-        <UserReviews />
-      )}
+      <div className='h-auto w-full mb-[100px] flex flex-col items-center'>
+        {isUser ? (
+          <ScheduledEvents />
+        ) : (
+          <UserReviews />
+        )}
+      </div>
     </div>
   )
 }
