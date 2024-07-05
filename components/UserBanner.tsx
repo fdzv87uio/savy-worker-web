@@ -20,7 +20,7 @@ function UserBanner({ name, lastname, email }: UserBannerProps) {
       <div className='absolute inset-0 flex items-center justify-start w-full h-[116px] px-6'>
         <div className='text-white flex items-center gap-3'>
           <Link href='/profile'>
-            <Image src="/images/userExample.png" alt="Profile photo" className="rounded-full" width={63} height={63} />
+            <Image src="/images/user-icon.png" alt="Profile photo" className="rounded-full" width={63} height={63} />
           </Link>
           <div className='flex flex-col justify-start items-start gap-1'>
             <h1 className="text-xl md:text-2xl text-white-1">Hello, {name} {lastname}</h1>

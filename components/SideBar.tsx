@@ -2,19 +2,38 @@
 import { sidebarLinks } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore'
+import { findUserByEmail } from '@/utils/authUtils';
 const SideBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { clearAuthToken } = useAuthTokenStore();
-
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<any>(null);
+  useEffect(() => {
+    const token = getCookie('curcle-auth-token')
+    const userEmail = getCookie('curcle-user-email')
+    if (token && userEmail) {
+      // Si existe token, traer la info del usuario con email
+      getUserInfo(userEmail, token);
+    }
+  }, [userInfo])
+
+  // Get User info
+  async function getUserInfo(email: string, token: string) {
+    const res: any = await findUserByEmail(email, token);
+    if (res && res.status === "success") {
+      console.log(res.data);
+      setUserInfo(res.data);
+    }
+
+  }
 
   const handleToggleSubMenu = (label: string, event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -29,13 +48,17 @@ const SideBar = () => {
   };
 
   return (
-    <section className="w-[208px] h-svh">
+    <section className="w-[230px] h-svh">
       <div className='flex flex-col justify-start items-center bg-slate-800 h-svh'>
-        <div className='flex gap-1 mt-20'>
-          <Image className='rounded-full' src="/images/userExample.png" alt="profile" width={61} height={61} />
-          <div className='flex flex-col justify-center items-center text-white-1'>
-            <h3 className='text-xl'>Hello, Andy</h3>
-            <span className={`text-xs bg-primary-1 rounded-full px-3 text-white-1 ${inter.className}`}>Sports Enthusiast</span>
+        <div className='flex gap-1 mt-20 pl-1 gap-[5px]'>
+          <Image className='rounded-full' src="/images/user-icon.png" alt="profile" width={41} height={41} />
+          <div className='flex flex-col justify-center items-left text-white-1'>
+            {userInfo && (
+              <>
+                <h3 className='text-xl'>Hello, {userInfo.name}</h3>
+                <span className={`text-xs bg-primary-1 rounded-full px-3 text-center text-white-1 ${inter.className}`}>{userInfo.roles[0]}</span>
+              </>
+            )}
           </div>
         </div>
         <div className='h-[1px] w-[208px] bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60 my-3'></div>
