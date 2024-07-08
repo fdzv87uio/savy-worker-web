@@ -1,7 +1,7 @@
 'use client';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Inter } from "next/font/google";
 import { Button } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
@@ -14,6 +14,10 @@ import { setCookie } from 'cookies-next';
 import { createAccount } from '@/utils/createAccount';
 import { useAuthTokenStore } from '@/stores/authTokenStore'
 import bcrypt from 'bcryptjs';
+import platform from 'platform';
+import { TransactionType } from '@/interfaces/transactionInterfaces';
+import { getIpData } from '@/utils/ipUtils';
+import { createTransaction } from '@/utils/transactionUtils';
 
 const preferences = [
   {
@@ -41,8 +45,19 @@ const preferences = [
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
+  const [ip, setIp] = useState('');
   const router = useRouter();
   const { setAuthToken } = useAuthTokenStore();
+  // Effect to retrieve IP Address
+  useEffect(() => {
+    getIpAddress();
+  }, [])
+
+  async function getIpAddress() {
+    const data = await getIpData();
+    setIp(data.ip)
+
+  }
 
   // Yup validation rules
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -107,6 +122,24 @@ const SignUp = () => {
     data.documentType = 'Driver Licenses';
     setLoading(true);
     if (data.email && data.password) {
+      // Set Info for new Transaction
+      const os = platform.os?.family ? platform.os?.family : "n/a";
+      const browser = platform.name ? platform.name : "n/a";
+      const version = platform.version ? platform.version : "n/a";
+      const device = platform.product ? platform.product : "n/a";
+      const location = "Miami, USA"; // This is a Provisional Prop
+      const now = new Date().toUTCString();
+      const newData: TransactionType = {
+        userEmail: data.email,
+        transactionType: "register",
+        os: os,
+        browser: browser,
+        version: version,
+        device: device,
+        location: location,
+        ip: ip,
+        datetime: now,
+      }
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(data.password, salt);
       const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.birthDate, data.documentType);
@@ -116,13 +149,15 @@ const SignUp = () => {
         const msg = res.error.response.data.message ? res.error.response.data.message : 'Invalid Credentials';
         toast.error("Error: " + msg);
       } else if (res.status === "success") {
-        setLoading(false);
+        // Create User Register Transaction
+        await createTransaction(newData);
         const newToken = res.data.dataAuthRegister.accessToken;
         setCookie('curcle-auth-token', newToken, {
           maxAge: 604800,
           path: '/',
         });
         setAuthToken(newToken);
+        setLoading(false);
         toast.success("Login Successful!");
         router.push('/');
       }

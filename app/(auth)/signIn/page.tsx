@@ -82,7 +82,6 @@ const SignIn = () => {
       const device = platform.product ? platform.product : "n/a";
       const location = "Miami, USA"; // This is a Provisional Prop
       const now = new Date().toUTCString();
-
       const newData: TransactionType = {
         userEmail: data.email,
         transactionType: "login",
@@ -94,11 +93,9 @@ const SignIn = () => {
         ip: ip,
         datetime: now,
       }
-      console.log(newData);
       setTransactionData(newData);
       // Get Login transactions by User
       const TransactionList: any = await getAllTransactionsByEmail(data.email);
-      console.log(TransactionList);
       // If there are no transactions, proceed creating new Transaction and login
       if (TransactionList.data.length === 0) {
         console.log("no transactions available");
