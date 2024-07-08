@@ -21,6 +21,9 @@ const Home = () => {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0)
+    }
     const token = getCookie('curcle-auth-token')
     const userEmail = getCookie('curcle-user-email')
     if (token && userEmail) {
@@ -29,7 +32,7 @@ const Home = () => {
     } else {
       setIsUser(false);
     }
-  }, [])
+  }, [isUser, setIsUser])
 
   // Get User info
   async function getUserInfo(email: string, token: string) {
@@ -45,6 +48,7 @@ const Home = () => {
     }
 
   }
+
   return (
     <div className='flex flex-col justify-center items-center relative'>
       <Image
@@ -135,7 +139,7 @@ const Home = () => {
       {/* Recommended Events */}
       <RecommendedEvents isUser={isUser} userInfo={userInfo} />
       {/* SignUp*/}
-      <SignUpForFree />
+      <SignUpForFree isUser={isUser} setIsUser={setIsUser} />
       {/* Categories */}
       {!isUser &&
         <PopularCategories />
