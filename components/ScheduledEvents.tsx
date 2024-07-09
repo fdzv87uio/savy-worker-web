@@ -1,58 +1,52 @@
 import Image from 'next/image';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Inter } from "next/font/google";
+import { getAllEvents } from '@/utils/eventsUtils';
 const inter = Inter({ subsets: ["latin"] });
 
 
-const events = [
-  {
-    id: 1,
-    image: '/images/event.jfif', // Asegúrate de reemplazar esto con la ruta correcta de la imagen
-    title: 'Basketball Tournament',
-    date: '05/05/2024',
-    orders: 175,
-    tag: 'Basketball'
-  },
-  {
-    id: 2,
-    image: '/images/event.jfif', // Asegúrate de reemplazar esto con la ruta correcta de la imagen
-    title: 'Basketball Tournament',
-    date: '05/05/2024',
-    orders: 175,
-    tag: 'Basketball'
-  },
-  {
-    id: 3,
-    image: '/images/event.jfif', // Asegúrate de reemplazar esto con la ruta correcta de la imagen
-    title: 'Basketball Tournament',
-    date: '05/05/2024',
-    orders: 175,
-    tag: 'Basketball'
-  },
-];
+interface ScheduledEventsProps {
+  userInfo: any
+}
 
-const ScheduledEvents = () => {
+function ScheduledEvents({ userInfo }: ScheduledEventsProps) {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    if (events.length === 0) {
+      getEventData();
+    }
+  }, [events])
+
+  async function getEventData() {
+    const res: any = await getAllEvents();
+    if (res && res.status === "success") {
+      const allEvents = res.data;
+      const filtered = allEvents.filter((x: any) => x.guestList.includes(userInfo.email));
+      setEvents(filtered);
+    }
+  }
   return (
     <div className='flex flex-col mt-32 z-10 justify-center items-center mb-32'>
       <h2 className='text-white-1 text-3xl md:text-4xl text-center'>Your scheduled events</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center gap-4 mt-20">
-        {events.map((event) => (
-          <div key={event.id} className="bg-white rounded-lg shadow-lg w-[350px] md:w-[371px] h-[457px] relative border border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10">
+        {events.length > 0 && events.map((event: any) => (
+          <div key={event._id} className="bg-white rounded-lg shadow-lg w-[350px] md:w-[371px] h-[457px] relative border border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10">
             <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 w-[350px] md:w-[371px] h-[457px]">
             </div>
             <div className='absolute top-0 left-0'>
-              <Image src={event.image} alt={event.title} width={371} height={236} className="h-[236px] object-cover rounded-lg" />
+              <Image src={event.uploads[0]} alt={event.title} width={371} height={236} className="h-[236px] object-cover rounded-lg" />
               <div className="p-4 flex flex-col mt-5">
                 <h3 className="text-white-1 text-xl md:text-2xl">{event.title}</h3>
                 <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>Date: {event.date}</p>
                 <div className='flex items-center gap-2'>
                   <Image src="/icons/star2.svg" alt="start" width={18} height={18} />
-                  <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>{event.orders} Orders</p>
+                  <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>{event.guestList.length} Guests</p>
                 </div>
                 <div className='flex'>
                   <div className='bg-primary-1 px-3 rounded-full'>
                     <p className={`text-white-1 text-base md:text-lg  ${inter.className}`}>
-                      {event.tag}
+                      {event.categoryList[0]}
                     </p>
                   </div>
                 </div>

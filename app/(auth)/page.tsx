@@ -146,8 +146,8 @@ const Home = () => {
       }
       {/* User Reviews */}
       <div className='h-auto w-full mb-[100px] flex flex-col items-center'>
-        {isUser ? (
-          <ScheduledEvents />
+        {isUser && userInfo ? (
+          <ScheduledEvents userInfo={userInfo} />
         ) : (
           <UserReviews />
         )}
