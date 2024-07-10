@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function createAccount(name: string, lastname: string, email: string, password: string, address: string, birthDate: string, documentType: string) {
+export async function createAccount(name: string, lastname: string, email: string, password: string, address: string, birthDate: string, documentType: string, preferences: string) {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/auth/register"
 
@@ -11,7 +11,8 @@ export async function createAccount(name: string, lastname: string, email: strin
             password: password,
             address: address,
             birthDate: birthDate,
-            documentType: documentType
+            documentType: documentType,
+            preferences: preferences,
         };
 
         const response = await axios.post(apiUrl, data, {
