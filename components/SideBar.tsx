@@ -42,7 +42,8 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
-    deleteCookie('curcle-auth-token')
+    deleteCookie('curcle-auth-token');
+    deleteCookie('curcle-user-email');
     clearAuthToken();
     router.push('/');
   };
