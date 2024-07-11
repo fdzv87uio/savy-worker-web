@@ -10,10 +10,13 @@ import { getCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore';
 import { Skeleton } from './ui/skeleton';
 import MobileNav from './MobileNav';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Header = () => {
   const [isUser, setIsUser] = useState<boolean | null>(null);
   const { authToken } = useAuthTokenStore();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const cookieToken = getCookie('curcle-auth-token');
@@ -26,9 +29,11 @@ const Header = () => {
         <div className="flex items-center w-full">
           <div className="flex justify-between w-full md:px-16">
             <div className='flex justify-center items-center gap-3'>
-              <div className="flex h-16 items-center justify-between md:hidden">
-                <MobileNav />
-              </div>
+              {isUser && pathname !== '/' && (
+                <div className="flex h-16 items-center justify-between md:hidden">
+                  <MobileNav />
+                </div>
+              )}
               <Link href="/">
                 <h1 className="text-2xl md:text-4xl font-normal text-gray-1 uppercase">
                   Curcleup
