@@ -49,9 +49,9 @@ const SideBar = () => {
   };
 
   return (
-    <section className="w-[230px] h-svh">
-      <div className='flex flex-col justify-start items-center bg-slate-800 h-svh'>
-        <div className='flex gap-1 mt-20 pl-1 gap-[5px]'>
+    <section className="w-[258px] h-svh rounded-r-[10px] bg-[url('/images/card-bg.png')] bg-contain bg-slate-600 hidden md:flex">
+      <div className='flex flex-col justify-start items-center  h-svh rounded-r-[10px] bg-slate-800/95 w-full border-[1px] border-[#ffffff33]'>
+        <div className='flex mt-20 gap-[5px]'>
           <Image className='rounded-full' src="/images/user-icon.png" alt="profile" width={41} height={41} />
           <div className='flex flex-col justify-center items-left text-white-1'>
             {userInfo && (

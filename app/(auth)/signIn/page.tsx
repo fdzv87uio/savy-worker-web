@@ -124,6 +124,7 @@ const SignIn = () => {
               maxAge: 604800,
               path: '/',
             });
+            setAuthToken(newToken);
             toast.success("Login Successful!");
             router.push('/');
           } else {
@@ -162,6 +163,7 @@ const SignIn = () => {
                 maxAge: 604800,
                 path: '/',
               });
+              setAuthToken(newToken);
               setLoading(false);
               toast.success("Login Successful!");
               router.push('/');
