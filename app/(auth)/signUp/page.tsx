@@ -142,7 +142,7 @@ const SignUp = () => {
       }
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(data.password, salt);
-      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.birthDate, data.documentType);
+      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.birthDate, data.documentType, preferences.join(","));
       console.log(res);
       if (res.status === 'error') {
         setLoading(false);
@@ -156,6 +156,12 @@ const SignUp = () => {
           maxAge: 604800,
           path: '/',
         });
+        setCookie('curcle-user-email', data.email, {
+          maxAge: 604800,
+          path: '/',
+        });
+
+
         setAuthToken(newToken);
         setLoading(false);
         toast.success("Login Successful!");
