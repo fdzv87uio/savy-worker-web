@@ -10,29 +10,28 @@ const inter = Inter({ subsets: ["latin"] });
 import { deleteCookie, getCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore'
 import { findUserByEmail } from '@/utils/authUtils';
+
 const SideBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { clearAuthToken } = useAuthTokenStore();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<any>(null);
+
   useEffect(() => {
-    const token = getCookie('curcle-auth-token')
-    const userEmail = getCookie('curcle-user-email')
+    const token = getCookie('curcle-auth-token');
+    const userEmail = getCookie('curcle-user-email');
     if (token && userEmail) {
-      // Si existe token, traer la info del usuario con email
       getUserInfo(userEmail, token);
     }
-  }, [userInfo])
+  }, []); // Solo ejecuta una vez al montar el componente
 
   // Get User info
   async function getUserInfo(email: string, token: string) {
     const res: any = await findUserByEmail(email, token);
     if (res && res.status === "success") {
-      console.log(res.data);
       setUserInfo(res.data);
     }
-
   }
 
   const handleToggleSubMenu = (label: string, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,21 +91,17 @@ const SideBar = () => {
                       const isLastItem = index === subMenu.length - 1;
 
                       return (
-                        <>
-                          <div className='flex'>
-                            <div className='flex flex-col'>
-                              <div className='border-b border-l border-white-2/40 rounded-bl-sm h-full w-[15px]'>
-                              </div>
-                              <div className={`h-full w-[15px] border-white-2/40  ${!isLastItem ? 'border-l' : ''}`}></div>
-                            </div>
-                            <Link href={subRoute} key={subLabel} className={cn("flex gap-3 items-center py-2 w-[158px] text-white-2/40 h-[36px]", {
-                              'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isSubActive
-                            })}>
-                              {/* <Image src={subImgURL} alt={subLabel} width={20} height={20} /> */}
-                              <p className={`text-xs ${inter.className} px-3`}>{subLabel}</p>
-                            </Link>
+                        <div key={subLabel} className='flex'>
+                          <div className='flex flex-col'>
+                            <div className='border-b border-l border-white-2/40 rounded-bl-sm h-full w-[15px]'></div>
+                            <div className={`h-full w-[15px] border-white-2/40 ${!isLastItem ? 'border-l' : ''}`}></div>
                           </div>
-                        </>
+                          <Link href={subRoute} className={cn("flex gap-3 items-center py-2 w-[158px] text-white-2/40 h-[36px]", {
+                            'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isSubActive
+                          })}>
+                            <p className={`text-xs ${inter.className} px-3`}>{subLabel}</p>
+                          </Link>
+                        </div>
                       );
                     })}
                   </div>
