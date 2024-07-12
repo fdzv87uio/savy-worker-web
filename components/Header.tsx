@@ -11,16 +11,38 @@ import { useAuthTokenStore } from '@/stores/authTokenStore';
 import { Skeleton } from './ui/skeleton';
 import MobileNav from './MobileNav';
 import { usePathname, useRouter } from 'next/navigation';
+import { findUserByEmail } from '@/utils/authUtils';
+import { NavigationMenuTop } from './NavigationMenuTop';
 
 const Header = () => {
   const [isUser, setIsUser] = useState<boolean | null>(null);
+  const [name, setName] = useState("");
+  const [isMenuOpen,setIsMenuOpen] = useState("");
   const { authToken } = useAuthTokenStore();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
+    
+  }, [isUser, setIsUser])
+
+  // Get User info
+  async function getUserInfo(email: string, token: string) {
+    const res: any = await findUserByEmail(email, token);
+    if (res && res.status === "success") {
+      setName(res.data.name);
+    }
+  }
+
+
+  useEffect(() => {
     const cookieToken = getCookie('curcle-auth-token');
+    const userEmail = getCookie('curcle-user-email')
     setIsUser(!!authToken || !!cookieToken);
+    if (cookieToken && userEmail) {
+      getUserInfo(userEmail, cookieToken);
+    } 
+
   }, [authToken])
 
   return (
@@ -60,18 +82,7 @@ const Header = () => {
               ) : (
                 isUser ? (
                   <>
-                    <Link href="#">
-                      <Button variant="primary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
-                        <Image src="/icons/create.svg" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
-                        Create Event
-                      </Button>
-                    </Link>
-                    <Link href="#">
-                      <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
-                        Join event
-                        <Image src="/icons/loupe.svg" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
-                      </Button>
-                    </Link>
+                    <NavigationMenuTop name={name} />
                   </>
                 ) : (
                   <>
@@ -102,18 +113,7 @@ const Header = () => {
               ) : (
                 isUser ? (
                   <>
-                    <Link href="#">
-                      <Button variant="primary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
-                        <Image src="/icons/create.svg" alt='icon' width={15} height={15} className='w-[15px] h-[15px]' />
-                        Create Event
-                      </Button>
-                    </Link>
-                    <Link href="#">
-                      <Button variant="secondary" size="xsm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
-                        Join Event
-                        <Image src="/icons/loupe.svg" alt='icon' width={15} height={15} className='w-[15px] h-[15px]' />
-                      </Button>
-                    </Link>
+                    <NavigationMenuTop name={name} />
                   </>
                 ) : (
                   <>
