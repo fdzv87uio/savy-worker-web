@@ -10,29 +10,28 @@ const inter = Inter({ subsets: ["latin"] });
 import { deleteCookie, getCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore'
 import { findUserByEmail } from '@/utils/authUtils';
+
 const SideBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { clearAuthToken } = useAuthTokenStore();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<any>(null);
+
   useEffect(() => {
-    const token = getCookie('curcle-auth-token')
-    const userEmail = getCookie('curcle-user-email')
+    const token = getCookie('curcle-auth-token');
+    const userEmail = getCookie('curcle-user-email');
     if (token && userEmail) {
-      // Si existe token, traer la info del usuario con email
       getUserInfo(userEmail, token);
     }
-  }, [userInfo])
+  }, []); // Solo ejecuta una vez al montar el componente
 
   // Get User info
   async function getUserInfo(email: string, token: string) {
     const res: any = await findUserByEmail(email, token);
     if (res && res.status === "success") {
-      console.log(res.data);
       setUserInfo(res.data);
     }
-
   }
 
   const handleToggleSubMenu = (label: string, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,9 +48,9 @@ const SideBar = () => {
   };
 
   return (
-    <section className="w-[230px] h-svh">
-      <div className='flex flex-col justify-start items-center bg-slate-800 h-svh'>
-        <div className='flex gap-1 mt-20 pl-1 gap-[5px]'>
+    <section className="w-[258px] h-svh rounded-r-[10px] bg-[url('/images/card-bg.png')] bg-contain bg-slate-600 hidden md:flex">
+      <div className='flex flex-col justify-start items-center  h-svh rounded-r-[10px] bg-slate-800/95 w-full border-[1px] border-[#ffffff33]'>
+        <div className='flex mt-20 gap-[5px]'>
           <Image className='rounded-full' src="/images/user-icon.png" alt="profile" width={41} height={41} />
           <div className='flex flex-col justify-center items-left text-white-1'>
             {userInfo && (
@@ -92,21 +91,17 @@ const SideBar = () => {
                       const isLastItem = index === subMenu.length - 1;
 
                       return (
-                        <>
-                          <div className='flex'>
-                            <div className='flex flex-col'>
-                              <div className='border-b border-l border-white-2/40 rounded-bl-sm h-full w-[15px]'>
-                              </div>
-                              <div className={`h-full w-[15px] border-white-2/40  ${!isLastItem ? 'border-l' : ''}`}></div>
-                            </div>
-                            <Link href={subRoute} key={subLabel} className={cn("flex gap-3 items-center py-2 w-[158px] text-white-2/40 h-[36px]", {
-                              'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isSubActive
-                            })}>
-                              {/* <Image src={subImgURL} alt={subLabel} width={20} height={20} /> */}
-                              <p className={`text-xs ${inter.className} px-3`}>{subLabel}</p>
-                            </Link>
+                        <div key={subLabel} className='flex'>
+                          <div className='flex flex-col'>
+                            <div className='border-b border-l border-white-2/40 rounded-bl-sm h-full w-[15px]'></div>
+                            <div className={`h-full w-[15px] border-white-2/40 ${!isLastItem ? 'border-l' : ''}`}></div>
                           </div>
-                        </>
+                          <Link href={subRoute} className={cn("flex gap-3 items-center py-2 w-[158px] text-white-2/40 h-[36px]", {
+                            'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isSubActive
+                          })}>
+                            <p className={`text-xs ${inter.className} px-3`}>{subLabel}</p>
+                          </Link>
+                        </div>
                       );
                     })}
                   </div>
