@@ -21,7 +21,7 @@ import { createTransaction } from '@/utils/transactionUtils';
 import { Progress } from '@/components/ui/progress';
 import StepOne from './forms/StepOne';
 import StepTwo from './forms/StepTwo';
-import { getAllPreferencesByCategory } from '@/utils/preferencesUtils';
+import { getAllPreferences, getAllPreferencesByCategory } from '@/utils/preferencesUtils';
 import StepThree from './forms/StepThree';
 
 const SignUp = () => {
@@ -41,9 +41,10 @@ const SignUp = () => {
   const [addressDetails, setAddressDetails] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [preferences, setPreferences] = useState("");
+  const [country, setCountry] = useState("USA");
+  const [preferences, setPreferences] = useState('');
   const [prefOptions, setPrefOptions] = useState<any>({})
+  const [prefList, setPrefList] = useState<any[]>([])
 
   const [ip, setIp] = useState('');
   const router = useRouter();
@@ -57,16 +58,19 @@ const SignUp = () => {
     const ipData = await getIpData();
     setIp(ipData.ip)
     const allPrefs: any = await getAllPreferencesByCategory();
-    if (allPrefs?.status === "success") {
+    const allPrefsList: any = await getAllPreferences();
+    if (allPrefs?.status === "success" && allPrefsList?.status === "success") {
       console.log("prefs:");
       console.log(allPrefs.data);
-      setPrefOptions(allPrefs.data)
+      setPrefOptions(allPrefs.data);
+      setPrefList(allPrefsList.data);
     }
   }
 
 
   // Submission handler
-  async function onSubmit() {
+  async function onSubmit(event: any) {
+    event.preventDefault(); // Here's the hero!
     const data: any = {
       name: name,
       lastname: lastname,
@@ -75,12 +79,22 @@ const SignUp = () => {
       birthDate: birthDate,
       address: address,
       addressDetails: addressDetails,
+      idNumber: idNumber,
       postalCode: postalCode,
       city: city,
       country: country,
-      preferences: preferences,
     };
+    const prefArray = preferences.split(',');
+    const prefIdArray: any = [];
+    prefArray.forEach((x: any) => {
+      const filtered = prefList.filter((y: any) => y.name === x)[0];
+      if (filtered) {
+        prefIdArray.push(filtered._id);
+      }
+    })
+    data.preferences = prefIdArray;
     data.documentType = 'Driver Licenses';
+    console.log(data);
     setLoading(true);
     if (email && password) {
       // Set Info for new Transaction
@@ -103,8 +117,7 @@ const SignUp = () => {
       }
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(data.password, salt);
-      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.birthDate, data.documentType, preferences);
-      console.log(res);
+      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.addressDetails, data.postalCode, data.city, data.idNumber, data.birthDate, data.documentType, data.preferences);
       if (res.status === 'error') {
         setLoading(false);
         const msg = res.error.response.data.message ? res.error.response.data.message : 'Invalid Credentials';
@@ -162,7 +175,7 @@ const SignUp = () => {
               <StepOne step={step} setStep={setStep} setProgress={setProgress} name={name} setName={setName} lastname={lastname} setLastname={setLastname} birthDate={birthDate} setBirthDate={setBirthDate} email={email} setEmail={setEmail} setPassword={setPassword} idNumber={idNumber} setIdNumber={setIdNumber} />
             )}
             {step === 2 && (
-              <StepTwo step={step} setStep={setStep} setProgress={setProgress} address={address} setAddress={setAddress} addressDetails={addressDetails} setAddressDetails={setAddressDetails} postalCode={postalCode} setPostalCode={setPostalCode} city={city} setCity={setCity} country={country} setCountry={setCountry} />
+              <StepTwo step={step} setStep={setStep} setProgress={setProgress} address={address} setAddress={setAddress} addressDetails={addressDetails} setAddressDetails={setAddressDetails} postalCode={postalCode} setPostalCode={setPostalCode} city={city} setCity={setCity} />
             )}
             {step === 3 && (
               <StepThree loading={loading} step={step} prefOptions={prefOptions} setStep={setStep} setProgress={setProgress} setPreferences={setPreferences} preferences={preferences} handleSubmit={onSubmit} />

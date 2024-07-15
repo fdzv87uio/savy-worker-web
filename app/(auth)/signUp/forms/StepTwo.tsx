@@ -20,16 +20,14 @@ interface StepTwoProps {
     setPostalCode: any;
     city: string;
     setCity: any;
-    country: string;
-    setCountry: any;
 }
 
-export default function StepTwo({ step, setStep, setProgress, address, setAddress, addressDetails, setAddressDetails, postalCode, setPostalCode, city, setCity, country, setCountry }: StepTwoProps) {
+export default function StepTwo({ step, setStep, setProgress, address, setAddress, addressDetails, setAddressDetails, postalCode, setPostalCode, city, setCity }: StepTwoProps) {
 
     const [isDisabled, setIsDisbaled] = useState(false);
     useEffect(() => {
         isButtonDisabled();
-    }, [step, address, postalCode, city, country])
+    }, [step, address, postalCode, city])
 
     // Yup validation rules
     const validationSchema = Yup.object().shape({
@@ -42,9 +40,6 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
         city: Yup.string()
             .min(3, "City is too small")
             .required('City is required'),
-        country: Yup.string()
-            .min(3, "Country is too small")
-            .required('Country is required'),
     });
 
     // Form options
@@ -61,7 +56,6 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
         setAddressDetails(formData.addressDetails);
         setPostalCode(formData.postalCode);
         setCity(formData.city);
-        setCountry(formData.country);
         setProgress(66);
         setStep(3);
     }
@@ -71,13 +65,13 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
 
     //Submit button activator
     function isButtonDisabled() {
-        if (!address || !postalCode || !city || !country) {
+        if (!address || !postalCode || !city) {
             setIsDisbaled(true);
         } else {
             const formData = control._formValues;
-            if (!formData.address || !formData.postalCode || !formData.city || !formData.country) {
+            if (!formData.address || !formData.postalCode || !formData.city) {
                 setIsDisbaled(true);
-            } else if (errors.address || errors.postalCode || errors.city || errors.country) {
+            } else if (errors.address || errors.postalCode || errors.city) {
                 setIsDisbaled(true);
             } else {
                 setIsDisbaled(false);
@@ -167,32 +161,6 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
                 )}
                 {errors.city && errors.city.message && (
                     <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.city.message}`}</p>
-                )}
-            </div>
-            {/* country */}
-            <div className="flex flex-col items-left gap-[5px]">
-                <Controller
-                    control={control}
-                    name="country"
-                    render={({ field }) => (
-                        <Input
-                            value={country}
-                            {...register('country', {
-                                onChange: (e) => {
-                                    setCountry(e.target.value);
-                                },
-                            })}
-                            type="text"
-                            placeholder='Country'
-                            autoComplete='new-password'
-                        />
-                    )}
-                />
-                {!errors.country && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your Country</p>
-                )}
-                {errors.country && errors.country.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.country.message}`}</p>
                 )}
             </div>
             <div className='w-full flex flex-row justify-between'>

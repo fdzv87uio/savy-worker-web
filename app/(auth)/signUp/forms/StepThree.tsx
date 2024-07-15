@@ -55,8 +55,9 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
 
     }
 
+
     return (
-        <form className='absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4'>
+        <form className='absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4' >
             <h1 className='text-2xl'>Select Your Preferences</h1>
             <div className='w-full flex flex-col'>
                 {categories.length > 0 && categories.map((x: any, key: number) => {
@@ -82,7 +83,7 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
                     )
                 })}
                 <div className='w-full flex flex-row justify-between'>
-                    <Button disabled={preferences === ""} variant="primary" onClick={() => handleSubmit()} size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                    <Button disabled={preferences === ""} variant="primary" onClick={(event: any) => handleSubmit(event)} size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
                         {loading ? "..." : "Submit"}
                     </Button>
                     <Button onClick={() => { backtrack() }} variant="ghost" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
