@@ -26,7 +26,6 @@ import { useRouter } from "next/navigation";
 
 export function NavigationMenuTop({ name }: { name: string }) {
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState("");
   const { clearAuthToken } = useAuthTokenStore();
 
   const handleLogout = () => {
@@ -43,7 +42,7 @@ export function NavigationMenuTop({ name }: { name: string }) {
           <Button variant="primary" size="sm" className='uppercase text-sm font-normal gap-3'>
             <Image src="/images/user-icon.png" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
             {name}
-            {isMenuOpen ? <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} /> : <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} className='rotate-180' />}
+            <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} />
           </Button>
         </MenubarTrigger>
         <MenubarContent className={`text-base ${audiowide.className} text-white-1 bg-slate-800 mt-5 p-3`}>
