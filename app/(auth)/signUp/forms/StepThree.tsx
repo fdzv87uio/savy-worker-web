@@ -73,7 +73,7 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
                                 {Prefs.map((item: any, k: number) => {
                                     return (
                                         < div key={`pref_${k}`}>
-                                            <div onClick={() => handlePreferenceClick(item.name)} className={`cursor-pointer h-[25px] px-[10px] w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
+                                            <div onClick={() => handlePreferenceClick(item.name)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
                                         </div>
                                     )
                                 })}
