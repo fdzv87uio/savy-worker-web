@@ -18,110 +18,85 @@ import platform from 'platform';
 import { TransactionType } from '@/interfaces/transactionInterfaces';
 import { getIpData } from '@/utils/ipUtils';
 import { createTransaction } from '@/utils/transactionUtils';
-
-const preferences = [
-  {
-    id: 1,
-    title: "Running",
-  },
-  {
-    id: 2,
-    title: "Gaming",
-  },
-  {
-    id: 3,
-    title: "Soccer",
-  },
-  {
-    id: 4,
-    title: "Basketball",
-  },
-  {
-    id: 5,
-    title: "Swimming",
-  },
-];
+import { Progress } from '@/components/ui/progress';
+import StepOne from './forms/StepOne';
+import StepTwo from './forms/StepTwo';
+import { getAllPreferences, getAllPreferencesByCategory } from '@/utils/preferencesUtils';
+import StepThree from './forms/StepThree';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
+  // Navigation Props 
+  const [progress, setProgress] = useState(10);
+  const [step, setStep] = useState(1);
+  // Form props
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetails, setAddressDetails] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("USA");
+  const [preferences, setPreferences] = useState('');
+  const [prefOptions, setPrefOptions] = useState<any>({})
+  const [prefList, setPrefList] = useState<any[]>([])
+
   const [ip, setIp] = useState('');
   const router = useRouter();
   const { setAuthToken } = useAuthTokenStore();
   // Effect to retrieve IP Address
   useEffect(() => {
-    getIpAddress();
+    getData();
   }, [])
 
-  async function getIpAddress() {
-    const data = await getIpData();
-    setIp(data.ip)
-
-  }
-
-  // Yup validation rules
-  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required('Name is required'),
-    lastname: Yup.string()
-      .required('Lastname is required'),
-    dateBirth: Yup.date()
-      .max(new Date(), 'Future date not allowed')
-      .required('Date of Birth is required')
-      .test('is-adult', 'You must be at least 18 years old', (value) => {
-        const currentDate = new Date();
-        const eighteenYearsAgo = new Date(currentDate);
-        eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
-        return value <= eighteenYearsAgo;
-      }),
-    email: Yup.string()
-      .matches(emailRegex, "Invalid email")
-      .email('Email is invalid'),
-    password: Yup.string()
-      .min(8, 'Password must be at least 8 characters long')
-      .required('Password is required'),
-    address: Yup.string()
-      .min(2, 'Address is too small')
-      .required('Address is required'),
-    preferences: Yup.string()
-      .required('Preferences are required'),
-  });
-
-  // Form options
-  const formOptions: any = {
-    resolver: yupResolver(validationSchema),
-    mode: 'onChange',
-  };
-
-  //Submit button activator
-  function isButtonDisabled() {
-    const formData = control._formValues;
-    if (!formData.email || !formData.password || !formData.name || !formData.lastname || !formData.dateBirth || !formData.address || !formData.preferences) {
-      return true;
-    } else {
-      return false;
+  async function getData() {
+    const ipData = await getIpData();
+    setIp(ipData.ip)
+    const allPrefs: any = await getAllPreferencesByCategory();
+    const allPrefsList: any = await getAllPreferences();
+    if (allPrefs?.status === "success" && allPrefsList?.status === "success") {
+      console.log("prefs:");
+      console.log(allPrefs.data);
+      setPrefOptions(allPrefs.data);
+      setPrefList(allPrefsList.data);
     }
   }
 
-  // React Hook Form
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm(formOptions);
-
-  // Function to format date to yyyy-mm-dd
-  const formatDate = (date: Date) => {
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  };
 
   // Submission handler
-  async function onSubmit(data: any) {
-    console.log('data', data);
-    data.birthDate = formatDate(new Date(data.dateBirth));
+  async function onSubmit(event: any) {
+    event.preventDefault(); // Here's the hero!
+    const data: any = {
+      name: name,
+      lastname: lastname,
+      email: email,
+      password: password,
+      birthDate: birthDate,
+      address: address,
+      addressDetails: addressDetails,
+      idNumber: idNumber,
+      postalCode: postalCode,
+      city: city,
+      country: country,
+    };
+    const prefArray = preferences.split(',');
+    const prefIdArray: any = [];
+    prefArray.forEach((x: any) => {
+      const filtered = prefList.filter((y: any) => y.name === x)[0];
+      if (filtered) {
+        prefIdArray.push(filtered._id);
+      }
+    })
+    data.preferences = prefIdArray;
     data.documentType = 'Driver Licenses';
+    console.log(data);
     setLoading(true);
-    if (data.email && data.password) {
+    if (email && password) {
       // Set Info for new Transaction
       const os = platform.os?.family ? platform.os?.family : "n/a";
       const browser = platform.name ? platform.name : "n/a";
@@ -142,8 +117,7 @@ const SignUp = () => {
       }
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(data.password, salt);
-      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.birthDate, data.documentType, preferences.join(","));
-      console.log(res);
+      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.addressDetails, data.postalCode, data.city, data.idNumber, data.birthDate, data.documentType, data.preferences);
       if (res.status === 'error') {
         setLoading(false);
         const msg = res.error.response.data.message ? res.error.response.data.message : 'Invalid Credentials';
@@ -170,13 +144,6 @@ const SignUp = () => {
     }
   }
 
-  const handlePreferenceClick = (preference: string) => {
-    setSelectedPreferences(prev => {
-      const newPreferences = [...prev, preference];
-      setValue("preferences", newPreferences.join(", "));
-      return newPreferences;
-    });
-  }
 
   return (
     <div className='flex flex-col justify-center items-center relative'>
@@ -194,172 +161,26 @@ const SignUp = () => {
         height={250}
         className="absolute top-[400px] left-[60px] object-cover blur-md"
       />
-      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 md:mt-3 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[750px] z-10">
+      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 mb-4 md:mt-3 md:mb-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[637px] z-10">
         <div className='flex flex-col'>
           <h2 className="text-2xl md:text-5xl font-normal text-center md:text-start">Create Your Account</h2>
           <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
         </div>
-        <div className='w-[350px] md:min-w-[543px] min-h-[516px] border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[750px] ">
+        <div className='w-[350px] md:min-w-[543px] h-auto border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[637px] ">
           </div>
-          <form className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
-            {/* name */}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="name"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder='Name'
-                  />
-                )}
-              />
-              {!errors.name && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your name</p>
-              )}
-              {errors.name && errors.name.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.name.message}`}</p>
-              )}
-            </div>
-            {/* lastname*/}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="lastname"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder='Last Name'
-                  />
-                )}
-              />
-              {!errors.lastname && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your Last Name</p>
-              )}
-              {errors.lastname && errors.lastname.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.lastname.message}`}</p>
-              )}
-            </div>
-            {/* dateBirth*/}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="dateBirth"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="date"
-                    placeholder='Date Birth'
-                  />
-                )}
-              />
-              {!errors.dateBirth && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your Date of Birth</p>
-              )}
-              {errors.dateBirth && errors.dateBirth.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.dateBirth.message}`}</p>
-              )}
-            </div>
-            {/* email */}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="email"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder='Email'
-                  />
-                )}
-              />
-              {!errors.email && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>
-              )}
-              {errors.email && errors.email.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
-              )}
-            </div>
-            {/* password */}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="password"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="password"
-                    placeholder='Password'
-                  />
-                )}
-              />
-              {!errors.password && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Your password must be at least 8 characters</p>
-              )}
-              {errors.password && errors.password.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.password.message}`}</p>
-              )}
-            </div>
-            {/* Address */}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="address"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder='Address (US only)'
-                  />
-                )}
-              />
-              {!errors.address && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your location</p>
-              )}
-              {errors.address && errors.address.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.address.message}`}</p>
-              )}
-            </div>
-            {/* Preference */}
-            <div className="flex flex-col items-left gap-[5px]">
-              <Controller
-                control={control}
-                name="preferences"
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="text"
-                    placeholder='Preferences'
-                    value={selectedPreferences.join(", ")}
-                    readOnly
-                  />
-                )}
-              />
-              {!errors.preferences && (
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Select your preferences</p>
-              )}
-              {errors.preferences && errors.preferences.message && (
-                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.preferences.message}`}</p>
-              )}
-              <div className='relative flex flex-wrap md:flex-nowrap w-[250px] gap-3 mt-1'>
-                {preferences.map((preference) => (
-                  <div
-                    key={preference.id}
-                    className={`${inter.className} text-sm bg-primary-1 rounded-full px-3 cursor-pointer`}
-                    onClick={() => handlePreferenceClick(preference.title)}
-                  >
-                    <p>{preference.title}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <Button disabled={isButtonDisabled()} type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
-              {loading ? "..." : "Sign Up"}
-            </Button>
-          </form>
+          <div className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col'>
+            <Progress value={progress} max={100} className='z-[99]' id="progress" />
+            {step === 1 && (
+              <StepOne step={step} setStep={setStep} setProgress={setProgress} name={name} setName={setName} lastname={lastname} setLastname={setLastname} birthDate={birthDate} setBirthDate={setBirthDate} email={email} setEmail={setEmail} setPassword={setPassword} idNumber={idNumber} setIdNumber={setIdNumber} />
+            )}
+            {step === 2 && (
+              <StepTwo step={step} setStep={setStep} setProgress={setProgress} address={address} setAddress={setAddress} addressDetails={addressDetails} setAddressDetails={setAddressDetails} postalCode={postalCode} setPostalCode={setPostalCode} city={city} setCity={setCity} />
+            )}
+            {step === 3 && (
+              <StepThree loading={loading} step={step} prefOptions={prefOptions} setStep={setStep} setProgress={setProgress} setPreferences={setPreferences} preferences={preferences} handleSubmit={onSubmit} />
+            )}
+          </div>
         </div>
       </div>
     </div>

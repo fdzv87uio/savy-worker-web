@@ -221,9 +221,9 @@ const SignIn = () => {
   }
 
   return (
-    <div className='w-full bg-[#030614] relative overflow-x-hidden overflow-hidden'>
+    <div className='w-full bg-[#030614]  relative overflow-x-hidden overflow-hidden'>
       <div className='w-[100vw]'>
-        <div className='pt-[40px] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col gap-[40px] xl:gap-[100px]'>
+        <div className='pt-[40px] h-[110vh] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col gap-[40px] xl:gap-[100px]'>
 
           {/* Standard Login */}
           <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
@@ -283,7 +283,7 @@ const SignIn = () => {
             </div>
           </div>
           {/* AUTHID Login */}
-          <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
+          {/* <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
             <div className='flex flex-col xl:items-left w-full xl:w-[50vw] gap-5'>
               <h1 className='text-xl xl:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>AuthID Verification</h1>
               <p className={`text-[#ffffff] text-base xl:text-2xl  text-center xl:text-left font-normal ${inter.className}`} >Use AuthID for enhanced security</p>
@@ -310,7 +310,7 @@ const SignIn = () => {
                 </form>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* svg assets */}
