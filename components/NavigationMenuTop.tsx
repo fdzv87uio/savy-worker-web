@@ -46,7 +46,7 @@ export function NavigationMenuTop({ name }: { name: string }) {
           </Button>
         </MenubarTrigger>
         <MenubarContent className={`text-base ${audiowide.className} text-white-1 bg-slate-800 mt-5 p-3`}>
-          <Link href="/profile">
+          {/* <Link href="/profile">
             <MenubarSub>
               <MenubarSubTrigger className="gap-3 hover:bg-slate-700 cursor-pointer">
                 <Image src="/icons/profile.svg" alt="Log Out" width={22} height={22} />
@@ -75,6 +75,15 @@ export function NavigationMenuTop({ name }: { name: string }) {
 
               </MenubarSubContent>
             </MenubarSub>
+          </Link> */}
+
+          <Link href="/profile">
+            <MenubarItem className="gap-3 hover:bg-slate-700 cursor-pointer">
+              <Image src="/icons/profile.svg" alt="Log Out" width={22} height={22} />
+              <p className={`text-base ${audiowide.className}`}>
+                Profile
+              </p>
+            </MenubarItem>
           </Link>
 
           <Link href="/sports">
@@ -96,6 +105,15 @@ export function NavigationMenuTop({ name }: { name: string }) {
           </Link>
 
           <Link href="/events">
+            <MenubarItem className="gap-3 hover:bg-slate-700 cursor-pointer">
+              <Image src="/icons/events.svg" alt="Log Out" width={22} height={22} />
+              <p className={`text-base ${audiowide.className}`}>
+                Events
+              </p>
+            </MenubarItem>
+          </Link>
+
+          {/* <Link href="/events">
             <MenubarSub>
               <MenubarSubTrigger className="gap-3 hover:bg-slate-700 cursor-pointer">
                 <Image src="/icons/events.svg" alt="Log Out" width={22} height={22} />
@@ -115,7 +133,7 @@ export function NavigationMenuTop({ name }: { name: string }) {
                 </Link>
               </MenubarSubContent>
             </MenubarSub>
-          </Link>
+          </Link> */}
 
           <MenubarSeparator />
           <MenubarItem className="gap-3 hover:bg-slate-700 cursor-pointer" onClick={handleLogout}>
