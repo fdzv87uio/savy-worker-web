@@ -50,7 +50,7 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
                 <div className="relative">
                   <img src={event.uploads[0]} alt={event.title} className="w-full h-64 bg-black object-cover rounded-xl" />
                   <div className="absolute bottom-[-30px] left-0 bg-green-600 p-2 rounded-full m-4">
-                    <img src={getIcon(event.categoryList)} alt={event.title} className="w-6 h-6" />
+                    {/* <img src={getIcon(event.categoryList)} alt={event.title} className="w-6 h-6" /> */}
                   </div>
                 </div>
                 <div className="p-4">
