@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 import { Calendar } from "@/components/ui/calendar"
 import { findUserByEmail } from '@/utils/authUtils';
 import { getCookie } from 'cookies-next';
+import { getProfile } from '@/utils/profileUtils';
 
 
 const Profile = () => {
@@ -19,8 +20,9 @@ const Profile = () => {
   const [preferences, setPreferences] = useState([]);
 
   // Get User info
-  async function getUserInfo(email: string, token: string) {
-    const res: any = await findUserByEmail(email, token);
+  async function getUserInfo(token: string) {
+    const res: any = await getProfile(token);
+    console.log(res)
     if (res && res.status === "success") {
       setName(res.data.name);
       setEmail(res.data.email);
@@ -32,9 +34,8 @@ const Profile = () => {
 
   useEffect(() => {
     const cookieToken = getCookie('curcle-auth-token');
-    const userEmail = getCookie('curcle-user-email')
-    if (cookieToken && userEmail) {
-      getUserInfo(userEmail, cookieToken);
+    if (cookieToken) {
+      getUserInfo(cookieToken);
     }
 
   }, [])
@@ -95,7 +96,7 @@ const Profile = () => {
                   <h3>Preferences</h3>
                   <div className='flex gap-3'>
                     {preferences &&  preferences.map(preference => (
-                      <p key={preference} className={`bg-primary-1 rounded-full ${inter.className} text-center px-3`}>{preference}</p>
+                      <p key={preference._id} className={`bg-primary-1 rounded-full ${inter.className} text-center px-3 text-sm`}>{preference.name}</p>
                     ))}
                   </div>
                 </div>

@@ -16,7 +16,7 @@ function ScheduledEvents({ userInfo }: ScheduledEventsProps) {
     if (events.length === 0) {
       getEventData();
     }
-  }, [events])
+  }, [])
 
   async function getEventData() {
     const res: any = await getAllEvents();
