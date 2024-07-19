@@ -81,6 +81,11 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
             ))}
           </div>
         )}
+        {events.length === 0 && (
+          <div className='w-full h-auto mt-[5px] text-xl text-[#ffffff] flex flex-col items-center font-normal'>
+            <p>No Scheduled Events Available</p>
+          </div>
+        )}
 
       </div>
     </>

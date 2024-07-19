@@ -143,6 +143,7 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
             if (newTransaction.status === 'success') {
               setLoading(false);
               const newToken = res.data.dataAuth.accessToken;
+              setAuthToken(newToken);
               setCookie('curcle-auth-token', newToken, {
                 maxAge: 604800,
                 path: '/',
@@ -213,7 +214,7 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
     <>
       <div className='flex gap-8 mt-32 relative flex-col md:flex-row'>
         {isUser ? (
-          <div className='md:min-h-[331px] w-[350px] md:w-[543px] border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className='md:min-h-[331px] w-[350px] md:w-[543px] relative border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
             <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[400px] md:h-[331px]">
             </div>
             <div className='absolute w-[350px] md:w-[543px] md:h-[331px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
