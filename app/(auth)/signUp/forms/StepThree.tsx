@@ -31,7 +31,7 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
 
     //backtrack function
     function backtrack() {
-        setProgress(33);
+        setProgress(40);
         setStep(2);
     }
 
@@ -57,7 +57,7 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
 
 
     return (
-        <form className='absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4' >
+        <form className='absolute w-[270px] md:w-[450px] mt-12 flex flex-col gap-4' >
             <h1 className='text-2xl'>Select Your Preferences</h1>
             <div className='w-full flex flex-col'>
                 {categories.length > 0 && categories.map((x: any, key: number) => {
@@ -74,7 +74,7 @@ export default function StepThree({ step, setStep, setProgress, setPreferences, 
                                 {Prefs.map((item: any, k: number) => {
                                     return (
                                         < div key={`pref_${k}`}>
-                                            <div onClick={() => handlePreferenceClick(item.name)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
+                                            <div onClick={() => handlePreferenceClick(item.name)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name.length < 15 ? item.name : `${item.name.slice(0, 15)}...`}</div>
                                         </div>
                                     )
                                 })}
