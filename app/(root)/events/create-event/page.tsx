@@ -6,6 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 import { Progress } from '@/components/ui/progress';
 import StepOne from '@/components/forms/createEvent/StepOne';
 import StepTwo from '@/components/forms/createEvent/StepTwo';
+import StepThree from '@/components/forms/createEvent/StepThree';
+import StepFour from '@/components/forms/createEvent/StepFour';
 import { createEventFormStore } from '@/stores/createEventFormStore'
 
 const CreateEvent = () => {
@@ -36,6 +38,12 @@ const CreateEvent = () => {
             )}
             {inputs.step === 2 && (
               <StepTwo />
+            )}
+            {inputs.step === 3 && (
+              <StepThree />
+            )}
+            {inputs.step === 4 && (
+              <StepFour />
             )}
           </div>
         </div>

@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 
 type Inputs = {
-  eventType: string;
-  title: string;
-  description: string;
-  recurring: string;
-  frequency: string;
-  date: string;
-  online: string;
-  location: string;
+  eventType?: string;
+  title?: string;
+  description?: string;
+  recurring?: string;
+  frequency?: string;
+  date?: string;
+  online?: string;
+  location?: string;
   step: number;
 };
 
@@ -27,7 +27,7 @@ export const createEventFormStore = create<InputsStore>((set) => ({
     date: '',
     online: '',
     location: '',
-    step: 2,
+    step: 1,
   },
   setInputs: (inputs: Inputs) => set({ inputs }),
 }));

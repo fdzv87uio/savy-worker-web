@@ -13,21 +13,15 @@ type Inputs = {
     eventType: string;
     title: string;
     description: string;
-    recurring: string;
-    frequency: string;
-    date: string;
-    online: string;
+    mode: string;
     location: string;
 }
 
 const defaultValues: Inputs = {
-    eventType: "",
+    eventType: "private",
     title: "",
     description: "",
-    recurring: "",
-    frequency: "",
-    date: "",
-    online: "",
+    mode: "inPerson",
     location: ""
 };
 
@@ -35,11 +29,9 @@ export default function StepOne() {
 
     const { inputs, setInputs } = createEventFormStore();
 
-
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const updatedData = { ...data, step: 2 };
-        console.log(updatedData);
         setInputs(updatedData);
     };
 
@@ -57,11 +49,11 @@ export default function StepOne() {
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="private" id="r1" />
+                                <RadioGroupItem value="private" />
                                 <Label className={inter.className}>Private</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="public" id="r2" />
+                                <RadioGroupItem value="public" />
                                 <Label className={inter.className}>Public</Label>
                             </div>
                         </RadioGroup>
@@ -115,88 +107,21 @@ export default function StepOne() {
                 )}
             </div>
 
-            {/* recurring */}
+            {/* event Mode */}
             <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Is this event recurring?</Label>
+                <Label className={`${inter.className} text-base`}>Event Mode:</Label>
                 <Controller
-                    name="recurring"
+                    name="mode"
                     control={control}
                     rules={{ required: "Event type is required" }}
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="Yes" id="r1" />
-                                <Label className={inter.className}>Yes</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="No" id="r2" />
-                                <Label className={inter.className}>No</Label>
-                            </div>
-                        </RadioGroup>
-                    )}
-                />
-                {errors.recurring && <span className="text-red-500">{errors.recurring.message}</span>}
-            </div>
-
-            {/* frequency */}
-            <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Frequency</Label>
-                <Controller
-                    name="frequency"
-                    control={control}
-                    rules={{ required: "Event type is required" }}
-                    render={({ field }) => (
-                        <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="Yes" id="r1" />
-                                <Label className={inter.className}>Weekly</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="No" id="r2" />
-                                <Label className={inter.className}>Monthly</Label>
-                            </div>
-                        </RadioGroup>
-                    )}
-                />
-                {errors.frequency && <span className="text-red-500">{errors.frequency.message}</span>}
-            </div>
-
-            {/* date*/}
-            <div className="flex flex-col items-left gap-[5px]">
-                <Controller
-                    control={control}
-                    name="date"
-                    render={({ field }) => (
-                        <Input
-                            {...field}
-                            type="datetime-local"
-                            placeholder='Event Date and Time'
-                        />
-                    )}
-                />
-                {!errors.date && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Select date and time</p>
-                )}
-                {errors.date && errors.date.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.date.message}`}</p>
-                )}
-            </div>
-
-            {/* online */}
-            <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Event Type:</Label>
-                <Controller
-                    name="online"
-                    control={control}
-                    rules={{ required: "Event type is required" }}
-                    render={({ field }) => (
-                        <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="Yes" id="r1" />
+                                <RadioGroupItem value="inPerson" />
                                 <Label className={inter.className}>In-Person</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="No" id="r2" />
+                                <RadioGroupItem value="online" />
                                 <Label className={inter.className}>Online</Label>
                             </div>
                         </RadioGroup>
