@@ -167,9 +167,9 @@ const SignUp = () => {
           <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
         </div>
         <div className='w-[350px] md:min-w-[543px] h-auto border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[637px] ">
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[637px] h-auto object-cover ">
           </div>
-          <div className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col'>
+          <div className='absolute w-[270px] md:w-[450px] top-10 left-10 top-10 left-10 flex flex-col'>
             <Progress value={progress} max={100} className='z-[99]' id="progress" />
             {step === 1 && (
               <StepOne step={step} setStep={setStep} setProgress={setProgress} name={name} setName={setName} lastname={lastname} setLastname={setLastname} birthDate={birthDate} setBirthDate={setBirthDate} email={email} setEmail={setEmail} setPassword={setPassword} idNumber={idNumber} setIdNumber={setIdNumber} />

@@ -48,7 +48,7 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
             {events.map((event: any) => (
               <div key={event.id} className="min-h-[407px] w-[350px] md:w-[359px] bg-white-1 rounded-xl overflow-hidden shadow-xl transform transition-all hover:scale-105">
                 <div className="relative">
-                  <img src={event.uploads[0]} alt={event.title} className="w-full h-64 bg-black object-cover rounded-xl" />
+                  <img src={event.images[0]} alt={event.title} className="w-full h-64 bg-black object-cover rounded-xl" />
                   <div className="absolute bottom-[-30px] left-0 bg-green-600 p-2 rounded-full m-4">
                     {/* <img src={getIcon(event.categoryList)} alt={event.title} className="w-6 h-6" /> */}
                   </div>
@@ -67,7 +67,7 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
                   }
                   <div className="text-center mt-4">
                     <p className={`${inter.className} text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
-                    <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}, {event.country}</p>
+                    <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}, USA</p>
                   </div>
                   {isUser &&
                     <div className='flex justify-center gap-10 mt-3'>
@@ -79,6 +79,11 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {events.length === 0 && (
+          <div className='w-full h-auto mt-[5px] text-xl text-[#ffffff] flex flex-col items-center font-normal'>
+            <p>No Scheduled Events Available</p>
           </div>
         )}
 

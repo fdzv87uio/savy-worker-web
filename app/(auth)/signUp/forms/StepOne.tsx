@@ -76,8 +76,9 @@ export default function StepOne({ step, setStep, setProgress, name, setName, las
         setBirthDate(formData.birthDate);
         setEmail(formData.email);
         setPassword(formData.password);
-        setProgress(33);
+        setProgress(40);
         setStep(2);
+        window.scrollTo(0, 0)
     }
 
     // React Hook Form
@@ -96,7 +97,7 @@ export default function StepOne({ step, setStep, setProgress, name, setName, las
     }
 
     return (
-        <form className='absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+        <form className='absolute w-[270px] md:w-[450px] mt-12 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
             {/* name */}
             <div className="flex flex-col items-left gap-[5px]">
                 <Input

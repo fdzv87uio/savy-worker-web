@@ -52,3 +52,10 @@ export async function getAllPreferences() {
         return res;
     }
 };
+
+export function getPreferenceName(preferences: any[], id: string) {
+    if (preferences) {
+        const filter = preferences.filter((x: any) => x._id === id)[0];
+        return filter.name;
+    }
+}

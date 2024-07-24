@@ -28,6 +28,8 @@ const Profile = () => {
       setEmail(res.data.email);
       setAddress(res.data.address);
       setPreferences(res.data.preferences);
+      console.log('pref:');
+      console.log(res.data.preferences)
     }
   }
 
@@ -95,7 +97,7 @@ const Profile = () => {
                 <div>
                   <h3>Preferences</h3>
                   <div className='flex gap-3'>
-                    {preferences &&  preferences.map(preference => (
+                    {preferences && preferences.map((preference: any) => (
                       <p key={preference._id} className={`bg-primary-1 rounded-full ${inter.className} text-center px-3 text-sm`}>{preference.name}</p>
                     ))}
                   </div>

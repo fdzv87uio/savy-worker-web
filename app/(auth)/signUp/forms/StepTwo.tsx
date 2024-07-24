@@ -35,7 +35,7 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
             .min(10, "Address is too small")
             .required('Address is required'),
         postalCode: Yup.string()
-            .min(6, "Postal Code is too small")
+            .min(5, "Postal Code is too small")
             .required('Postal Code is required'),
         city: Yup.string()
             .min(3, "City is too small")
@@ -56,8 +56,9 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
         setAddressDetails(formData.addressDetails);
         setPostalCode(formData.postalCode);
         setCity(formData.city);
-        setProgress(66);
+        setProgress(80);
         setStep(3);
+        window.scrollTo(0, 0)
     }
 
     // React Hook Form
@@ -87,7 +88,7 @@ export default function StepTwo({ step, setStep, setProgress, address, setAddres
 
 
     return (
-        <form className='absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+        <form className='absolute w-[270px] md:w-[450px] mt-12 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
             {/* address */}
             <div className="flex flex-col items-left gap-[5px]">
                 <Input
