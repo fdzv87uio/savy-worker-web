@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-export async function uploadFile(file: File, token: string) {
+export async function uploadFile(file: File, eventId: string, token: string) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload";
 
     const formData = new FormData();
     formData.append('file', file, file.name);
+    formData.append('eventId', eventId);
 
     const response = await axios.post(apiUrl, formData, {
       headers: {

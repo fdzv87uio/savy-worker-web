@@ -41,30 +41,36 @@ type Inputs = {
     ocurrences: number;
 };
 
-const defaultValues: Inputs = {
-    startDate: new Date(),
-    hours: 10,
-    minutes: 30,
-    amPm: "am",
-    recurring: "no",
-    frequency: "daily",
-    repeatNumber: 1,
-    repeatType: "daily",
-    repeatOn: "monday",
-    eventEnds: "never",
-    datePick: new Date(),
-    ocurrences:2,
-};
-
 export default function StepTwo() {
 
     const { inputs, setInputs } = createEventFormStore();
+
+    const defaultValues: Inputs = {
+        startDate: inputs.startDate || new Date(),
+        hours: inputs.hours || 10,
+        minutes: inputs.minutes || 30,
+        amPm: inputs.amPm || "am",
+        recurring: inputs.recurring || "no",
+        frequency: inputs.frequency || "daily",
+        repeatNumber: inputs.repeatNumber || 1,
+        repeatType: inputs.repeatType || "daily",
+        repeatOn: inputs.repeatOn || "monday",
+        eventEnds: inputs.eventEnds || "never",
+        datePick: inputs.datePick || new Date(),
+        ocurrences: inputs.ocurrences || 2,
+    };
+
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
     const [date, setDate] = React.useState<Date>()
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        const updatedData = { ...data, step: 3 };
+        const updatedData = { ...inputs, ...data, step: 3, progress: 50 };
         setInputs(updatedData);
+    };
+
+    const handleBackClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setInputs({ ...inputs, step: 1, progress: 10 });
     };
 
     return (
@@ -194,11 +200,11 @@ export default function StepTwo() {
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="yes"/>
+                                <RadioGroupItem value="yes" />
                                 <Label className={inter.className}>Yes</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="no"/>
+                                <RadioGroupItem value="no" />
                                 <Label className={inter.className}>No</Label>
                             </div>
                         </RadioGroup>
@@ -419,9 +425,14 @@ export default function StepTwo() {
                 {errors.recurring && <span className="text-red-500">{errors.recurring.message}</span>}
             </div>
 
-            <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
-                Next
-            </Button>
+            <div className='w-full flex flex-row justify-between'>
+                <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
+                    Back
+                </Button>
+                <Button type="submit" variant="primary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                    Next
+                </Button>
+            </div>
         </form>
     );
 }

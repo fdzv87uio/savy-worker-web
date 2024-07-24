@@ -17,31 +17,35 @@ type Inputs = {
     location: string;
 }
 
-const defaultValues: Inputs = {
-    eventType: "private",
-    title: "",
-    description: "",
-    mode: "inPerson",
-    location: ""
-};
+
 
 export default function StepOne() {
 
     const { inputs, setInputs } = createEventFormStore();
+    console.log(inputs)
+
+    const defaultValues: Inputs = {
+        eventType: inputs.eventType || "private",
+        title: inputs.title || "",
+        description: inputs.description || "",
+        mode: inputs.mode || "inPerson",
+        location: inputs.location || ""
+    };
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        const updatedData = { ...data, step: 2 };
+        const updatedData = { ...data, step: 2, progress: 25 };
         setInputs(updatedData);
     };
 
-    console.log(watch("eventType"));
+
+    // console.log(watch("eventType"));
 
     return (
         <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
             {/* type */}
             <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Event type {inputs.eventType}</Label>
+                <Label className={`${inter.className} text-base`}>Event type</Label>
                 <Controller
                     name="eventType"
                     control={control}
@@ -127,7 +131,7 @@ export default function StepOne() {
                         </RadioGroup>
                     )}
                 />
-                {errors.online && <span className="text-red-500">{errors.online.message}</span>}
+                {errors.mode && <span className="text-red-500">{errors.mode.message}</span>}
             </div>
 
             {/* location */}

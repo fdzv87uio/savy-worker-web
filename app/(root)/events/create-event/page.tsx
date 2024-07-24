@@ -13,7 +13,6 @@ import { createEventFormStore } from '@/stores/createEventFormStore'
 const CreateEvent = () => {
   const [loading, setLoading] = useState(false);
   const { inputs } = createEventFormStore();
-  const [progress, setProgress] = useState(10);
 
   return (
     <div className='flex flex-col justify-center items-center relative'>
@@ -32,7 +31,7 @@ const CreateEvent = () => {
           <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[850px] ">
           </div>
           <div className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col'>
-            <Progress value={progress} max={100} className='z-[99]' id="progress" />
+            <Progress value={inputs.progress} max={100} className='z-[99]' id="progress" />
             {inputs.step === 1 && (
               <StepOne />
             )}
