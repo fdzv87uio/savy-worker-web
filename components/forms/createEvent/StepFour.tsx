@@ -6,12 +6,12 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
-import { uploadFile } from "@/utils/uploadFilesUtils";
+import { uploadImage, uploadVideo } from "@/utils/uploadFilesUtils";
 import { useDropzone } from 'react-dropzone';
 import ReactPlayer from 'react-player';
 import { Spinner } from '@/components/ui/spinner';
 import { createEventFormStore } from "@/stores/createEventFormStore";
-import { createEvent } from '@/utils/eventsUtils'
+import { createEvent, updateEvent } from '@/utils/eventsUtils'
 import { eventNames, title } from "process";
 import { description } from "platform";
 import { getProfile } from "@/utils/profileUtils";
@@ -40,6 +40,7 @@ export default function StepFour() {
     const [objectURLs, setObjectURLs] = useState<Map<string, string>>(new Map());
     const [isUploading, setIsUploading] = useState(false);
     const [userId, setUserId] = useState("");
+    const [userName, setUserName] = useState("");
     const [eventId, setEventId] = useState("");
 
     const token = getCookie('curcle-auth-token') as string;
@@ -51,6 +52,7 @@ export default function StepFour() {
             console.log(res)
             if (res && res.status === "success") {
                 setUserId(res.data.id);
+                setUserName(res.data.name)
             }
         }
         getUserInfo(token);
@@ -108,101 +110,85 @@ export default function StepFour() {
         });
     };
 
-    //CREATE EVENT
-    const createNewEvent = async (token: string) => {
-
-        const starTimeField = inputs.hours || "00" + inputs.minutes || "00" + inputs.amPm
-
-        const data = {
-            title: inputs.title,
-            description: inputs.description,
-            eventType: inputs.mode,
-            startDate: inputs.startDate?.toISOString(),
-            startTime: starTimeField.toLocaleString(),
-            address: inputs.location,
-            userId,
-            preferenceListIds: inputs.prefeIds
-        }
-
-        try {
-            const res = await createEvent(data, token);
-            console.log(res)
-            setEventId(res.data._id)
-
-        } catch (error) {
-            return null;
-        }
-    };
-
-    //UPLOAD FILE
-    const uploadFileHandler = async (file: File, eventId: string, token: string) => {
-        try {
-            const uploadResponse = await uploadFile(file, eventId, token);
-            if ('data' in uploadResponse && uploadResponse.status === 'success') {
-                return {
-                    name: file.name,
-                    url: uploadResponse.data.url
-                };
-            } else {
-                return null;
-            }
-        } catch (error) {
-            console.error('Error al subir el archivo:', error);
-            return null;
-        }
-    };
-
-    //UPDATED EVENT
-    const updatedEvent = async (token: string) => {
-
-        const starTimeField = inputs.hours || "00" + inputs.minutes || "00" + inputs.amPm
-
-        const data = {
-            title: inputs.title,
-            description: inputs.description,
-            eventType: inputs.mode,
-            startDate: inputs.startDate?.toISOString(),
-            startTime: starTimeField.toLocaleString(),
-            address: inputs.location,
-            userId,
-            preferenceListIds: inputs.prefeIds
-        }
-
-        try {
-            const res = await createEvent(data, token);
-            console.log(res)
-            setEventId(res.data._id)
-
-        } catch (error) {
-            return null;
-        }
-    };
-
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         setIsUploading(true);
 
-        await createNewEvent(token)
+        try {
+            // Crear nuevo evento
+            const starTimeField = `${inputs.hours}-${inputs.minutes}-${inputs.amPm}`;
+            const eventEndField = inputs.eventEnds === 'never' ? false : true;
+            const isFrecuencyField = inputs.recurring === 'yes' ? true : false;
+            const frecuencyField = `${inputs.repeatNumber}-${inputs.repeatType}`
+            const urlsImages: string[] = [];
+            const urlsVideos: string[] = [];
 
-        let fileUploadResponse;
+            const eventData = {
+                title: inputs.title,
+                slug: "-",
+                description: inputs.description,
+                url: "-",
+                eventType: inputs.eventType,
+                eventMode: inputs.mode,
+                startDate: inputs.startDate?.toISOString(),
+                startTime: starTimeField,
+                eventEnds: eventEndField,
+                endDate: inputs.datePick,
+                endTime: "TBD",
+                occurrenceCount: inputs.ocurrences,
+                isFrecuency: isFrecuencyField,
+                frecuency: inputs.repeatType,
+                frecuencyStatus: "None",//TODO review
+                location: inputs.location,
+                address: "TBD",
+                city: "TBD",
+                author: userName,
+                userId,
+                preferenceListIds: inputs.prefeIds,
+                guestList: [],
+                images: [],
+                videos: []
+            };
 
-        if (images.length > 0 && images[0].file) {
-            fileUploadResponse = await uploadFileHandler(images[0].file, eventId, token);
-        } else if (uploadedFiles.length > 0) {
-            fileUploadResponse = await uploadFileHandler(uploadedFiles[0], eventId, token);
+            const resCreateEvent = await createEvent(eventData, token);
+            const newEventId = resCreateEvent.data._id;
+
+            // Subir Fotos y obtener URLs
+            const uploadImagePromises = images.map(async (image) => {
+                if (image.file) {
+                    const resUploadImage = await uploadImage(image.file, newEventId, token);
+                    urlsImages.push(resUploadImage.data.data.url);
+                }
+            });
+
+            // Subir Videos y obtener URLs
+            const uploadVideoPromises = uploadedFiles.map(async (video) => {
+                const resUploadVideo = await uploadVideo(video, newEventId, token);
+                urlsVideos.push(resUploadVideo.data.data.url); // Asume que la respuesta contiene la URL del video subido
+            });
+
+            await Promise.all([...uploadImagePromises, ...uploadVideoPromises]);
+
+            // Actualizar evento con las URLs de las imágenes y videos
+            const eventDataUpdated = {
+                ...eventData,
+                images: urlsImages,
+                videos: urlsVideos,
+            };
+
+            const resUpdateEvent = await updateEvent(newEventId, eventDataUpdated, token);
+            console.log("res", resUpdateEvent);
+
+            // Finalizar proceso de subida
+            setIsUploading(false);
+
+            // Actualizar estado de inputs si es necesario
+            const updatedData = { ...inputs, progress: 100 };
+            setInputs(updatedData);
+        } catch (error) {
+            console.error('Error en onSubmit:', error);
+            setIsUploading(false); // Asegúrate de manejar los errores correctamente
         }
-
-        if (fileUploadResponse) {
-            data.file.name = fileUploadResponse.name;
-            data.file.url = fileUploadResponse.url;
-            console.log('Archivo subido con éxito:', data);
-        } else {
-            console.error('No se subió ningún archivo.');
-        }
-
-        setIsUploading(false);
-        const updatedData = { ...inputs, progress: 100 };
-        setInputs(updatedData);
     };
 
     const handleBackClick = (event: React.MouseEvent<HTMLButtonElement>) => {

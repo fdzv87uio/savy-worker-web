@@ -28,7 +28,7 @@ export default function StepOne() {
         eventType: inputs.eventType || "private",
         title: inputs.title || "",
         description: inputs.description || "",
-        mode: inputs.mode || "inPerson",
+        mode: inputs.mode || "in-person",
         location: inputs.location || ""
     };
 
@@ -121,7 +121,7 @@ export default function StepOne() {
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="inPerson" />
+                                <RadioGroupItem value="in-person" />
                                 <Label className={inter.className}>In-Person</Label>
                             </div>
                             <div className="flex items-center space-x-2">

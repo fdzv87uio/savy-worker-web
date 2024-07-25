@@ -51,9 +51,9 @@ export default function StepTwo() {
         minutes: inputs.minutes || 30,
         amPm: inputs.amPm || "am",
         recurring: inputs.recurring || "no",
-        frequency: inputs.frequency || "daily",
+        frequency: inputs.frequency || "Daily",
         repeatNumber: inputs.repeatNumber || 1,
-        repeatType: inputs.repeatType || "daily",
+        repeatType: inputs.repeatType || "Daily",
         repeatOn: inputs.repeatOn || "monday",
         eventEnds: inputs.eventEnds || "never",
         datePick: inputs.datePick || new Date(),
@@ -222,19 +222,19 @@ export default function StepTwo() {
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="daily" id="r1" />
+                                <RadioGroupItem value="Daily" id="r1" />
                                 <Label className={inter.className}>Daily</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="weekly" id="r1" />
+                                <RadioGroupItem value="Weekly" id="r1" />
                                 <Label className={inter.className}>Weekly</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="monthly" id="r2" />
+                                <RadioGroupItem value="Monthly" id="r2" />
                                 <Label className={inter.className}>Monthly</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="anually" id="r1" />
+                                <RadioGroupItem value="Anually" id="r1" />
                                 <Label className={inter.className}>Annually</Label>
                             </div>
                         </RadioGroup>
@@ -279,10 +279,10 @@ export default function StepTwo() {
                                     </SelectTrigger>
                                     <SelectContent className="text-black-1 bg-white-1">
                                         <SelectGroup>
-                                            <SelectItem value="daily">Daily</SelectItem>
-                                            <SelectItem value="weekly">Weekly</SelectItem>
-                                            <SelectItem value="monthly">Monthly</SelectItem>
-                                            <SelectItem value="annually">Annually</SelectItem>
+                                            <SelectItem value="Daily">Daily</SelectItem>
+                                            <SelectItem value="Weekly">Weekly</SelectItem>
+                                            <SelectItem value="Monthly">Monthly</SelectItem>
+                                            <SelectItem value="Annually">Annually</SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>

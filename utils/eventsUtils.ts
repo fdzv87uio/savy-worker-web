@@ -79,11 +79,48 @@ export async function findUserByUserId(id: string, token: string) {
     }
 };
 
-export async function createEvent(eventData:any, accessToken:string) {
+interface ApiResponseCreateEvent {
+    success: boolean;
+    statusCode: string;
+    data?: {
+        url: string;
+    };
+    error?: any;
+}
+
+export async function createEvent(eventData: any, accessToken: string): Promise<ApiResponseCreateEvent> {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/events/new";
 
         const response = await axios.post(apiUrl, eventData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res: ApiResponseCreateEvent = {
+            success: true,
+            statusCode: 'success upload',
+            data: response.data,
+        };
+        return res;
+    } catch (error) {
+        const res: ApiResponseCreateEvent = {
+            success: false,
+            statusCode: 'error',
+            error: error,
+        };
+        return res;
+    }
+}
+
+export async function updateEvent(eventId: string, eventData: any, accessToken: string) {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + `/events/${eventId}`;
+
+        const response = await axios.put(apiUrl, eventData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
