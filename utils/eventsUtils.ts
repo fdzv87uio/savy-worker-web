@@ -79,15 +79,6 @@ export async function findUserByUserId(id: string, token: string) {
     }
 };
 
-interface ApiResponseCreateEvent {
-    success: boolean;
-    statusCode: string;
-    data?: {
-        url: string;
-    };
-    error?: any;
-}
-
 export async function createEvent(eventData: any, accessToken: string): Promise<ApiResponseCreateEvent> {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/events/new";
@@ -103,7 +94,7 @@ export async function createEvent(eventData: any, accessToken: string): Promise<
         const res: ApiResponseCreateEvent = {
             success: true,
             statusCode: 'success upload',
-            data: response.data,
+            data: response.data as EventData,
         };
         return res;
     } catch (error) {

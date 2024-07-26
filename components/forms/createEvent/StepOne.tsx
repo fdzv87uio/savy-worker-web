@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createEventFormStore } from '@/stores/createEventFormStore'
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,10 @@ type Inputs = {
 export default function StepOne() {
 
     const { inputs, setInputs } = createEventFormStore();
-    console.log(inputs)
+
+    // const updatedData = { step: 1, progress: 10 };
+    // setInputs(updatedData);
+
 
     const defaultValues: Inputs = {
         eventType: inputs.eventType || "private",

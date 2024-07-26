@@ -24,6 +24,7 @@ import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
@@ -33,7 +34,7 @@ type Inputs = {
     amPm: string;
     repeatNumber: number;
     repeatType: string;
-    repeatOn: string;
+    repeatOn: string[];
     recurring: string;
     frequency: string;
     eventEnds: string;
@@ -54,11 +55,21 @@ export default function StepTwo() {
         frequency: inputs.frequency || "Daily",
         repeatNumber: inputs.repeatNumber || 1,
         repeatType: inputs.repeatType || "Daily",
-        repeatOn: inputs.repeatOn || "monday",
+        repeatOn: inputs.repeatOn || ['monday'],
         eventEnds: inputs.eventEnds || "never",
         datePick: inputs.datePick || new Date(),
         ocurrences: inputs.ocurrences || 2,
     };
+
+    const daysOfWeek = [
+        { value: "sunday", label: "S" },
+        { value: "monday", label: "M" },
+        { value: "tuesday", label: "T" },
+        { value: "wednesday", label: "W" },
+        { value: "thursday", label: "T" },
+        { value: "friday", label: "F" },
+        { value: "saturday", label: "S" },
+    ];
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
     const [date, setDate] = React.useState<Date>()
@@ -296,47 +307,34 @@ export default function StepTwo() {
             </div>
 
             {/* repeatOn */}
-            <div className='flex flex-col gap-[5px]'>
+            <div className="flex flex-col items-left gap-[5px]">
                 <Label className={`${inter.className} text-base`}>Repeat on</Label>
-                <Controller
-                    name="repeatOn"
-                    control={control}
-                    render={({ field }) => (
-                        <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="sunday" id="r1" />
-                                <Label className={inter.className}>S</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="monday" id="r1" />
-                                <Label className={inter.className}>M</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="tuesday" id="r2" />
-                                <Label className={inter.className}>T</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="wednesday" id="r1" />
-                                <Label className={inter.className}>W</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="thursday" id="r1" />
-                                <Label className={inter.className}>T</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="friday" id="r1" />
-                                <Label className={inter.className}>F</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="saturday" id="r1" />
-                                <Label className={inter.className}>S</Label>
-                            </div>
-                        </RadioGroup>
-                    )}
-                />
-                {errors.repeatOn && <span className="text-red-500">{errors.repeatOn.message}</span>}
+                <div className='flex gap-2'>
+                    {daysOfWeek.map((day) => (
+                        <Controller
+                            key={day.value}
+                            name="repeatOn"
+                            control={control}
+                            render={({ field }) => (
+                                <div className={`flex items-center space-x-2 ${inter.className}`}>
+                                    <Checkbox
+                                        id={day.value}
+                                        checked={field.value.includes(day.value)}
+                                        onCheckedChange={(checked) => {
+                                            if (checked) {
+                                                field.onChange([...field.value, day.value]);
+                                            } else {
+                                                field.onChange(field.value.filter((v: string) => v !== day.value));
+                                            }
+                                        }}
+                                    />
+                                    <Label htmlFor={day.value}>{day.label}</Label>
+                                </div>
+                            )}
+                        />
+                    ))}
+                </div>
             </div>
-
             {/* Event ends */}
             <div className='flex flex-col gap-[5px]'>
                 <Label className={`${inter.className} text-base`}>Events Ends</Label>

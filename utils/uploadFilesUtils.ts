@@ -1,6 +1,19 @@
 import axios from 'axios';
 
-export async function uploadImage(file: File, eventId: string, token: string) {
+interface ApiResponseUpload {
+  success: boolean;
+  statusCode: string;
+  data?: UploadData;
+  error?: any;
+}
+
+interface UploadData {
+  url: string;
+  signedurl: string;
+}
+
+
+export async function uploadImage(file: File, eventId: string, token: string): Promise<ApiResponseUpload> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload/image";
 
@@ -16,21 +29,23 @@ export async function uploadImage(file: File, eventId: string, token: string) {
       },
     });
 
-    const res = {
-      status: 'success',
-      data: response.data,
+    const res: ApiResponseUpload = {
+      success: true,
+      statusCode: 'success upload',
+      data: response.data.data as UploadData,
     };
     return res;
   } catch (error: any) {
-    const res = {
-      status: 'error',
+    const res: ApiResponseUpload = {
+      success: false,
+      statusCode: 'error',
       error: error,
     };
     return res;
   }
 }
 
-export async function uploadVideo(file: File, eventId: string, token: string) {
+export async function uploadVideo(file: File, eventId: string, token: string): Promise<ApiResponseUpload> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload/video";
 
@@ -46,14 +61,16 @@ export async function uploadVideo(file: File, eventId: string, token: string) {
       },
     });
 
-    const res = {
-      status: 'success',
-      data: response.data,
+    const res: ApiResponseUpload = {
+      success: true,
+      statusCode: 'success upload',
+      data: response.data.data as UploadData,
     };
     return res;
   } catch (error: any) {
-    const res = {
-      status: 'error',
+    const res: ApiResponseUpload = {
+      success: false,
+      statusCode: 'error',
       error: error,
     };
     return res;

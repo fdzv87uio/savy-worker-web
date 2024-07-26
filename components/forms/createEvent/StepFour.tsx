@@ -15,6 +15,8 @@ import { createEvent, updateEvent } from '@/utils/eventsUtils'
 import { eventNames, title } from "process";
 import { description } from "platform";
 import { getProfile } from "@/utils/profileUtils";
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,20 +41,23 @@ export default function StepFour() {
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [objectURLs, setObjectURLs] = useState<Map<string, string>>(new Map());
     const [isUploading, setIsUploading] = useState(false);
+    const [isGettingUserInfo, setIsGettingUserInfo] = useState(false);
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
     const [eventId, setEventId] = useState("");
+    const router = useRouter();
 
     const token = getCookie('curcle-auth-token') as string;
     const { inputs, setInputs } = createEventFormStore();
 
     useEffect(() => {
         async function getUserInfo(token: string) {
+            setIsGettingUserInfo(true)
             const res: any = await getProfile(token);
-            console.log(res)
             if (res && res.status === "success") {
                 setUserId(res.data.id);
                 setUserName(res.data.name)
+                setIsGettingUserInfo(false)
             }
         }
         getUserInfo(token);
@@ -151,43 +156,73 @@ export default function StepFour() {
             };
 
             const resCreateEvent = await createEvent(eventData, token);
-            const newEventId = resCreateEvent.data._id;
 
-            // Subir Fotos y obtener URLs
-            const uploadImagePromises = images.map(async (image) => {
-                if (image.file) {
-                    const resUploadImage = await uploadImage(image.file, newEventId, token);
-                    urlsImages.push(resUploadImage.data.data.url);
-                }
-            });
+            if (!resCreateEvent.success) {
+                const errorMsg = resCreateEvent.error.response?.data?.message || 'Invalid Credentials';
+                throw new Error(errorMsg);
+            }
 
-            // Subir Videos y obtener URLs
-            const uploadVideoPromises = uploadedFiles.map(async (video) => {
-                const resUploadVideo = await uploadVideo(video, newEventId, token);
-                urlsVideos.push(resUploadVideo.data.data.url); // Asume que la respuesta contiene la URL del video subido
-            });
+            const newEventId = resCreateEvent.data && resCreateEvent.data._id;
 
-            await Promise.all([...uploadImagePromises, ...uploadVideoPromises]);
+            if (newEventId) {
+                // Subir Fotos y obtener URLs
+                const uploadImagePromises = images.map(async (image) => {
+                    if (image.file) {
+                        const resUploadImage = await uploadImage(image.file, newEventId, token);
 
-            // Actualizar evento con las URLs de las imágenes y videos
-            const eventDataUpdated = {
-                ...eventData,
-                images: urlsImages,
-                videos: urlsVideos,
-            };
+                        if (!resUploadImage.success) {
+                            const errorMsg = resUploadImage.error.response?.data?.message || 'Failed to upload image';
+                            throw new Error(errorMsg);
+                        }
+                        if (resUploadImage.data && resUploadImage.data.signedurl) {
+                            urlsImages.push(resUploadImage.data.signedurl);
+                        }
+                    }
+                });
 
-            const resUpdateEvent = await updateEvent(newEventId, eventDataUpdated, token);
-            console.log("res", resUpdateEvent);
+                // Subir Videos y obtener URLs
+                const uploadVideoPromises = uploadedFiles.map(async (video) => {
+                    const resUploadVideo = await uploadVideo(video, newEventId, token);
+                    if (!resUploadVideo.success) {
+                        const errorMsg = resUploadVideo.error?.response?.data?.message || 'Failed to upload video';
+                        throw new Error(errorMsg);
+                    }
+                    if (resUploadVideo.data && resUploadVideo.data.signedurl) {
+                        urlsVideos.push(resUploadVideo.data.signedurl);
+                    }
+                });
 
-            // Finalizar proceso de subida
-            setIsUploading(false);
+                await Promise.all([...uploadImagePromises, ...uploadVideoPromises]);
 
-            // Actualizar estado de inputs si es necesario
-            const updatedData = { ...inputs, progress: 100 };
-            setInputs(updatedData);
+                // Actualizar evento con las URLs de las imágenes y videos
+                const eventDataUpdated = {
+                    ...eventData,
+                    images: urlsImages,
+                    videos: urlsVideos,
+                };
+
+                const resUpdateEvent = await updateEvent(newEventId, eventDataUpdated, token);
+                console.log("res", resUpdateEvent);
+
+                setIsUploading(false);
+                toast.success("Event Create Success");
+                const updatedData = { progress: 100 };
+                setInputs(updatedData);
+                router.push('/events/my-events');
+                const updatedData2 = { step: 1, progress: 10 };
+                setInputs(updatedData2);
+            }
+
+
+
         } catch (error) {
-            console.error('Error en onSubmit:', error);
-            setIsUploading(false); // Asegúrate de manejar los errores correctamente
+            if (error instanceof Error) {
+                const errorMsg = error.message || 'Error uploading event';
+                toast.error("Error: " + errorMsg);
+            } else {
+                toast.error("An unknown error occurred");
+            }
+            setIsUploading(false);
         }
     };
 
@@ -270,11 +305,12 @@ export default function StepFour() {
             </div>
 
             <div className='w-full flex flex-row justify-between'>
-                <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
+                <Button disabled={isUploading || isGettingUserInfo} variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
                     Back
                 </Button>
-                <Button type="submit" variant="primary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="primary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
                     Next
+                    {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                 </Button>
             </div>
         </form>

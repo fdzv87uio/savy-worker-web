@@ -58,8 +58,6 @@ export default function StepThree() {
             const allPrefs: any = await getAllPreferencesByCategory();
             const allPrefsList: any = await getAllPreferences();
             if (allPrefs?.status === "success" && allPrefsList?.status === "success") {
-                console.log("prefs:");
-                console.log(allPrefs.data);
                 setPrefOptions(allPrefs.data);
                 const keysArray = Object.keys(allPrefs.data);
                 setCategories(keysArray);
@@ -69,7 +67,6 @@ export default function StepThree() {
     }, [])
 
     const handlePreferenceClick = (preference: string, id: string) => {
-        console.log(preference, id)
         // Clonar el array actual de preferencias para trabajar con una copia
         let updatedPrefs = [...currentPrefs];
         let updatedPrefsIds = [...currentPrefsIds];

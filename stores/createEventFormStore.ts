@@ -17,7 +17,7 @@ type Inputs = {
   frequency?: string;
   repeatNumber?: number;
   repeatType?: string;
-  repeatOn?: string;
+  repeatOn?: string[];
   eventEnds?: string;
   datePick?: Date;
   ocurrences?: number;
@@ -51,7 +51,7 @@ export const createEventFormStore = create<InputsStore>((set) => ({
     frequency: '',
     repeatNumber: 0,
     repeatType: '',
-    repeatOn: '',
+    repeatOn: [''],
     eventEnds: '',
     datePick: new Date(),
     ocurrences: 2,
