@@ -19,9 +19,9 @@ const CreateEvent = () => {
       <Image
         src="/images/vector7.2.svg"
         alt="Ellipse"
-        width={800}
-        height={429}
-        className="hidden xl:flex absolute top-[0px] left-[850px] object-cover blur-xl"
+        width={400}
+        height={229}
+        className="hidden xl:flex absolute top-[30px] left-[650px] object-cover blur-xl w-[400px] h-[229px]"
       />
       <div className="flex flex-col xl:flex-row justify-center items-center gap-5 md:gap-x-36 text-white-1 mt-10 md:mt-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[850px] z-10 ">
         <div className='flex'>
