@@ -19,9 +19,9 @@ const Footer = () => {
             <p>Privacy Policy</p>
           </div>
           <div className='flex gap-3 text-white-2'>
-            <Image src="/icons/facebook.svg" alt='icon' width={5} height={8} />
-            <Image src="/icons/twitter.svg" alt='icon' width={8} height={8} />
-            <Image src="/icons/instagram.svg" alt='icon' width={8} height={8} />
+            <Image src="/icons/facebook.svg" alt='icon' width={5} height={8} className='w-[5px] h-[8px]' />
+            <Image src="/icons/twitter.svg" alt='icon' width={8} height={8} className='w-[8px] h-[8px]' />
+            <Image src="/icons/instagram.svg" alt='icon' width={8} height={8} className='w-[8px] h-[8px]' />
           </div>
         </div>
         <div className='hidden xl:flex gap-2 items-center max-w-[198px] w-full justify-between'>

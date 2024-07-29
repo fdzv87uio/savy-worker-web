@@ -39,11 +39,11 @@ export function NavigationMenuTop({ name }: { name: string }) {
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger>
-          <Button variant="primary" size="sm" className='uppercase text-sm font-normal gap-3'>
+          <div className='uppercase gap-3 border inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-xl px-3 border-b-4 bg-primary-1 text-white-1 hover:bg-primary-1/90 border-primary-2'>
             <Image src="/images/user-icon.png" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
             {name}
-            <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} />
-          </Button>
+            <Image src="/icons/arrowUp.svg" alt="arrowUp" width={24} height={24} className="rotate-180"/>
+          </div>
         </MenubarTrigger>
         <MenubarContent className={`text-base ${audiowide.className} text-white-1 bg-slate-800 mt-5 p-3`}>
           {/* <Link href="/profile">

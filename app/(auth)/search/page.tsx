@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import CustomDropdown from '@/components/ui/customDropdown';
+import ScheduledEventCard from '@/components/ui/ScheduledEventCard';
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -157,34 +158,11 @@ const Page = () => {
                             </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center gap-4 mt-20">
-                            {events.length > 0 && events.map((event: any) => (
-                                <div key={event._id} className="bg-white rounded-lg shadow-lg w-[350px] md:w-[371px] h-[457px] relative border border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10">
-                                    <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 w-[350px] md:w-[371px] h-[457px]">
-                                    </div>
-                                    <div className='absolute top-0 left-0'>
-                                        <Image src={'/images/basketball.png'} alt={event.title} width={371} height={236} className="h-[236px] object-cover rounded-lg" />
-                                        <div className="p-4 flex flex-col mt-5">
-                                            <h3 className="text-white-1 text-xl md:text-2xl">{event.title}</h3>
-                                            <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>Date: {event.date}</p>
-                                            <div className='flex items-center gap-2'>
-                                                <Image src="/icons/star2.svg" alt="start" width={18} height={18} />
-                                                <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>{event.guestList.length} Guests</p>
-                                            </div>
-                                            <div className='flex gap-[10px]'>
-                                                {event.preferenceListIds.map((y: any, key: number) => {
-                                                    return (
-                                                        <div key={`pref_${key}`} className='bg-primary-1 px-3 rounded-full'>
-                                                            <p className={`text-white-1 text-base md:text-lg  ${inter.className}`}>
-                                                                {getPreferenceName(allPrefs, y)}
-                                                            </p>
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                            {events.length > 0 && events.map((event: any, key: number) => {
+                                return (
+                                    <ScheduledEventCard key={`item_${key}`} allPrefs={allPrefs} event={event} />
+                                )
+                            })}
                         </div>
                         {events.length === 0 && (
                             <div className='w-full h-auto mt-[5px] text-xl text-[#ffffff] flex flex-col items-center font-normal'>
