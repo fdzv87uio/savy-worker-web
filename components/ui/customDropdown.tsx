@@ -93,7 +93,7 @@ export default function CustomDropdown({ label, handleChange, options, type }: C
                             <Input type="date" value={fromDate} onChange={(e: any) => { setFromDate(e.target.value) }} />
                         </div>
                         <div className="flex flex-row gap-2 h-[30px] items-center">
-                            <span>From:</span>
+                            <span>To:</span>
                             <Input type="date" value={toDate} onChange={(e: any) => { setToDate(e.target.value) }} />
                         </div>
                         <DropdownMenuItem className="h-[30px]">
