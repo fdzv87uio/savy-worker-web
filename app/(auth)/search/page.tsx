@@ -218,11 +218,11 @@ const Page = () => {
     }
 
     return (
-        <div className='flex flex-col justify-center items-center relative overflow-visible'>
+        <div className='flex flex-col justify-center items-center relative  overflow-visible'>
             {!loading && (
                 <>
                     {/* Background Images */}
-                    <div className='w-screen h-auto relative top-0 left-0 overflow-y-hidden z-[10]'>
+                    <div className='w-screen h-auto relative top-0 left-0 overflow-hidden z-[10]'>
                         <Image
                             src="/images/vector1.svg"
                             alt="Ellipse"
