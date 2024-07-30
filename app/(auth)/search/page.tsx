@@ -9,10 +9,13 @@ import CustomDropdown from '@/components/ui/customDropdown';
 import ScheduledEventCard from '@/components/ui/scheduledEventCard';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 const inter = Inter({ subsets: ["latin"] });
 
 
 const Page = () => {
+    const searchParams = useSearchParams()
+    const search = searchParams.get('query')
     const [loading, setLoading] = useState(true);
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
@@ -24,6 +27,7 @@ const Page = () => {
     const [cityFilters, setCityFilters] = useState<any>([]);
     const [dates, setDates] = useState<any>([]);
     const [dateFilters, setDateFilters] = useState<any>([]);
+
 
     useEffect(() => {
         if (events.length === 0) {
@@ -37,7 +41,6 @@ const Page = () => {
         if (res && res.status === "success" && res2 && res2.status === "success") {
             const allEvents = res.data;
             setEvents(allEvents);
-            setFilteredEvents(allEvents);
             setAllPrefs(res2.data);
             // get app possible preference codes, cities and dates
             let prefSet = new Set();
@@ -64,6 +67,13 @@ const Page = () => {
             setPreferences(prefNameArray);
             setCities(cityArray);
             setDates(dateArray);
+            // get query param and search
+            if (search && search !== "") {
+                setQuery(search);
+                filterDataByQuery(search, allEvents);
+            } else {
+                setFilteredEvents(allEvents);
+            }
             setLoading(false);
 
         }
@@ -73,10 +83,11 @@ const Page = () => {
         filterDataByQuery();
     }, [query])
 
+
     //Filter Data By Query
-    function filterDataByQuery() {
+    function filterDataByQuery(param?: string, data?: any) {
         let resultIdSet = new Set();
-        if (query) {
+        if (query && !param && !data) {
             const queryLen = query.length;
             filteredEvents.forEach((x: any) => {
                 // Filter by title substring match
@@ -101,6 +112,30 @@ const Page = () => {
             console.log(filteredResults);
             setFilteredEvents(filteredResults);
 
+        } else if (param && data) {
+            const queryLen = param.length;
+            data.forEach((x: any) => {
+                // Filter by title substring match
+                const titleSubString = x.title.slice(0, queryLen);
+                if (param.toLocaleLowerCase() === titleSubString.toLocaleLowerCase()) {
+                    resultIdSet.add(x._id);
+                }
+                // Filter by location
+                const locationSubString = x.city.slice(0, queryLen);
+                if (param.toLocaleLowerCase() === locationSubString.toLocaleLowerCase()) {
+                    resultIdSet.add(x._id);
+                }
+                // Filter by Event ID
+                const idSubString = x._id.slice(0, queryLen);
+                if (param === idSubString) {
+                    resultIdSet.add(x._id);
+                }
+            })
+            const resultIdArray = Array.from(resultIdSet);
+            const filteredResults = data.filter((x: any) => resultIdArray.includes(x._id));
+            console.log('filtered results:');
+            console.log(filteredResults);
+            setFilteredEvents(filteredResults);
         } else {
             setFilteredEvents(events);
         }
@@ -140,8 +175,10 @@ const Page = () => {
                 events.forEach((x: any) => {
                     // filter by date filter
                     const currentDate = x.startDate.split("T")[0];
-                    const includesElement = dateFilters.includes(currentDate);
-                    if (includesElement) {
+                    const currentTime = new Date(currentDate).getTime();
+                    const lowerDate = new Date(dateFilters[0]).getTime();
+                    const upperDate = new Date(dateFilters[1]).getTime();
+                    if (currentTime >= lowerDate && currentTime <= upperDate) {
                         resultIdSet.add(x._id);
                     }
                 })
@@ -171,8 +208,10 @@ const Page = () => {
                     })
                     const includesPref = x.preferenceListIds.some((element: any) => prefIds.includes(element))
                     const currentDate = x.startDate.split("T")[0];
-                    const includesDate = dateFilters.includes(currentDate);
-                    if (includesPref && includesDate) {
+                    const currentTime = new Date(currentDate).getTime();
+                    const lowerDate = new Date(dateFilters[0]).getTime();
+                    const upperDate = new Date(dateFilters[1]).getTime();
+                    if (includesPref && currentTime >= lowerDate && currentTime <= upperDate) {
                         resultIdSet.add(x._id);
                     }
                 })
@@ -183,8 +222,10 @@ const Page = () => {
                     // filter by preference filter
                     const includesCity = cityFilters.includes(x.city);
                     const currentDate = x.startDate.split("T")[0];
-                    const includesDate = dateFilters.includes(currentDate);
-                    if (includesCity && includesDate) {
+                    const currentTime = new Date(currentDate).getTime();
+                    const lowerDate = new Date(dateFilters[0]).getTime();
+                    const upperDate = new Date(dateFilters[1]).getTime();
+                    if (includesCity && currentTime >= lowerDate && currentTime <= upperDate) {
                         resultIdSet.add(x._id);
                     }
                 })
@@ -198,10 +239,12 @@ const Page = () => {
                         prefIds.push(getPreferenceId(allPrefs, y));
                     })
                     const includesPref = x.preferenceListIds.some((element: any) => prefIds.includes(element))
-                    const currentDate = x.startDate.split("T")[0];
                     const includesCity = cityFilters.includes(x.city);
-                    const includesDate = dateFilters.includes(currentDate);
-                    if (includesPref && includesDate && includesCity) {
+                    const currentDate = x.startDate.split("T")[0];
+                    const currentTime = new Date(currentDate).getTime();
+                    const lowerDate = new Date(dateFilters[0]).getTime();
+                    const upperDate = new Date(dateFilters[1]).getTime();
+                    if (includesPref && includesCity && currentTime >= lowerDate && currentTime <= upperDate) {
                         resultIdSet.add(x._id);
                     }
                 })
@@ -253,7 +296,7 @@ const Page = () => {
                         />
                         <MaxWidthWrapper className='px-16 overflow-visible'>
                             <div className='w-full flex flex-col mt-14 z-10 justify-center items-center mb-32 z-[20]'>
-                                <h2 className='text-white-1 text-3xl md:text-4xl mb-8 text-center'>Your Event Matches</h2>
+                                <h2 className='text-white-1 text-3xl md:text-4xl mb-8 text-center'>Your Event Matches {search ? `For: "${search}"` : ""}</h2>
                                 {/* Search Bar */}
                                 <div className='min-w-full h-auto grid grid-cols-4 gap-10'>
                                     <div className='w-full h-auto relative'>
@@ -262,7 +305,7 @@ const Page = () => {
                                     </div>
                                     <CustomDropdown options={preferences} label={"preferences"} handleChange={setPrefFilters} type={"default"} />
                                     <CustomDropdown options={cities} label={"city"} handleChange={setCityFilters} type={"default"} />
-                                    <CustomDropdown options={dates} label={"date"} handleChange={setDateFilters} type={"date"} />
+                                    <CustomDropdown label={"date"} handleChange={setDateFilters} type={"date"} />
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center gap-4 mt-14">
                                     {filteredEvents.length > 0 && filteredEvents.map((event: any, key: number) => {
