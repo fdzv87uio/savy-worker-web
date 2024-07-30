@@ -89,11 +89,11 @@ export default function CustomDropdown({ label, handleChange, options, type }: C
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className={`${inter.className} w-60 bg-[#030614] px-3 py-4 text-[#ffffff] border-[2px] sshadow-[0_64px_64px_-32px_rgba(41, 15, 0, 0.56)] flex flex-col items-left gap-5`}>
                         <div className="flex flex-row gap-2 h-[30px] items-center">
-                            <span>From:</span>
+                            <span className="w-[60px]">From:</span>
                             <Input type="date" value={fromDate} onChange={(e: any) => { setFromDate(e.target.value) }} />
                         </div>
                         <div className="flex flex-row gap-2 h-[30px] items-center">
-                            <span>To:</span>
+                            <span className="w-[60px]">To:</span>
                             <Input type="date" value={toDate} onChange={(e: any) => { setToDate(e.target.value) }} />
                         </div>
                         <DropdownMenuItem className="h-[30px]">
