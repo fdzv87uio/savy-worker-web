@@ -1,6 +1,5 @@
-"use client"
 import { useEffect, useState } from "react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,33 +9,33 @@ interface CustomDropdownProps {
     handleChange: any;
     options: string[];
     type: string;
-    filterValue: string;
 }
 
-export default function CustomDropdown({ label, handleChange, options, type, filterValue }: CustomDropdownProps) {
-    const [selected, setSelected] = useState("");
-
+export default function CustomDropdown({ label, handleChange, options, type }: CustomDropdownProps) {
+    const [selected, setSelected] = useState<any[]>([]);
     function handleSelection(value: string) {
-        setSelected(value);
-        handleChange(label, value);
+        setSelected(prev => [...prev, value]);
+    }
+    function handleDeselection(value: string) {
+        const current: any = selected;
+        const newState = current.filter((x: any) => x !== value);
+        setSelected(newState)
     }
 
     useEffect(() => {
-        if (filterValue !== selected) {
-            setSelected("");
-        }
-    }, [filterValue])
+        handleChange(selected)
+    }, [selected])
+
+
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className={`h-full placeholder-[#ffffff] pl-3 py-1.5 pr-2 w-full z-[90] h-[36px] hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] focus:outline focus:outline-offset-2 focus:outline-2 focus:outline-[#ffffff] focus:border-[#32A852]  bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] text-sm flex flex-row justify-between items-center`}>
-                {!selected && (
+            <DropdownMenuTrigger className={`placeholder-[#ffffff] pl-3 py-1.5 pr-2 w-full z-[90] h-[45px] hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] focus:outline focus:outline-offset-2 focus:outline-2 focus:outline-[#ffffff] focus:border-[#32A852]  bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] text-sm flex flex-row justify-between items-center`}>
+                {selected.length === 0 && (
                     <span className={`${inter.className}`}>{`Select ${label}`}</span>
                 )}
-                {selected && (
-                    <div className="flex flex-row justify-between gap-2 items-center bg-primary-1 rounded-xl px-3">
-                        <span className={`${inter.className}`}>{selected}</span>
-                    </div>
+                {selected.length > 0 && (
+                    <span className={`${inter.className}`}>{selected.length} selected</span>
                 )}
 
                 {type === "default" && (
@@ -47,11 +46,20 @@ export default function CustomDropdown({ label, handleChange, options, type, fil
                 )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className={`${inter.className} w-52 bg-yellow-100`}>
-                {options.map((x: any, key: number) => {
-                    return (
-                        <DropdownMenuItem onClick={() => handleSelection(x)} key={`option_${key}`}>{x}</DropdownMenuItem>
-                    )
+                {options.length && options.map((x: any, key: number) => {
+                    if (selected.includes(x)) {
+                        return (
+                            <DropdownMenuCheckboxItem checked={true} onClick={() => handleDeselection(x)} key={`option_${key + label}_selected`}>{x}</DropdownMenuCheckboxItem>
+                        )
+                    } else {
+                        return (
+                            <DropdownMenuCheckboxItem checked={false} onClick={() => handleSelection(x)} key={`option_${key + label}_not_selected`}>{x}</DropdownMenuCheckboxItem>
+                        )
+                    }
                 })}
+                {options.length === 0 && (
+                    <p>No Options Available</p>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     )

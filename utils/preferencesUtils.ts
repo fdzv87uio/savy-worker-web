@@ -59,3 +59,10 @@ export function getPreferenceName(preferences: any[], id: string) {
         return filter.name;
     }
 }
+
+export function getPreferenceId(preferences: any[], name: string) {
+    if (preferences) {
+        const filter = preferences.filter((x: any) => x.name === name)[0];
+        return filter._id;
+    }
+}

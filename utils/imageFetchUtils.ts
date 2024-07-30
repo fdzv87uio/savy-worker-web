@@ -2,9 +2,13 @@ import axios from "axios";
 
 export async function getSignedImageUrl(url: string) {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload/" + url;
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload/url";
 
-        const response = await axios.get(apiUrl, {
+        const body = {
+            url: url
+        };
+
+        const response = await axios.post(apiUrl, body, {
             headers: {
                 'Content-Type': 'application/json', // Ajusta el tipo de contenido según tus necesidades
             },
