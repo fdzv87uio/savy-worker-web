@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { getAllEvents } from '@/utils/eventsUtils';
 import { getAllPreferences, getPreferenceId, getPreferenceName } from '@/utils/preferencesUtils';
 import { Inter } from "next/font/google";
@@ -14,8 +14,16 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 const Page = () => {
+    return (
+        <Suspense>
+            <Content />
+        </Suspense>
+    )
+}
+
+const Content = () => {
     const searchParams = useSearchParams()
-    const search = searchParams.get('query')
+    const search = searchParams.get('search')
     const [loading, setLoading] = useState(true);
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);

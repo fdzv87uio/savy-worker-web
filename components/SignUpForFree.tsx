@@ -224,7 +224,7 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
               <div className='flex flex-col gap-3 mt-3'>
                 <Input value={query} type='text' onChange={(e: any) => setQuery(e.target.value)} placeholder={'Search'} />
                 <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Search by name or preference</p>
-                <Button disabled={!query} onClick={() => router.push(`/search?query=${query}`)} variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
+                <Button disabled={!query} onClick={() => router.push(`/search?search=${query}`)} variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
                   Search
                 </Button>
               </div>
