@@ -83,36 +83,37 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
     <>
       {!loading && event && signedUrls.length > 0 && (
 
-        <div className='flex flex-col justify-center items-center relative'>
-          <Image
-            src="/images/vector7.2.svg"
-            alt="Ellipse"
-            width={600}
-            height={429}
-            className="hidden xl:flex absolute top-[30px] left-[650px] object-cover blur-xl w-[600px] h-[429px]"
-          />
-          <Image
-            src="/images/vector7.svg"
-            alt="Ellipse"
-            width={400}
-            height={229}
-            className="hidden xl:flex absolute top-[900px] left-[-60px] object-cover blur-xl w-[400px] h-[229px]"
-          />
-          <Image
-            src="/images/vector2.svg"
-            alt="Ellipse"
-            width={600}
-            height={600}
-            className="hidden xl:flex absolute top-[900px] left-[60px] object-cover blur-xl w-[600px] h-[600px]"
-          />
-          <Image
-            src="/images/vector3.svg"
-            alt="Ellipse"
-            width={400}
-            height={229}
-            className="hidden xl:flex absolute top-[900px] right-[0px] object-cover blur-xl w-[400px] h-[229px]"
-          />
-          <MaxWidthWrapper>
+        <MaxWidthWrapper className='oveflow-visible'>
+          <div className='flex flex-col oveflow-visible justify-center items-center relative'>
+            <Image
+              src="/images/vector7.2.svg"
+              alt="Ellipse"
+              width={600}
+              height={429}
+              className="hidden xl:flex absolute top-[30px] left-[650px] object-cover blur-xl w-[600px] h-[429px]"
+            />
+            <Image
+              src="/images/vector7.svg"
+              alt="Ellipse"
+              width={400}
+              height={229}
+              className="hidden xl:flex absolute top-[900px] left-[-60px] object-cover blur-xl w-[400px] h-[229px]"
+            />
+            <Image
+              src="/images/vector2.svg"
+              alt="Ellipse"
+              width={600}
+              height={600}
+              className="hidden xl:flex absolute top-[900px] left-[60px] object-cover blur-xl w-[600px] h-[600px]"
+            />
+            <Image
+              src="/images/vector3.svg"
+              alt="Ellipse"
+              width={400}
+              height={229}
+              className="hidden xl:flex absolute top-[900px] right-[0px] object-cover blur-xl w-[400px] h-[229px]"
+            />
+
             <div className='w-full h-auto grid grid-cols-2 z-[20]'>
               <div className='w-full col-span-1 flex flex-col items-left mt-16 gap-6'>
                 <h2 className="text-[#ffffff] text-2xl md:text-5xl font-normal text-center md:text-start">{event.title}</h2>
@@ -233,8 +234,9 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                 </div>
               </div>
             </div>
-          </MaxWidthWrapper>
-        </div>
+
+          </div >
+        </MaxWidthWrapper>
 
       )}
     </>
