@@ -307,7 +307,7 @@ const Content = () => {
                                 <h2 className='text-white-1 text-3xl md:text-4xl mb-8 text-center'>Your Event Matches {search ? `For: "${search}"` : ""}</h2>
                                 {/* Search Bar */}
                                 <div className='min-w-full h-auto flex flex-col items-center gap-3 md:grid md:grid-cols-4 md:gap-10'>
-                                    <Input placeholder='Search' className='h-[45px]' type='text' value={query} onChange={(e: any) => setQuery(e.target.value)} />
+                                    <Input placeholder='Search' className='h-[45px]' type='search' value={query} onChange={(e: any) => setQuery(e.target.value)} />
                                     <CustomDropdown options={preferences} label={"preferences"} handleChange={setPrefFilters} type={"default"} />
                                     <CustomDropdown options={cities} label={"city"} handleChange={setCityFilters} type={"default"} />
                                     <CustomDropdown label={"date"} handleChange={setDateFilters} type={"date"} />
