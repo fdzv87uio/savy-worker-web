@@ -24,7 +24,7 @@ const SideBar = () => {
     if (token && userEmail) {
       getUserInfo(userEmail, token);
     }
-  }, []); // Solo ejecuta una vez al montar el componente
+  }, []);
 
   // Get User info
   async function getUserInfo(email: string, token: string) {

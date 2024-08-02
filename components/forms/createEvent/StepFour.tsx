@@ -130,9 +130,9 @@ export default function StepFour() {
 
             const eventData = {
                 title: inputs.title,
-                slug: "-",
+                // slug: "-",
                 description: inputs.description,
-                url: "-",
+                // url: "-",
                 eventType: inputs.eventType,
                 eventMode: inputs.mode,
                 startDate: inputs.startDate?.toISOString(),
