@@ -222,19 +222,19 @@ const SignIn = () => {
 
   return (
     <div className='w-full bg-[#030614]  relative overflow-x-hidden overflow-hidden'>
-      <div className='w-[100vw]'>
-        <div className='pt-[40px] h-[110vh] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col gap-[40px] xl:gap-[100px]'>
+      <div className='w-full md:w-[100vw]'>
+        <div className='pt-[40px] h-[110vh] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col items-center gap-[40px] xl:gap-[100px]'>
 
           {/* Standard Login */}
-          <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
+          <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-[350px] md:w-[80vw]  xl:w-full '>
             <div className='w-full flex flex-col xl:items-left xl:w-[50vw] gap-5'>
-              <h1 className='text-xl xl:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Log In</h1>
-              <p className={`text-[#ffffff] text-base xl:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Join exciting sporting events and meetings with gamers</p>
+              <h1 className='text-2xl md:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Log In</h1>
+              <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Join exciting sporting events and meetings with gamers</p>
             </div>
             <div
               style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
               className='w-full xl:w-[50vw] h-auto overflow-hidden border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10 relative'>
-              <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[300px] left-0 z-[1]' />
+              <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[330px] left-0 z-[1]' />
               <div className='w-full flex flex-col h-auto pt-[46px] pb-7 xl:pb-[49px] pl-[21px] pr-[21px] xl:pr-[60px] z-[90] gap-[20px]'>
                 <form className='w-full flex flex-col h-auto z-[90] gap-[20px]' onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex flex-col items-left gap-[5px]">
