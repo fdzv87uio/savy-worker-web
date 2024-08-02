@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { getPreferenceName } from "@/utils/preferencesUtils";
 import { useEffect, useState } from "react";
 import { getSignedImageUrl } from "@/utils/imageFetchUtils";
+import { useRouter } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 interface ScheduledEventCardProps {
@@ -15,6 +16,7 @@ interface ScheduledEventCardProps {
 
 export default function ScheduledEventCard({ event, allPrefs }: ScheduledEventCardProps) {
     const [signedUrl, setSignedUrl] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
         if (!signedUrl) {
@@ -37,10 +39,10 @@ export default function ScheduledEventCard({ event, allPrefs }: ScheduledEventCa
             </div>
             <div className='absolute top-0 left-0'>
                 {signedUrl && (
-                    <img src={signedUrl} alt={""} width={371} height={236} className="h-[236px] object-cover rounded-lg" />
+                    <img onClick={() => router.push(`/event/${event.slug}`)} src={signedUrl} alt={""} width={371} height={236} className="h-[236px] cursor-pointer object-cover rounded-lg" />
                 )}
                 <div className="p-4 flex flex-col mt-5">
-                    <h3 className="text-white-1 text-xl md:text-2xl">{event.title}</h3>
+                    <h3 onClick={() => router.push(`/event/${event.slug}`)} className="cursor-pointer text-white-1 hover:underline hover:text-primary-1 text-xl md:text-2xl">{event.title}</h3>
                     <p className={`text-white-1 text-base md:text-lg ${inter.className}`}>Date: {event.startDate.split("T")[0]}</p>
                     <div className='flex items-center gap-2'>
                         <Image src="/icons/star2.svg" alt="start" width={18} height={18} />

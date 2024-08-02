@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { getSignedImageUrl } from "@/utils/imageFetchUtils";
+import { useRouter } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 interface RecommendedEventCardProps {
@@ -11,6 +12,7 @@ interface RecommendedEventCardProps {
 
 export default function RecommendedEventCard({ event, isUser }: RecommendedEventCardProps) {
     const [signedUrl, setSignedUrl] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
         if (!signedUrl) {
@@ -31,7 +33,7 @@ export default function RecommendedEventCard({ event, isUser }: RecommendedEvent
         <div key={event.id} className="min-h-[407px] w-[350px] md:w-[359px] bg-white-1 rounded-xl overflow-hidden shadow-xl transform transition-all hover:scale-105">
             <div className="relative">
                 {signedUrl && (
-                    <img src={signedUrl} alt={event.title} className="w-full h-64 bg-black object-cover rounded-xl" />
+                    <img onClick={() => router.push(`/event/${event.slug}`)} src={signedUrl} alt={event.title} className="w-full h-64 bg-black cursor-pointer object-cover rounded-xl" />
                 )}
                 <div className="absolute bottom-[-30px] left-0 bg-green-600 p-2 rounded-full m-4">
                     {/* <img src={getIcon(event.categoryList)} alt={event.title} className="w-6 h-6" /> */}
@@ -39,7 +41,7 @@ export default function RecommendedEventCard({ event, isUser }: RecommendedEvent
             </div>
             <div className="p-4">
                 <div className="relative mb-4">
-                    <div className="bg-secondary-1 py-2 px-4 transform -skew-x-12 shadow-custom-primary">
+                    <div onClick={() => router.push(`/event/${event.slug}`)} className="cursor-pointer bg-secondary-1 py-2 px-4 transform -skew-x-12 shadow-custom-primary">
                         <h3 className="text-xl md:text-2xl text-center transform  skew-x-12 text-white-1">{event.title}</h3>
                     </div>
                 </div>

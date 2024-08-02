@@ -302,15 +302,12 @@ const Content = () => {
                             height={364}
                             className="hidden xl:flex absolute top-[1750px] md:left-[1000px] object-cover blur-md"
                         />
-                        <MaxWidthWrapper className='px-16 overflow-visible'>
-                            <div className='w-full flex flex-col mt-14 z-10 justify-center items-center mb-32 z-[20]'>
+                        <MaxWidthWrapper className='px-5 md:px-16 overflow-visible'>
+                            <div className='w-full flex flex-col mt-5 md:mt-14 z-10 justify-center items-center mb-32 z-[20]'>
                                 <h2 className='text-white-1 text-3xl md:text-4xl mb-8 text-center'>Your Event Matches {search ? `For: "${search}"` : ""}</h2>
                                 {/* Search Bar */}
-                                <div className='min-w-full h-auto grid grid-cols-4 gap-10'>
-                                    <div className='w-full h-auto relative'>
-                                        <Input placeholder='Search' className='h-[45px] absolute top-0' type='text' value={query} onChange={(e: any) => setQuery(e.target.value)} />
-                                        <img src={"/icons/search.svg"} alt="" width={17} height={17} className='absolute top-3.5 right-4' />
-                                    </div>
+                                <div className='min-w-full h-auto flex flex-col items-center gap-3 md:grid md:grid-cols-4 md:gap-10'>
+                                    <Input placeholder='Search' className='h-[45px]' type='text' value={query} onChange={(e: any) => setQuery(e.target.value)} />
                                     <CustomDropdown options={preferences} label={"preferences"} handleChange={setPrefFilters} type={"default"} />
                                     <CustomDropdown options={cities} label={"city"} handleChange={setCityFilters} type={"default"} />
                                     <CustomDropdown label={"date"} handleChange={setDateFilters} type={"date"} />
