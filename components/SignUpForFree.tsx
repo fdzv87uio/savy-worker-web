@@ -30,6 +30,7 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
   const [ip, setIp] = useState('');
   const [transactionData, setTransactionData] = useState<any>({});
   const router = useRouter();
+  const [query, setQuery] = useState("");
 
   // Effect to retrieve IP Address
   useEffect(() => {
@@ -218,12 +219,12 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
             <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 h-[400px] md:h-[331px]">
             </div>
             <div className='absolute w-[350px] md:w-[543px] md:h-[331px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
-              <h1 className='text-3xl md:text-4xl'>Join an Event</h1>
-              <h3 className={`text-xl md:text-2xl ${inter.className}`}>Fill in the details to join an event</h3>
+              <h1 className='text-3xl md:text-4xl'>Find an Event</h1>
+              <h3 className={`text-xl md:text-2xl ${inter.className}`}>Fill in the details to find an event</h3>
               <div className='flex flex-col gap-3 mt-3'>
-                <Input placeholder={'Category'} disabled={false} />
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Search by name or category</p>
-                <Button variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
+                <Input value={query} type='text' onChange={(e: any) => setQuery(e.target.value)} placeholder={'Search'} />
+                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Search by name or preference</p>
+                <Button disabled={!query} onClick={() => router.push(`/search?search=${query}`)} variant="primary" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
                   Search
                 </Button>
               </div>
