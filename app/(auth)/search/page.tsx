@@ -287,7 +287,7 @@ const Content = () => {
 
     function scrollToTop() {
         if (typeof window !== "undefined") {
-            window.scrollTo(0, 100);
+            window.scrollTo(0, 0);
         }
     }
 

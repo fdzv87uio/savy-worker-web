@@ -54,7 +54,11 @@ function RecommendedEvents({ isUser, userInfo }: RecommendedEventsProps) {
 
   function scrollToTop() {
     if (typeof window !== "undefined") {
-      window.scrollTo(0, 600);
+      if (isUser) {
+        window.scrollTo(0, 0);
+      } else {
+        window.scrollTo(0, 600);
+      }
     }
   }
 
