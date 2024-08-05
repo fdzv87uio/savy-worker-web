@@ -10,6 +10,8 @@ import ScheduledEventCard from '@/components/ui/scheduledEventCard';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { usePagination } from '@/hooks/usePagination';
+import Paginator from '@/components/ui/paginator';
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -35,6 +37,15 @@ const Content = () => {
     const [cityFilters, setCityFilters] = useState<any>([]);
     const [dates, setDates] = useState<any>([]);
     const [dateFilters, setDateFilters] = useState<any>([]);
+    const {
+        isPaginating,
+        currentPage,
+        setCurrentPage,
+        pageItems,
+        setItemList,
+        totalPages,
+        totalItems
+    } = usePagination([]);
 
 
     useEffect(() => {
@@ -81,6 +92,7 @@ const Content = () => {
                 filterDataByQuery(search, allEvents);
             } else {
                 setFilteredEvents(allEvents);
+                setItemList(allEvents);
             }
             setLoading(false);
 
@@ -119,6 +131,7 @@ const Content = () => {
             console.log('filtered results:');
             console.log(filteredResults);
             setFilteredEvents(filteredResults);
+            setItemList(filteredResults);
 
         } else if (param && data) {
             const queryLen = param.length;
@@ -144,8 +157,10 @@ const Content = () => {
             console.log('filtered results:');
             console.log(filteredResults);
             setFilteredEvents(filteredResults);
+            setItemList(filteredResults);
         } else {
             setFilteredEvents(events);
+            setItemList(events);
         }
     }
 
@@ -262,9 +277,17 @@ const Content = () => {
             console.log('filtered results:');
             console.log(filteredResults);
             setFilteredEvents(filteredResults);
+            setItemList(filteredResults);
 
         } else {
             setFilteredEvents(events);
+            setItemList(events);
+        }
+    }
+
+    function scrollToTop() {
+        if (typeof window !== "undefined") {
+            window.scrollTo(0, 0);
         }
     }
 
@@ -313,13 +336,16 @@ const Content = () => {
                                     <CustomDropdown label={"date"} handleChange={setDateFilters} type={"date"} />
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center gap-4 mt-14">
-                                    {filteredEvents.length > 0 && filteredEvents.map((event: any, key: number) => {
+                                    {pageItems.length > 0 && pageItems.map((event: any, key: number) => {
                                         return (
                                             <ScheduledEventCard key={`item_${key}_${event._id}`} allPrefs={allPrefs} event={event} />
                                         )
                                     })}
                                 </div>
-                                {filteredEvents.length === 0 && (
+                                {pageItems.length > 0 && (
+                                    <Paginator scrollToTop={scrollToTop} currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} />
+                                )}
+                                {pageItems.length === 0 && (
                                     <div className='w-full h-auto mt-[5px] text-xl text-[#ffffff] flex flex-col items-center font-normal'>
                                         <p>No Events Available</p>
                                     </div>
