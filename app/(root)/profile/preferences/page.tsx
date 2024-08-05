@@ -10,7 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { createEventFormStore } from '@/stores/createEventFormStore'
 import { useEffect, useState } from "react";
 import { getAllPreferences, getAllPreferencesByCategory } from "@/utils/preferencesUtils";
+import { getProfile, updateUserProfile } from '@/utils/profileUtils';
 import Image from "next/image";
+import { getCookie } from "cookies-next";
+import { Spinner } from '@/components/ui/spinner';
+import { toast } from 'sonner';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,25 +40,17 @@ const defaultValues: Inputs = {
   location: ""
 };
 
-interface StepThreeProps {
-  step: number;
-  setStep: any;
-  setProgress: any;
-  setPreferences: any;
-  preferences: string;
-  handleSubmit: any;
-  prefOptions: any;
-  loading: boolean;
-}
-
-
 const Preference = () => {
-  const { inputs, setInputs } = createEventFormStore();
   const [prefOptions, setPrefOptions] = useState<any>({})
-  const [preferences, setPreferences] = useState('');
   const [categories, setCategories] = useState<any[]>([]);
   const [currentPrefs, setCurrentPrefs] = useState<any[]>([])
   const [currentPrefsIds, setCurrentPrefsIds] = useState<any[]>([])
+
+  const [email, setEmail] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [isGettingUserInfo, setIsGettingUserInfo] = useState(false);
+
+  const token = getCookie('curcle-auth-token') as string;
 
   useEffect(() => {
     async function getData() {
@@ -68,6 +64,20 @@ const Preference = () => {
     }
     getData();
   }, [])
+
+  useEffect(() => {
+    async function getUserInfo(token: string) {
+      setIsGettingUserInfo(true)
+      const res: any = await getProfile(token);
+      if (res && res.status === 'success') {
+        setEmail(res.data.email);
+        setIsGettingUserInfo(false);
+        setCurrentPrefs(res.data.preferences.map((p: any) => p.name));
+        setCurrentPrefsIds(res.data.preferences.map((p: any) => p._id));
+      }
+    }
+    getUserInfo(token);
+  }, [token]);
 
   const handlePreferenceClick = (preference: string, id: string) => {
     // Clonar el array actual de preferencias para trabajar con una copia
@@ -87,20 +97,27 @@ const Preference = () => {
     setCurrentPrefs(updatedPrefs);
     setCurrentPrefsIds(updatedPrefsIds);
 
-    setInputs({ ...inputs, prefe: updatedPrefs, prefeIds: updatedPrefsIds });
-
   }
 
   const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const updatedData = { ...inputs, step: 4, progress: 75 };
-    setInputs(updatedData);
-  };
-
-  const handleBackClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const updatedData = { ...inputs, step: 2, progress: 25 };
-    setInputs(updatedData);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsUploading(true)
+    try {
+      const updateData = {
+        preferences: currentPrefsIds
+      };
+      await updateUserProfile(token, email, updateData);
+      setIsUploading(false);
+      toast.success("Update Success");
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorMsg = error.message || 'Error uploading profile';
+        toast.error("Error: " + errorMsg);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -137,7 +154,7 @@ const Preference = () => {
                         {Prefs.map((item: any, k: number) => {
                           return (
                             < div key={`pref_${k}`}>
-                              <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${inputs.prefe && inputs.prefe.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
+                              <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
                             </div>
                           )
                         })}
@@ -147,9 +164,12 @@ const Preference = () => {
                   )
                 })}
               </div>
-              <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
-                Save
-              </Button>
+              <div className='w-full flex'>
+                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="primary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                  Save
+                  {isUploading && <Spinner className="ml-3 w-5 h-5" />}
+                </Button>
+              </div>
             </form>
           </div>
         </div>
