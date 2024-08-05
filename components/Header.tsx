@@ -12,17 +12,19 @@ import { Skeleton } from './ui/skeleton';
 import { usePathname, useRouter } from 'next/navigation';
 import { findUserByEmail } from '@/utils/authUtils';
 import { NavigationMenuTop } from './NavigationMenuTop';
+import { useHeaderLinkStore } from '@/stores/headerLinkStore';
 
 const Header = () => {
+  const { headerLink, setHeaderLink }: any = useHeaderLinkStore();
   const [isUser, setIsUser] = useState<boolean | null>(null);
   const [name, setName] = useState("");
-  const [isMenuOpen,setIsMenuOpen] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState("");
   const { authToken } = useAuthTokenStore();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    
+
   }, [isUser, setIsUser])
 
   // Get User info
@@ -40,9 +42,22 @@ const Header = () => {
     setIsUser(!!authToken || !!cookieToken);
     if (cookieToken && userEmail) {
       getUserInfo(userEmail, cookieToken);
-    } 
+    }
 
   }, [authToken])
+
+  function handleLinkClick(target: string) {
+    if (target === "home") {
+      setHeaderLink("home");
+      router.push("/");
+    } else if (target === "events") {
+      setHeaderLink("events");
+      router.push('/search');
+    } else if (target === "tournaments") {
+      setHeaderLink("tournaments");
+      router.push("/tournaments");
+    }
+  }
 
   return (
     <div className="sticky top-0 flex size-full z-[94] w-full bg-blue-2 border-spacing-0">
@@ -57,15 +72,15 @@ const Header = () => {
               </Link>
             </div>
             <ul className='hidden xl:flex md:gap-7'>
-              <Link href="/">
-                <li className='text-2xl font-normal text-green-1 uppercase'>Home</li>
-              </Link>
-              <Link href="#">
-                <li className='text-2xl font-normal text-white-1 uppercase'>Events</li>
-              </Link>
-              <Link href="#">
-                <li className='text-2xl font-normal text-white-1 uppercase'>Tournaments</li>
-              </Link>
+              <div onClick={() => { handleLinkClick("home") }}>
+                <li className={`text-2xl font-normal ${headerLink === "home" ? "text-green-1" : "text-white-1"} cursor-pointer uppercase`}>Home</li>
+              </div>
+              <div onClick={() => { handleLinkClick("events") }}>
+                <li className={`text-2xl font-normal ${headerLink === "events" ? "text-green-1" : "text-white-1"} cursor-pointer uppercase`}>Events</li>
+              </div>
+              <div onClick={() => { handleLinkClick("tournaments") }}>
+                <li className={`text-2xl font-normal ${headerLink === "" ? "text-green-1" : "text-white-1"} cursor-pointer uppercase`}>Tournaments</li>
+              </div>
             </ul>
             <div className='hidden md:flex md:gap-5'>
               {isUser === null ? (
