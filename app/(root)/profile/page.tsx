@@ -83,7 +83,7 @@ const Profile = () => {
 
               {/* address */}
               <div className='flex gap-3'>
-                <Image src="/icons/mail.svg" alt="mail icon" width={45} height={45} />
+                <Image src="/icons/address.svg" alt="mail icon" width={45} height={45} />
                 <div>
                   <h3>Address</h3>
                   <p className={`${inter.className} text-[#768192]`}>{address}</p>
@@ -93,7 +93,7 @@ const Profile = () => {
 
               {/* preferences */}
               <div className='flex gap-3'>
-                <Image src="/icons/mail.svg" alt="mail icon" width={45} height={45} />
+                <Image src="/icons/preferences.svg" alt="mail icon" width={45} height={45} />
                 <div>
                   <h3>Preferences</h3>
                   <div className='flex gap-3'>
@@ -135,7 +135,7 @@ const Profile = () => {
                 </p>
               </div>
               <div className='flex gap-2 justify-center items-center'>
-                <div className='w-[18px] h-[18px] bg-primary-1 rounded-full'></div>
+                <div className='w-[18px] h-[18px] bg-secondary-1 rounded-full'></div>
                 <p className={`${inter.className}`}>
                   Upcomming event
                 </p>
