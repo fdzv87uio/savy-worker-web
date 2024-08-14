@@ -56,3 +56,61 @@ export async function findUserByEmail(email: string, token: string) {
         return res;
     }
 };
+
+export async function sendPasswordRecoveryEmail(email: string) {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/auth/forgotPassword"
+
+        const data = {
+            email: email
+        };
+
+        const response = await axios.post(apiUrl, data, {
+            headers: {
+                'Content-Type': 'application/json', // Ajusta el tipo de contenido según tus necesidades
+            },
+        });
+
+        const res = {
+            status: 'success',
+            data: response.data.message,
+        }
+        return res;
+    } catch (error: any) {
+        const res = {
+            status: 'error',
+            error: error,
+        }
+        return res;
+    }
+};
+
+export async function resetPassword(email: string, token: string, password: string, confirmPassword: string) {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/auth/resetPassword";
+        const data = {
+            email: email,
+            token: token,
+            password: password,
+            confirmPassword: confirmPassword,
+        };
+
+        const response = await axios.post(apiUrl, data, {
+            headers: {
+                'Content-Type': 'application/json'// Ajusta el tipo de contenido según tus necesidades
+            },
+        });
+
+        const res = {
+            status: 'success',
+            data: response.data.message,
+        }
+        return res;
+    } catch (error: any) {
+        const res = {
+            status: 'error',
+            error: error,
+        }
+        return res;
+    }
+};

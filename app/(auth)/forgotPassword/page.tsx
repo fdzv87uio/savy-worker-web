@@ -20,6 +20,7 @@ import BlueBlobMobile2 from '@/public/svgs/blue-blob-mobile-2.svg';
 import GrayBlobMobile from '@/public/svgs/gray-blob-mobile.svg';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { sendPasswordRecoveryEmail } from '@/utils/authUtils';
 
 
 const ForgotPassword = () => {
@@ -46,10 +47,16 @@ const ForgotPassword = () => {
     async function onSubmit(data: any) {
         setLoading(true);
         console.log(data);
-        setTimeout(() => {
+        const res: any = await sendPasswordRecoveryEmail(data.email);
+        console.log(res);
+        if (res.status === "success") {
             setLoading(false);
-            toast.success("Message Sent. Please, check your email")
-        }, 1000)
+            toast.success("Message sent. Please, check your email")
+        } else {
+            setLoading(false);
+            toast.error(res.error.response.data.message)
+        }
+
     }
 
 

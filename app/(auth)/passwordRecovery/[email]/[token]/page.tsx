@@ -21,6 +21,8 @@ import GrayBlobMobile from '@/public/svgs/gray-blob-mobile.svg';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import { useParams, useRouter } from 'next/navigation';
+import bcrypt from 'bcryptjs';
+import { resetPassword } from '@/utils/authUtils';
 
 
 
@@ -53,12 +55,27 @@ const PasswordRecovery = () => {
     async function onSubmit(data: any) {
         setLoading(true);
         console.log(data);
-        console.log(params);
-        setTimeout(() => {
+        if (data.newPassword !== data.repeatPassword) {
+            toast.error("Passwords Don't Match")
             setLoading(false);
-            toast.success("Password Reset Successfully!")
-            router.push("/signIn");
-        }, 1000)
+        } else {
+            console.log(params);
+            const salt = bcrypt.genSaltSync(12);
+            const password = bcrypt.hashSync(data.newPassword, salt);
+            const confirmPassword = bcrypt.hashSync(data.repeatPassword, salt);
+            const email = params.email.replace("%40", "@");
+            const token = params.token;
+            const res: any = await resetPassword(email, token, password, confirmPassword);
+            if (res.status === "success") {
+                setLoading(false);
+                toast.success("Password Reset Successfully!")
+                router.push("/signIn");
+            } else {
+                setLoading(false);
+                toast.error("An error ocurred")
+            }
+        }
+
     }
 
 
