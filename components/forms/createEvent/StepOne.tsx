@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createEventFormStore } from '@/stores/createEventFormStore'
 import { useEffect } from "react";
+import LocationModal from "@/components/ui/locationModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -144,10 +145,10 @@ export default function StepOne() {
                     control={control}
                     name="location"
                     render={({ field }) => (
-                        <Input
-                            {...field}
-                            type="text"
-                            placeholder='Event Location'
+                        <LocationModal
+                            onChange={(value: any) => {
+                                field.onChange(value); // Call RHF's default onChange
+                            }}
                         />
                     )}
                 />
