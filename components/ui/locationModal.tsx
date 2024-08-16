@@ -1,3 +1,5 @@
+'use client'
+
 import { Audiowide, Inter } from "next/font/google";
 import {
     Dialog,
@@ -12,20 +14,42 @@ const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
 import QRCode from "react-qr-code";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "./button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./input";
+import { getLocationByQuery } from "@/utils/locationUtils";
 
 interface LocationModalProps {
     onChange: any;
+    value: string;
 }
 
-export default function LocationModal({ onChange }: LocationModalProps) {
-    const [results, setResults] = useState<any[]>();
+export default function LocationModal({ onChange, value }: LocationModalProps) {
+    const [results, setResults] = useState<any[]>([]);
     const [query, setQuery] = useState("");
-    const [selection, setSelection] = useState("");
+    const [selection, setSelection] = useState(value);
 
+    useEffect(() => {
+        const q = query;
+        if (q.length > 0) {
+            getLocations(q);
+        }
+    }, [query])
+
+    async function getLocations(q: string) {
+        const res: any = await getLocationByQuery(q);
+        if (res.status === "success") {
+            if (res.data.data.length > 0) {
+                console.log(res.data.data);
+                setResults(res.data.data);
+            } else {
+                setResults([]);
+            }
+
+        }
+    }
 
     function handleSelect(value: string) {
+        setSelection(value)
         onChange(value);
     }
 
@@ -52,43 +76,28 @@ export default function LocationModal({ onChange }: LocationModalProps) {
                             onChange={(e: any) => setQuery(e.target.value)}
                         />
                     </div>
-                    <div className="w-full h-[290px] mt-4 flex overflow-y-scroll flex-col gap-2">
-                        <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
-                            <div className="flex flex-row items-center px-2.5 gap-4">
-                                <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
-                                <div className="flex flex-col gap-1">
-                                    <span className=" text-lg"><strong>LOCATION 1</strong></span>
-                                    <span className=" text-xs text-[#ffffff]/80"><strong>City, State</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
-                            <div className="flex flex-row items-center px-2.5 gap-4">
-                                <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
-                                <div className="flex flex-col gap-1">
-                                    <span className=" text-lg"><strong>LOCATION 1</strong></span>
-                                    <span className=" text-xs text-[#ffffff]/80"><strong>City, State</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
-                            <div className="flex flex-row items-center px-2.5 gap-4">
-                                <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
-                                <div className="flex flex-col gap-1">
-                                    <span className=" text-lg"><strong>LOCATION 1</strong></span>
-                                    <span className=" text-xs text-[#ffffff]/80"><strong>City, State</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
-                            <div className="flex flex-row items-center px-2.5 gap-4">
-                                <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
-                                <div className="flex flex-col gap-1">
-                                    <span className=" text-lg"><strong>LOCATION 1</strong></span>
-                                    <span className=" text-xs text-[#ffffff]/80"><strong>City, State</strong></span>
-                                </div>
-                            </div>
-                        </div>
+                    <div className={`w-full h-[290px] mt-4 flex overflow-y-scroll ${results?.length === 0 ? "justify-center items-center" : ""} flex-col gap-2`}>
+                        {results.length > 0 && results.map((x: any, key: number) => {
+                            const labelArray = x.Place.Label.split(",");
+                            const label = labelArray[0];
+                            const detail = labelArray.slice(1).join(",");
+                            return (
+                                <DialogClose onClick={() => handleSelect(label)} key={`location_${key}`} className="flex flex-col w-full">
+                                    <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
+                                        <div className="flex flex-row items-center px-2.5 gap-2">
+                                            <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
+                                            <div className="flex flex-col items-left gap-1">
+                                                <span className=" text-lg text-left"><strong>{label}</strong></span>
+                                                <span className=" text-xs text-left text-[#ffffff]/80"><strong>{detail}</strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </DialogClose>
+                            )
+                        })}
+                        {results.length === 0 && (
+                            <p>No Items Found</p>
+                        )}
 
                     </div>
                     <div className="w-full h-auto flex flex-col items-center">

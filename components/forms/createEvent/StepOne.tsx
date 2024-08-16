@@ -146,18 +146,13 @@ export default function StepOne() {
                     name="location"
                     render={({ field }) => (
                         <LocationModal
+                            value={field.value}
                             onChange={(value: any) => {
                                 field.onChange(value); // Call RHF's default onChange
                             }}
                         />
                     )}
                 />
-                {!errors.location && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter event location</p>
-                )}
-                {errors.location && errors.location.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.location.message}`}</p>
-                )}
             </div>
 
             <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
