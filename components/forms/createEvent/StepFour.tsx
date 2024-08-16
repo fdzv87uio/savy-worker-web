@@ -121,7 +121,8 @@ export default function StepFour() {
 
         try {
             // Crear nuevo evento
-            const starTimeField = `${inputs.hours}-${inputs.minutes}-${inputs.amPm}`;
+            const startTimeField = `${inputs.startHours}-${inputs.startMinutes}-${inputs.startAmPm}`;
+            const finishTimeField = `${inputs.finishHours}-${inputs.finishMinutes}-${inputs.finishAmPm}`;
             const eventEndField = inputs.eventEnds === 'never' ? false : true;
             const isFrecuencyField = inputs.recurring === 'yes' ? true : false;
             const frecuencyField = `${inputs.repeatNumber}-${inputs.repeatType}`
@@ -136,10 +137,10 @@ export default function StepFour() {
                 eventType: inputs.eventType,
                 eventMode: inputs.mode,
                 startDate: inputs.startDate?.toISOString(),
-                startTime: starTimeField,
+                startTime: startTimeField,
                 eventEnds: eventEndField,
-                endDate: inputs.datePick,
-                endTime: "TBD",
+                endDate: inputs.finishDate?.toISOString(),
+                endTime: finishTimeField,
                 occurrenceCount: inputs.ocurrences,
                 isFrecuency: isFrecuencyField,
                 frecuency: inputs.repeatType,
