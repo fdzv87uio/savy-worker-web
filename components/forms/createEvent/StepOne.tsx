@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createEventFormStore } from '@/stores/createEventFormStore'
 import { useEffect } from "react";
+import LocationModal from "@/components/ui/locationModal";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from "next/image";
@@ -180,19 +181,14 @@ export default function StepOne() {
                     control={control}
                     name="location"
                     render={({ field }) => (
-                        <Input
-                            {...field}
-                            type="text"
-                            placeholder='Event Location'
+                        <LocationModal
+                            value={field.value}
+                            onChange={(value: any) => {
+                                field.onChange(value); // Call RHF's default onChange
+                            }}
                         />
                     )}
                 />
-                {!errors.location && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter event location</p>
-                )}
-                {errors.location && errors.location.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.location.message}`}</p>
-                )}
             </div>
 
             {/* attenders */}
