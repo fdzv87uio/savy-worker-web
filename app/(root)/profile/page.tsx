@@ -1,46 +1,76 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
-import { Calendar } from "@/components/ui/calendar"
-import { findUserByEmail } from '@/utils/authUtils';
+import { Calendar } from "@/components/ui/calendar";
 import { getCookie } from 'cookies-next';
 import { getProfile } from '@/utils/profileUtils';
+import { getEventsByUserId } from '@/utils/eventsUtils';
 
+const inter = Inter({ subsets: ["latin"] });
 
 const Profile = () => {
-  const initiallySelectedDate = new Date();
-  const [selectedDate, setSelectedDate] = useState(initiallySelectedDate);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [preferences, setPreferences] = useState([]);
+  const [id, setId] = useState('');
+  const [events, setEvents] = useState<Date[]>([]);
+
+  // Function to get all dates from startDate to endDate
+  const obtenerFechasIntermedias = (startDate: Date, endDate: Date): Date[] => {
+    const fechas: Date[] = [];
+    let fechaActual = new Date(startDate);
+
+    while (fechaActual <= endDate) {
+      fechas.push(new Date(fechaActual));
+      fechaActual.setDate(fechaActual.getDate() + 1);
+    }
+
+    return fechas;
+  };
 
   // Get User info
   async function getUserInfo(token: string) {
     const res: any = await getProfile(token);
-    console.log(res)
     if (res && res.status === "success") {
       setName(res.data.name);
       setEmail(res.data.email);
       setAddress(res.data.address);
       setPreferences(res.data.preferences);
-      console.log('pref:');
-      console.log(res.data.preferences)
+      setId(res.data._id);
     }
   }
 
+  // Get Events info
+  async function getUserEvents(userId: string, token: string) {
+    const res: any = await getEventsByUserId(userId, token);
+    if (res && res.status === "success") {
+      const fechas = res.data.flatMap((x: { startDate: string, endDate: string }) => {
+        const start = new Date(x.startDate);
+        const end = new Date(x.endDate);
+        return obtenerFechasIntermedias(start, end);
+      });
+
+      setEvents(fechas);
+    }
+  }
 
   useEffect(() => {
     const cookieToken = getCookie('curcle-auth-token');
     if (cookieToken) {
       getUserInfo(cookieToken);
     }
+  }, []);
 
-  }, [])
+  useEffect(() => {
+    const cookieToken = getCookie('curcle-auth-token');
+    if (id && cookieToken) {
+      getUserEvents(id, cookieToken);
+    }
+  }, [id]);
 
   return (
     <div className='flex flex-col justify-center items-center relative'>
@@ -60,18 +90,16 @@ const Profile = () => {
             <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[400px] ">
             </div>
             <div className='absolute w-[250px] md:w-[450px] top-10 left-10 flex flex-col gap-4'>
-
-              {/* username */}
+              {/* Username */}
               <div className='flex gap-3'>
                 <Image src="/icons/username.svg" alt="username icon" width={45} height={45} />
                 <div>
-                  <h3>Unsername</h3>
+                  <h3>Username</h3>
                   <p className={`${inter.className} text-[#768192]`}>{name}</p>
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
-
-              {/* email */}
+              {/* Email */}
               <div className='flex gap-3'>
                 <Image src="/icons/mail.svg" alt="mail icon" width={45} height={45} />
                 <div>
@@ -80,8 +108,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
-
-              {/* address */}
+              {/* Address */}
               <div className='flex gap-3'>
                 <Image src="/icons/address.svg" alt="mail icon" width={45} height={45} />
                 <div>
@@ -90,8 +117,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
-
-              {/* preferences */}
+              {/* Preferences */}
               <div className='flex gap-3'>
                 <Image src="/icons/preferences.svg" alt="mail icon" width={45} height={45} />
                 <div>
@@ -104,7 +130,6 @@ const Profile = () => {
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
-
             </div>
           </div>
         </div>
@@ -113,11 +138,11 @@ const Profile = () => {
             <h2 className="text-2xl md:text-4xl font-normal text-center md:text-start">Your scheduled events</h2>
           </div>
           <div className='flex flex-col mt-10 xl:mt-0'>
-            <div className='flex min-h-[380px]  justify-center items-center md:justify-start md:items-start'>
+            <div className='flex min-h-[380px] justify-center items-center md:justify-start md:items-start'>
               <Calendar
-                mode="single"
+                mode="multiple"
                 numberOfMonths={2}
-                selected={selectedDate}
+                selected={events}
                 className="rounded-2xl border border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10"
               />
             </div>
@@ -137,7 +162,7 @@ const Profile = () => {
               <div className='flex gap-2 justify-center items-center'>
                 <div className='w-[18px] h-[18px] bg-secondary-1 rounded-full'></div>
                 <p className={`${inter.className}`}>
-                  Upcomming event
+                  Upcoming event
                 </p>
               </div>
             </div>
@@ -145,7 +170,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

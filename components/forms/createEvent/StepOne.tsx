@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createEventFormStore } from '@/stores/createEventFormStore'
 import { useEffect } from "react";
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +19,24 @@ type Inputs = {
     description: string;
     mode: string;
     location: string;
+    attenders?: number;
 }
 
+const validationSchema: Yup.ObjectSchema<Inputs> = Yup.object({
+    eventType: Yup.string()
+        .required('Event type is required'),
+    title: Yup.string()
+        .required('Title is required'),
+    description: Yup.string()
+        .required('Description is required'),
+    mode: Yup.string()
+        .required('mode is required'),
+    location: Yup.string()
+        .required('Location is required'),
+    attenders: Yup.number()
+        .min(0, "Limit Attenders should grathen than 0")
+        .optional(),
+});
 
 
 export default function StepOne() {
@@ -33,10 +52,15 @@ export default function StepOne() {
         title: inputs.title || "",
         description: inputs.description || "",
         mode: inputs.mode || "in-person",
-        location: inputs.location || ""
+        location: inputs.location || "",
+        attenders: inputs.attenders || 0,
     };
 
-    const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
+    const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({
+        defaultValues,
+        resolver: yupResolver(validationSchema),
+        mode: 'onChange',
+    });
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const updatedData = { ...data, step: 2, progress: 25 };
         setInputs(updatedData);
@@ -47,13 +71,28 @@ export default function StepOne() {
 
     return (
         <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
+
+            {(errors.eventType || errors.title || errors.description || errors.mode || errors.location || errors.attenders) && (
+                <div className="flex gap-3">
+                    <Image
+                        src="/icons/error.svg"
+                        alt="Error"
+                        width={15}
+                        height={15}
+                    />
+                    <div>
+                        <p className="text-red-500 text-base">Required Information Missing</p>
+                        <p className="text-red-500 text-xs">Please review your form and ensure all required fields are filled out.</p>
+                    </div>
+                </div>
+            )}
+
             {/* type */}
             <div className='flex flex-col gap-[5px]'>
                 <Label className={`${inter.className} text-base`}>Event type</Label>
                 <Controller
                     name="eventType"
                     control={control}
-                    rules={{ required: "Event type is required" }}
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
@@ -75,7 +114,6 @@ export default function StepOne() {
                 <Controller
                     control={control}
                     name="title"
-                    rules={{ required: "Title is required" }}
                     render={({ field }) => (
                         <Input
                             {...field}
@@ -98,7 +136,6 @@ export default function StepOne() {
                 <Controller
                     control={control}
                     name="description"
-                    rules={{ required: "Description is required" }}
                     render={({ field }) => (
                         <Textarea
                             {...field}
@@ -121,7 +158,6 @@ export default function StepOne() {
                 <Controller
                     name="mode"
                     control={control}
-                    rules={{ required: "Event type is required" }}
                     render={({ field }) => (
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
@@ -156,6 +192,28 @@ export default function StepOne() {
                 )}
                 {errors.location && errors.location.message && (
                     <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.location.message}`}</p>
+                )}
+            </div>
+
+            {/* attenders */}
+            <div className="flex flex-col items-left gap-[5px]">
+                <div className="flex">
+                    <Label className={`${inter.className} text-base w-[200px]`}>Limit attenders:</Label>
+                    <Controller
+                        control={control}
+                        name="attenders"
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                type="number"
+                                placeholder='Repeat number'
+                                className="bg-transparent text-white-1 w-[80px]"
+                            />
+                        )}
+                    />
+                </div>
+                {errors.attenders && errors.attenders.message && (
+                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.attenders.message}</p>
                 )}
             </div>
 

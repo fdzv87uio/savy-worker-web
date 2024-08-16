@@ -8,11 +8,16 @@ type Inputs = {
   description?: string;
   mode?: string;
   location?: string;
+  attenders?:number;
   // step 2
   startDate?: Date;
-  hours?: number;
-  minutes?: number;
-  amPm?: string;
+  startHours?: number;
+  startMinutes?: number;
+  startAmPm?: string;
+  finishDate?: Date;
+  finishHours?: number;
+  finishMinutes?: number;
+  finishAmPm?: string;
   recurring?: string;
   frequency?: string;
   repeatNumber?: number;
@@ -42,11 +47,16 @@ export const createEventFormStore = create<InputsStore>((set) => ({
     description: '',
     mode: '',
     location: '',
+    attenders:0,
     // step 2
     startDate: new Date(),
-    hours: 0,
-    minutes: 0,
-    amPm: '',
+    startHours: 0,
+    startMinutes: 0,
+    startAmPm: '',
+    finishDate: new Date(),
+    finishHours: 0,
+    finishMinutes: 0,
+    finishAmPm: '',
     recurring: '',
     frequency: '',
     repeatNumber: 0,
