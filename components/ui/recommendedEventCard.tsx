@@ -52,8 +52,17 @@ export default function RecommendedEventCard({ event, isUser }: RecommendedEvent
                     </div>
                 }
                 <div className="text-center mt-4">
-                    <p className={`${inter.className} text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
-                    <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}, USA</p>
+                    {event.eventMode !== "online" && (
+                        <>
+                            <p className={`${inter.className} text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
+                            <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}, USA</p>
+                        </>
+                    )}
+                    {event.eventMode === "online" && (
+                        <>
+                            <p className={`${inter.className} text-black-1 font-bold text-lg md:text-base`}>Online Event</p>
+                        </>
+                    )}
                 </div>
                 {isUser &&
                     <div className='flex justify-center gap-10 mt-3'>

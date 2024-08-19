@@ -20,7 +20,7 @@ type Inputs = {
     description: string;
     mode: string;
     location: string;
-    attenders?: number;
+    attendees?: number;
 }
 
 const validationSchema: Yup.ObjectSchema<Inputs> = Yup.object({
@@ -34,8 +34,9 @@ const validationSchema: Yup.ObjectSchema<Inputs> = Yup.object({
         .required('mode is required'),
     location: Yup.string()
         .required('Location is required'),
-    attenders: Yup.number()
-        .min(0, "Limit Attenders should grathen than 0")
+    attendees: Yup.number()
+        .min(2, "The event must have at least 2 attendees")
+        .max(200, "Max attendee number exceeded ")
         .optional(),
 });
 
@@ -54,7 +55,7 @@ export default function StepOne() {
         description: inputs.description || "",
         mode: inputs.mode || "in-person",
         location: inputs.location || "",
-        attenders: inputs.attenders || 0,
+        attendees: inputs.attendees || 0,
     };
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({
@@ -73,7 +74,7 @@ export default function StepOne() {
     return (
         <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
 
-            {(errors.eventType || errors.title || errors.description || errors.mode || errors.location || errors.attenders) && (
+            {(errors.eventType || errors.title || errors.description || errors.mode || errors.location || errors.attendees) && (
                 <div className="flex gap-3">
                     <Image
                         src="/icons/error.svg"
@@ -191,13 +192,13 @@ export default function StepOne() {
                 />
             </div>
 
-            {/* attenders */}
+            {/* attendees */}
             <div className="flex flex-col items-left gap-[5px]">
                 <div className="flex">
-                    <Label className={`${inter.className} text-base w-[200px]`}>Limit attenders:</Label>
+                    <Label className={`${inter.className} text-base w-[200px]`}>Limit attendees:</Label>
                     <Controller
                         control={control}
-                        name="attenders"
+                        name="attendees"
                         render={({ field }) => (
                             <Input
                                 {...field}
@@ -208,8 +209,8 @@ export default function StepOne() {
                         )}
                     />
                 </div>
-                {errors.attenders && errors.attenders.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.attenders.message}</p>
+                {errors.attendees && errors.attendees.message && (
+                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.attendees.message}</p>
                 )}
             </div>
 

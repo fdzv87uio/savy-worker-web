@@ -8,7 +8,7 @@ type Inputs = {
   description?: string;
   mode?: string;
   location?: string;
-  attenders?:number;
+  attendees?: number;
   // step 2
   startDate?: Date;
   startHours?: number;
@@ -28,10 +28,10 @@ type Inputs = {
   ocurrences?: number;
   // step 3
   prefe?: string[];
-  prefeIds?:string[];
+  prefeIds?: string[];
 
   step?: number;
-  progress?:number;
+  progress?: number;
 };
 
 type InputsStore = {
@@ -47,7 +47,7 @@ export const createEventFormStore = create<InputsStore>((set) => ({
     description: '',
     mode: '',
     location: '',
-    attenders:0,
+    attendees: 0,
     // step 2
     startDate: new Date(),
     startHours: 0,
@@ -66,11 +66,11 @@ export const createEventFormStore = create<InputsStore>((set) => ({
     datePick: new Date(),
     ocurrences: 2,
     // step 3
-    prefe:[''],
-    prefeIds:[''],
+    prefe: [''],
+    prefeIds: [''],
 
     step: 1,
-    progress:10,
+    progress: 10,
   },
   setInputs: (inputs: Inputs) => set({ inputs }),
 }));
