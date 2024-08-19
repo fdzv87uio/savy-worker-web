@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCookie } from 'cookies-next';
+import { getCookie, deleteCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore';
 import { Skeleton } from './ui/skeleton';
 import { usePathname, useRouter } from 'next/navigation';
@@ -19,10 +19,9 @@ const Header = () => {
   const [isUser, setIsUser] = useState<boolean | null>(null);
   const [name, setName] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState("");
-  const { authToken } = useAuthTokenStore();
+  const { authToken, clearAuthToken } = useAuthTokenStore();
   const router = useRouter();
   const pathname = usePathname();
-
   useEffect(() => {
 
   }, [isUser, setIsUser])
@@ -37,13 +36,33 @@ const Header = () => {
 
 
   useEffect(() => {
-    const cookieToken = getCookie('curcle-auth-token');
-    const userEmail = getCookie('curcle-user-email')
-    setIsUser(!!authToken || !!cookieToken);
-    if (cookieToken && userEmail) {
-      getUserInfo(userEmail, cookieToken);
+    function isTokenExpired(token: string): boolean {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const currentTime = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
+        return currentTime > payload.exp;
+      } catch (error) {
+        console.error("Invalid token", error);
+        return true;
+      }
+    }
+    function checkTokenValidity() {
+      const cookieToken = getCookie('curcle-auth-token');
+      const userEmail = getCookie('curcle-user-email')
+      if (!cookieToken || isTokenExpired(cookieToken as string)) {
+        deleteCookie('curcle-auth-token')
+        clearAuthToken();
+        setIsUser(false);
+        router.push('/signIn');
+      }
+      setIsUser(!!authToken || !!cookieToken);
+      if (cookieToken && userEmail) {
+        getUserInfo(userEmail, cookieToken);
+
+      }
     }
 
+    checkTokenValidity();
   }, [authToken])
 
   function handleLinkClick(target: string) {
