@@ -102,7 +102,7 @@ export default function StepThree() {
 
     return (
         <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
-            <h1 className='text-2xl'>Select Your Preferences</h1>
+            <h1 className='text-2xl'>Select your activity</h1>
             <div className='w-full flex flex-col'>
                 {categories.length > 0 && categories.map((x: any, key: number) => {
                     let Prefs = prefOptions[x];
