@@ -30,6 +30,7 @@ import { TransactionType } from '@/interfaces/transactionInterfaces';
 import { NewDeviceModal } from '@/components/NewDeviceModal';
 
 import { useAuthTokenStore } from '@/stores/authTokenStore';
+import { Spinner } from '@/components/ui/spinner';
 
 
 const SignIn = () => {
@@ -221,111 +222,185 @@ const SignIn = () => {
   }
 
   return (
-    <div className='w-full bg-[#030614]  relative overflow-x-hidden overflow-hidden'>
-      <div className='w-full md:w-[100vw]'>
-        <div className='pt-[40px] h-[110vh] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col items-center gap-[40px] xl:gap-[100px]'>
+    // <div className='w-full md:w-[750px] xl:w-[1123px] bg-[#030614]  relative overflow-x-hidden overflow-hidden border'>
+    //   <div className='w-full'>
+    //     <div className='pt-[40px] h-[110vh] pb-[114px] px-3.5 xl:pt-20 xl:pb-32 xl:px-36 flex flex-col items-center gap-[40px] xl:gap-[100px]'>
 
-          {/* Standard Login */}
-          <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-[350px] md:w-[80vw]  xl:w-full '>
-            <div className='w-full flex flex-col xl:items-left xl:w-[50vw] gap-5'>
-              <h1 className='text-2xl md:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Log In</h1>
-              <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Join exciting sporting events and meetings with gamers</p>
-            </div>
-            <div
-              style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
-              className='w-full xl:w-[50vw] h-auto overflow-hidden border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10 relative'>
-              <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[330px] left-0 z-[1]' />
-              <div className='w-full flex flex-col h-auto pt-[46px] pb-7 xl:pb-[49px] pl-[21px] pr-[21px] xl:pr-[60px] z-[90] gap-[20px]'>
-                <form className='w-full flex flex-col h-auto z-[90] gap-[20px]' onSubmit={handleSubmit(onSubmit)}>
-                  <div className="flex flex-col items-left gap-[5px]">
-                    <Controller
-                      control={control}
-                      name="email"
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder='Email'
-                        />
-                      )}
-                    />
-                    {!errors.email && (
-                      <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email</p>
-                    )}
-                    {errors.email && errors.email.message && (
-                      <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
-                    )}
-                  </div>
-                  <div className="flex flex-col items-left gap-[5px]">
-                    <Controller
-                      control={control}
-                      name="password"
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          type="password"
-                          placeholder='Password'
-                        />
-                      )}
-                    />
-                    {!errors.password && (
-                      <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
-                    )}
-                    {errors.password && errors.password.message && (
-                      <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.password.message}`}</p>
-                    )}
-                  </div>
-                  <Button type="submit" variant="primary" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
-                    {loading ? "..." : "Log In"}
-                  </Button>
-                </form>
-              </div>
-            </div>
+    //       {/* Standard Login */}
+    //       <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-[350px] md:w-[80vw]  xl:w-full '>
+    //         <div className='w-full flex flex-col xl:items-left xl:w-[50vw] gap-5'>
+    //           <h1 className='text-2xl md:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Log In</h1>
+    //           <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Join exciting sporting events and meetings with gamers</p>
+    //         </div>
+    //         <div
+    //           style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
+    //           className='w-full xl:w-[50vw] h-auto overflow-hidden border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10 relative'>
+    //           <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[330px] left-0 z-[1]' />
+    //           <div className='w-full flex flex-col h-auto pt-[46px] pb-7 xl:pb-[49px] pl-[21px] pr-[21px] xl:pr-[60px] z-[90] gap-[20px]'>
+    //             <form className='w-full flex flex-col h-auto z-[90] gap-[20px]' onSubmit={handleSubmit(onSubmit)}>
+    //               <div className="flex flex-col items-left gap-[5px]">
+    //                 <Controller
+    //                   control={control}
+    //                   name="email"
+    //                   render={({ field }) => (
+    //                     <Input
+    //                       {...field}
+    //                       type="text"
+    //                       placeholder='Email'
+    //                     />
+    //                   )}
+    //                 />
+    //                 {!errors.email && (
+    //                   <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email</p>
+    //                 )}
+    //                 {errors.email && errors.email.message && (
+    //                   <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
+    //                 )}
+    //               </div>
+    //               <div className="flex flex-col items-left gap-[5px]">
+    //                 <Controller
+    //                   control={control}
+    //                   name="password"
+    //                   render={({ field }) => (
+    //                     <Input
+    //                       {...field}
+    //                       type="password"
+    //                       placeholder='Password'
+    //                     />
+    //                   )}
+    //                 />
+    //                 {!errors.password && (
+    //                   <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
+    //                 )}
+    //                 {errors.password && errors.password.message && (
+    //                   <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.password.message}`}</p>
+    //                 )}
+    //               </div>
+    //               <Button type="submit" variant="primary" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+    //                 {loading ? "..." : "Log In"}
+    //               </Button>
+    //             </form>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       {/* AUTHID Login */}
+    //       {/* <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
+    //         <div className='flex flex-col xl:items-left w-full xl:w-[50vw] gap-5'>
+    //           <h1 className='text-xl xl:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>AuthID Verification</h1>
+    //           <p className={`text-[#ffffff] text-base xl:text-2xl  text-center xl:text-left font-normal ${inter.className}`} >Use AuthID for enhanced security</p>
+    //         </div>
+    //         <div
+    //           style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
+    //           className='w-full xl:w-[50vw] h-auto overflow-hidden border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10 relative'>
+    //           <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[300px] left-0 z-[1]' />
+    //           <div className='w-full flex flex-col h-auto pt-[46px] pb-7 xl:pb-[49px] pl-[21px] pr-[21px] xl:pr-[60px] z-[90] gap-[20px]'>
+    //             <form className='w-full flex flex-col h-auto z-[90] gap-[20px]'>
+    //               <div className="flex flex-col items-left gap-[5px]">
+    //                 <Input
+    //                   type="text"
+    //                   name="authId"
+    //                   value={authId}
+    //                   onChange={(e) => { setAuthId(e.target.value) }}
+    //                   placeholder='Enter your 6-digit code'
+    //                 />
+    //                 <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your AuthID email</p>
+    //               </div>
+    //               <Button type="submit" variant="primary" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+    //                 Log In
+    //               </Button>
+    //             </form>
+    //           </div>
+    //         </div>
+    //       </div> */}
+    //     </div>
+    //   </div>
+    //   {/* svg assets */}
+    //   <Image className='flex xl:hidden absolute top-0 left-0' src={BlueBlobMobile1} alt="blue-blob-mobile-1" />
+    //   <Image className='flex xl:hidden absolute top-0 right-0' src={GreenBlobMobile1} alt="green-blob-mobile-1" />
+    //   <Image className='flex xl:hidden absolute bottom-0 right-0' src={GreenBlobMobile2} alt="green-blob-mobile-2" />
+    //   <Image className='flex xl:hidden absolute bottom-0 left-0' src={GrayBlobMobile} alt="gray-blob-mobile" />
+    //   <Image className='flex xl:hidden absolute bottom-0' src={BlueBlobMobile2} alt="blue-blob-mobile-2" />
+    //   <Image className='hidden xl:flex absolute top-0 right-0' src={GreenBlob} alt="green-blob" />
+    //   <Image className='hidden xl:flex absolute bottom-[-600px]' src={BlueBlob} alt="blue-blob" />
+    //   <Image className='hidden xl:flex absolute top-[160px] left-[100px]' src={GrayBlob} alt="gray-blob" />
+    //   <Image className='hidden xl:flex absolute bottom-[-160px] right-0' src={GreenBlob2} alt="green-blob-2" />
+    //   {modalOpen && (
+    //     <NewDeviceModal setModalOpen={setModalOpen} modalOpen={modalOpen} onClick={onModalSubmit} modalData={transactionData} />
+    //   )}
+    // </div>
+    <div className='flex flex-col justify-center items-center relative'>
+      <Image
+        src="/images/vector7.2.svg"
+        alt="Ellipse"
+        width={800}
+        height={429}
+        className="hidden xl:flex absolute top-[40px] left-[450px] object-cover blur-xl"
+      />
+      <Image
+        src="/images/vector5.2.svg"
+        alt="Ellipse"
+        width={300}
+        height={250}
+        className="absolute top-[400px] left-[60px] object-cover blur-md"
+      />
+      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 mb-4 md:mt-48 md:mb-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[315px] z-10">
+        <div className='flex flex-col'>
+          <h2 className="text-2xl md:text-5xl font-normal text-center md:text-start">Log In</h2>
+          <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
+        </div>
+        <div className='w-[350px] md:min-w-[543px] h-auto border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
+          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[400px] md:min-h-[315px] h-auto object-cover ">
           </div>
-          {/* AUTHID Login */}
-          {/* <div className='flex flex-col xl:flex-row gap-[10px] z-[90] w-full '>
-            <div className='flex flex-col xl:items-left w-full xl:w-[50vw] gap-5'>
-              <h1 className='text-xl xl:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>AuthID Verification</h1>
-              <p className={`text-[#ffffff] text-base xl:text-2xl  text-center xl:text-left font-normal ${inter.className}`} >Use AuthID for enhanced security</p>
-            </div>
-            <div
-              style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
-              className='w-full xl:w-[50vw] h-auto overflow-hidden border rounded-xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10 relative'>
-              <img style={{ opacity: 0.4 }} alt="" src='/images/card-bg.png' className='absolute top-0 w-full h-[300px] left-0 z-[1]' />
-              <div className='w-full flex flex-col h-auto pt-[46px] pb-7 xl:pb-[49px] pl-[21px] pr-[21px] xl:pr-[60px] z-[90] gap-[20px]'>
-                <form className='w-full flex flex-col h-auto z-[90] gap-[20px]'>
-                  <div className="flex flex-col items-left gap-[5px]">
+          <div className='absolute w-[270px] md:w-[450px] top-10 left-10 flex flex-col'>
+            <form className='absolute w-[270px] md:w-[450px] mt-12 md:mt-3 flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+              {/* email */}
+              <div className="flex flex-col items-left gap-[5px]">
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({ field }) => (
                     <Input
+                      {...field}
                       type="text"
-                      name="authId"
-                      value={authId}
-                      onChange={(e) => { setAuthId(e.target.value) }}
-                      placeholder='Enter your 6-digit code'
+                      placeholder='Email'
                     />
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your AuthID email</p>
-                  </div>
-                  <Button type="submit" variant="primary" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
-                    Log In
-                  </Button>
-                </form>
+                  )}
+                />
+                {!errors.email && (
+                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email</p>
+                )}
+                {errors.email && errors.email.message && (
+                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
+                )}
               </div>
-            </div>
-          </div> */}
+              {/* password */}
+              <div className="flex flex-col items-left gap-[5px]">
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder='Password'
+                      autoComplete='new-password'
+                    />
+                  )}
+                />
+                {!errors.password && (
+                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
+                )}
+                {errors.password && errors.password.message && (
+                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.password.message}`}</p>
+                )}
+              </div>
+              <Button disabled={loading} type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                Log In {loading && <Spinner className="ml-3 w-5 h-5" />}
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
-      {/* svg assets */}
-      <Image className='flex xl:hidden absolute top-0 left-0' src={BlueBlobMobile1} alt="blue-blob-mobile-1" />
-      <Image className='flex xl:hidden absolute top-0 right-0' src={GreenBlobMobile1} alt="green-blob-mobile-1" />
-      <Image className='flex xl:hidden absolute bottom-0 right-0' src={GreenBlobMobile2} alt="green-blob-mobile-2" />
-      <Image className='flex xl:hidden absolute bottom-0 left-0' src={GrayBlobMobile} alt="gray-blob-mobile" />
-      <Image className='flex xl:hidden absolute bottom-0' src={BlueBlobMobile2} alt="blue-blob-mobile-2" />
-      <Image className='hidden xl:flex absolute top-0 right-0' src={GreenBlob} alt="green-blob" />
-      <Image className='hidden xl:flex absolute bottom-[-600px]' src={BlueBlob} alt="blue-blob" />
-      <Image className='hidden xl:flex absolute top-[160px] left-[100px]' src={GrayBlob} alt="gray-blob" />
-      <Image className='hidden xl:flex absolute bottom-[-160px] right-0' src={GreenBlob2} alt="green-blob-2" />
-      {modalOpen && (
-        <NewDeviceModal setModalOpen={setModalOpen} modalOpen={modalOpen} onClick={onModalSubmit} modalData={transactionData} />
-      )}
     </div>
   )
 }
