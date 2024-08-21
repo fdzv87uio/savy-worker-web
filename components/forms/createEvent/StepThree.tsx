@@ -66,6 +66,12 @@ export default function StepThree() {
         getData();
     }, [])
 
+    const iconMap: { [key: string]: string } = {
+        Music: "/images/gaming-icon.png",
+        Bussiness: "/images/gaming-icon.png",
+        // TODO add more categories
+    };
+
     const handlePreferenceClick = (preference: string, id: string) => {
         // Clonar el array actual de preferencias para trabajar con una copia
         let updatedPrefs = [...currentPrefs];
@@ -102,29 +108,31 @@ export default function StepThree() {
 
     return (
         <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
-            <h1 className='text-2xl'>Select your activity</h1>
+            <h1 className='text-2xl'>Select Your Preferences</h1>
             <div className='w-full flex flex-col'>
-                {categories.length > 0 && categories.map((x: any, key: number) => {
-                    let Prefs = prefOptions[x];
+                {categories.length > 0 && categories.map((x: string, key: number) => {
+                    const Prefs = prefOptions[x];
+                    const iconSrc = iconMap[x] || "/images/gaming-icon.png"; // Ícono por defecto si no hay coincidencia
+
                     return (
                         <div className='w-full h-auto flex flex-col items-left mb-[20px]' key={`category_${key}`}>
                             <div className='flex flex-row gap-[10px] items-center mb-[10px]'>
                                 <div className='w-[59px] h-[59px] bg-primary-1 rounded-full flex flex-col justify-center items-center'>
-                                    <img src="/images/gaming-icon.png" width={36} height={36} alt="icon" />
+                                    <img src={iconSrc} width={36} height={36} alt="icon" />
                                 </div>
                                 <p className='text-2xl'>{x}</p>
                             </div>
                             <div className='w-full h-auto flex flex-row border border-[#C4C4C4] rounded-lg gap-[10px] py-[17px] px-[10px]'>
-                                {Prefs.map((item: any, k: number) => {
-                                    return (
-                                        < div key={`pref_${k}`}>
-                                            <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${inputs.prefe && inputs.prefe.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
+                                {Prefs.map((item: any, k: number) => (
+                                    <div key={`pref_${k}`}>
+                                        <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${inputs.prefe && inputs.prefe.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>
+                                            {item.name}
                                         </div>
-                                    )
-                                })}
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    )
+                    );
                 })}
                 <div className='w-full flex flex-row justify-between'>
                     <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
