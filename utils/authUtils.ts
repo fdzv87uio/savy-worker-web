@@ -114,3 +114,29 @@ export async function resetPassword(email: string, token: string, password: stri
         return res;
     }
 };
+
+export async function getAllUsers(accessToken: string): Promise<any> {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/user/list";
+
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res: any = {
+            status: "success",
+            data: response.data,
+        };
+        return res;
+    } catch (error) {
+        const res: any = {
+            status: "error",
+            error: error,
+        };
+        return res;
+    }
+}

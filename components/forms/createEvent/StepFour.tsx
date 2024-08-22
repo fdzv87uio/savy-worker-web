@@ -17,6 +17,8 @@ import { description } from "platform";
 import { getProfile } from "@/utils/profileUtils";
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { Input } from "@/components/ui/input";
+import AttendeeModal from "@/components/ui/attendeeModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +47,9 @@ export default function StepFour() {
     const [userId, setUserId] = useState("");
     const [userName, setUserName] = useState("");
     const [eventId, setEventId] = useState("");
+    const [attendees, setAttendees] = useState<string[]>([]);
+    const [attendeeInput, setAttendeeInput] = useState<any>("");
+    const [attendeeError, setAttendeeError] = useState<any>("");
     const router = useRouter();
 
     const token = getCookie('curcle-auth-token') as string;
@@ -232,8 +237,33 @@ export default function StepFour() {
         setInputs({ ...inputs, step: 3, progress: 50 });
     };
 
+    function handleAttendeeChange(value: any, e: any) {
+        e.preventDefault();
+        console.log("new attendee:");
+        console.log(value);
+        const currentLimit: any = inputs.attendees;
+        if (value && value !== "") {
+            const current: any = attendees;
+            if (current.includes(value)) {
+                const filtered = current.filter((x: any) => x !== value);
+                setAttendees(filtered);
+            } else {
+                current.push(value);
+                setAttendees(current);
+            }
+        }
+        if (attendees.length < currentLimit) {
+            const msg = `Your event must have at least ${currentLimit} attendees`
+            setAttendeeError(msg);
+        } else {
+            setAttendeeError("")
+        }
+        setAttendeeInput("");
+
+    }
+
     return (
-        <form className={`absolute w-[250px] md:w-[450px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
+        <form className={`absolute w-[250px] md:w-[450px] max-h-[750px] mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
             {/* File upload for images */}
             <div className="flex flex-col items-left gap-[5px]">
                 <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Upload images {eventId}</p>
@@ -304,8 +334,27 @@ export default function StepFour() {
                     ))}
                 </div>
             </div>
+            {/* Attendees */}
+            <div className="w-full h-auto flex flex-col items-left gap-5">
+                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Attendees:</p>
+                <AttendeeModal token={token} onChange={setAttendees} />
+                {/* <Input name="attendeeInput" placeholder="Insert Attendee's Email" type="text" value={attendeeInput} onChange={(e: any) => { setAttendeeInput(e.target.value) }} />
+                <Button className="w-[150px]" disabled={!attendeeInput ? true : false} onClick={(e: any) => handleAttendeeChange(attendeeInput, e)} variant="secondary" size="sm">Add Attendee</Button>
+                {attendees && attendees.length > 0 && (
+                    <div className="w-full h-auto flex flex-col gap-5 pr-3">
+                        {attendees && attendees.length > 0 && attendees.map((x: any, key: number) => {
+                            return (
+                                <div key={`attendee_${key}`} className="px-2 w-full flex flex-row h-[30px] items-center justify-between bg-gray-500/50 hover:bg-gray-500 text-[#ffffff] border border-[#ffffff] rounded-lg">
+                                    <span>{x}</span>
+                                    <img onClick={(e: any) => handleAttendeeChange(x, e)} src="/icons/x.svg" width={20} height={20} alt="" className="cursor-pointer" />
+                                </div>
+                            )
+                        })}
+                    </div>
+                )} */}
+            </div>
 
-            <div className='w-full flex flex-row justify-between'>
+            <div className='w-full flex flex-row pb-7 justify-between'>
                 <Button disabled={isUploading || isGettingUserInfo} variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
                     Back
                 </Button>

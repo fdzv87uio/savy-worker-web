@@ -343,7 +343,7 @@ const SignIn = () => {
         height={250}
         className="absolute top-[400px] left-[60px] object-cover blur-md"
       />
-      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 mb-4 md:mt-48 md:mb-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[315px] z-10">
+      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 mb-4 md:mt-20 md:mb-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[315px] z-10">
         <div className='flex flex-col'>
           <h2 className="text-2xl md:text-5xl font-normal text-center md:text-start">Log In</h2>
           <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
