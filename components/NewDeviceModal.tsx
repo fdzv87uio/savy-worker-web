@@ -30,7 +30,7 @@ export function NewDeviceModal({ onClick, modalData, modalOpen, setModalOpen }: 
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button variant="primary" size="sm" onClick={() => onClick()}>Accept</Button>
+                    <Button variant="default" size="sm" onClick={() => onClick()}>Accept</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

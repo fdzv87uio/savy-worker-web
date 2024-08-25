@@ -14,7 +14,7 @@ const Hero = () => {
         </div>
         <div className='flex gap-3 mt-3'>
           <Link href="/signUp">
-            <Button variant="primary" size="sm" className={`text-xs font-normal ${inter.className}`}>
+            <Button variant="default" size="sm" className={`text-xs font-normal ${inter.className}`}>
               Sign Up
             </Button>
           </Link>

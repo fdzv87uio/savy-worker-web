@@ -55,7 +55,7 @@ const Address = () => {
       postalCode: '',
     },
     resolver: yupResolver(validationSchema),
-    mode: 'onChange', 
+    mode: 'onChange',
   });
 
   useEffect(() => {
@@ -226,7 +226,7 @@ const Address = () => {
               </div>
 
               <div className='w-full flex'>
-                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="primary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
                   Save
                   {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                 </Button>

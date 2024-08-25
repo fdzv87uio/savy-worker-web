@@ -168,7 +168,7 @@ export default function AttendeeModal({ onChange, token }: AttendeeModalProps) {
                                 <Button variant="secondary" size="sm" className="mb-4 md:mt-5 w-[250px]">Finish</Button>
                             </DialogClose>
                             <DialogClose className="flex w-[150px] p-0">
-                                <Button variant="primary" size="sm" className="mb-4 md:mt-5 w-[250px]">Close</Button>
+                                <Button variant="default" size="sm" className="mb-4 md:mt-5 w-[250px]">Close</Button>
                             </DialogClose>
                         </div>
                     </div>

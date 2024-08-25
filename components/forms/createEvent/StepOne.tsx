@@ -214,7 +214,7 @@ export default function StepOne() {
                 )}
             </div>
 
-            <Button type="submit" variant="primary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+            <Button type="submit" variant="default" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
                 Next
             </Button>
         </form>

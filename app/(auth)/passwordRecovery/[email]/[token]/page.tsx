@@ -134,7 +134,7 @@ const PasswordRecovery = () => {
                                             <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.repeatPassword.message}`}</p>
                                         )}
                                     </div>
-                                    <Button disabled={!newPassword || !repeatPassword || errors.repeatPassword || errors.newPassword ? true : false} type="submit" variant="primary" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                                    <Button disabled={!newPassword || !repeatPassword || errors.repeatPassword || errors.newPassword ? true : false} type="submit" variant='default' size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
                                         {loading ? "..." : "Submit"}
                                     </Button>
                                 </form>

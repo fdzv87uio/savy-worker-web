@@ -81,7 +81,7 @@ export default function QrModal({ url }: QrModalProps) {
                             </h6>
                         </div>
                         <DialogClose className="flex md:hidden w-[250px] p-0">
-                            <Button variant="primary" size="lg" className="mb-4 mt-5 w-[250px]">Finish</Button>
+                            <Button variant="default" size="lg" className="mb-4 mt-5 w-[250px]">Finish</Button>
                         </DialogClose>
                     </div>
                 </div>

@@ -102,7 +102,7 @@ export default function LocationModal({ onChange, value }: LocationModalProps) {
                     </div>
                     <div className="w-full h-auto flex flex-col items-center">
                         <DialogClose className="flex w-[150px] p-0">
-                            <Button variant="primary" size="sm" className="mb-4 mt-5 w-[250px]">Close</Button>
+                            <Button variant="default" size="sm" className="mb-4 mt-5 w-[250px]">Close</Button>
                         </DialogClose>
                     </div>
 

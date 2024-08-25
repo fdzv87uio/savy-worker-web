@@ -126,14 +126,14 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                   {isUser && (
                     <>
                       <Button variant="secondary" size="sm" className='w-[176px] h-[41px]'>Attend</Button>
-                      <Button variant="primary" size="sm" className='w-[176px] h-[41px]'>Ignore</Button>
+                      <Button variant="default" size="sm" className='w-[176px] h-[41px]'>Ignore</Button>
                       <QrModal url={event.url} />
                     </>
                   )}
                   {!isUser && (
                     <>
                       <Button onClick={() => router.push('/signUp')} variant="secondary" size="sm" className='w-[176px] h-[41px]'>Interested? SignUp</Button>
-                      <Button onClick={() => router.push('/search')} variant="primary" size="sm" className='w-[176px] h-[41px]'>More Events</Button>
+                      <Button onClick={() => router.push('/search')} variant="default" size="sm" className='w-[176px] h-[41px]'>More Events</Button>
                       <QrModal url={event.url} />
                     </>
                   )}

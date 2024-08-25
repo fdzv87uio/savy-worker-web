@@ -97,10 +97,10 @@ export default function CustomDropdown({ label, handleChange, options, type }: C
                             <Input type="date" value={toDate} onChange={(e: any) => { setToDate(e.target.value) }} />
                         </div>
                         <DropdownMenuItem className="h-[30px]">
-                            <Button className="h-[30px] w-full" onClick={() => selectDates()} size="xsm" variant="primary">Accept</Button>
+                            <Button className="h-[30px] w-full" onClick={() => selectDates()} size="sm" variant="default">Accept</Button>
                         </DropdownMenuItem>
                         <div className="h-[30px] px-2">
-                            <Button className="h-[30px] w-full" onClick={() => clearDates()} size="xsm" variant="secondary">Clear</Button>
+                            <Button className="h-[30px] w-full" onClick={() => clearDates()} size="sm" variant="secondary">Clear</Button>
                         </div>
                     </DropdownMenuContent>
                 </DropdownMenu>
