@@ -1,69 +1,44 @@
-import React from 'react'
+'use client'
 
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
-import Image from 'next/image';
-import { Button } from './ui/button';
+import { usePathname } from 'next/navigation'
+import MaxWidthWrapper from './MaxWidthWrapper'
+import Link from 'next/link'
+import { buttonVariants } from './ui/button'
 
+const Footer = ({ relative }: { relative?: boolean }) => {
+  const pathname = usePathname()
+  const pathsToMinimize = [
+    '/inicio',
+    '/busqueda',
+  ]
 
-const Footer = () => {
   return (
-    <div className="flex h-[138px] bg-blue-1 relative">
-      <section className="flex justify-between items-center w-full gap-10 px-3 md:px-16">
-        <p className={`text-sm md:text-base ${inter.className} text-primary-1`}>
-          Copyright 2024 Curcleup
-        </p>
-        <div className='hidden xl:flex max-w-[485px] w-full justify-between'>
-          <div className='flex gap-4 text-xs text-white-2'>
-            <p>Terms & Conditions</p>
-            <p>Privacy Policy</p>
-          </div>
-          <div className='flex gap-3 text-white-2'>
-            <Image src="/icons/facebook.svg" alt='icon' width={5} height={8} className='w-[5px] h-[8px]' />
-            <Image src="/icons/twitter.svg" alt='icon' width={8} height={8} className='w-[8px] h-[8px]' />
-            <Image src="/icons/instagram.svg" alt='icon' width={8} height={8} className='w-[8px] h-[8px]' />
-          </div>
-        </div>
-        <div className='hidden xl:flex gap-2 items-center max-w-[198px] w-full justify-between'>
-          <p className='text-xs text-white-2 w-full'>
-            Ready to explore?
-          </p>
-          <Button variant="primary" size="xsm" className={`text-[6px] text-white-1 ${inter.className}`}>
-            Get Started
-          </Button>
-        </div>
-        <p className='hidden md:flex text-xs text-white-2 max-w-[145px]'>
-          Get updates on your favourite games
-        </p>
-        <div className='flex gap-4'>
-          <div className='flex flex-col gap-3'>
-            <p className='text-xs text-primary-3'>
-              About
+    <footer className={`w-full ${relative ? 'relative bg-white' : 'absolute bottom-[170px] bg-transparent'} flex-grow-0`}>
+      <MaxWidthWrapper>
+        <div className={`py-10 md:flex md:justify-between flex-row relative`}>
+          <div className='text-center md:text-left'>
+            <p className='text-sm text-muted-foreground'>
+              &copy; {new Date().getFullYear()} All Rights Reserved
             </p>
-            <div className='flex flex-col'>
-              <ul className={`flex flex-col gap-2 text-xs text-white-2 ${inter.className} text-white-2`}>
-                <li>Our Story</li>
-                <li>Benefits</li>
-                <li>Team</li>
-                <li>Careers</li>
-              </ul>
-            </div>
           </div>
-          <div className='flex flex-col gap-3'>
-            <p className='text-xs text-primary-3'>
-              Help
-            </p>
-            <div className='flex flex-col'>
-              <ul className={`flex flex-col gap-2 text-xs text-white-2 ${inter.className} text-white-2`}>
-                <li>FAQs</li>
-                <li>Contact Us</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
-      </section>
-    </div>
+          <div className='mt-4 flex items-center justify-center md:mt-0'>
+            <div className='flex space-x-8'>
+              <Link
+                href='#'
+                className='text-xs text-muted-foreground hover:text-gray-600'>
+                Terms and Conditions
+              </Link>
+              <Link
+                href='#'
+                className='text-xs text-muted-foreground hover:text-gray-600'>
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
+        </div>
+      </MaxWidthWrapper>
+    </footer>
   )
 }
 

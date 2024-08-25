@@ -53,7 +53,7 @@ const Header = () => {
         deleteCookie('curcle-auth-token')
         clearAuthToken();
         setIsUser(false);
-        router.push('/signIn');
+        // router.push('/signIn');
       }
       setIsUser(!!authToken || !!cookieToken);
       if (cookieToken && userEmail) {

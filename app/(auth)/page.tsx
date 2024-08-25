@@ -13,6 +13,7 @@ import ScheduledEvents from '@/components/ScheduledEvents';
 import { Skeleton } from '@/components/ui/skeleton';
 import { findUserByEmail } from '@/utils/authUtils';
 import { useAuthTokenStore } from '@/stores/authTokenStore';
+import MapGrid2 from '@/components/MapGrid2';
 
 
 const Home = () => {
@@ -67,112 +68,8 @@ const Home = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center relative'>
-      {!loading && (
-        <>
-          <Image
-            src="/images/vector1.svg"
-            alt="Ellipse"
-            width={581}
-            height={307}
-            className="absolute top-[700px] left-[0] object-cover blur-xl w-[581px] h-[307px]"
-          />
-          <Image
-            src="/images/vector2.svg"
-            alt="Ellipse"
-            width={699}
-            height={430}
-            className="hidden xl:flex absolute top-[630px] left-[400px] md:left-[700px] object-cover blur-xl"
-          />
-          <Image
-            src="/images/vector3.svg"
-            alt="Ellipse"
-            width={238}
-            height={227}
-            className="absolute top-[1800px] left-[100px] object-cover blur-xl w-[238px] h-[227px]"
-          />
-          <Image
-            src="/images/vector4.svg"
-            alt="Ellipse"
-            width={324}
-            height={364}
-            className="hidden xl:flex absolute top-[1750px] md:left-[1000px] object-cover blur-md"
-          />
-          {isUser ? (
-            <Image
-              src="/images/vector5.svg"
-              alt="Ellipse"
-              width={581}
-              height={306}
-              className="hidden xl:flex absolute top-[1800px] left-[150px] object-cover blur-2xl"
-            />
-          ) : (
-            <Image
-              src="/images/vector5.svg"
-              alt="Ellipse"
-              width={581}
-              height={306}
-              className="hidden xl:flex absolute top-[2250px] left-[150px] object-cover blur-2xl"
-            />)}
-          {!isUser &&
-            <>
-              <Image
-                src="/images/vector6.svg"
-                alt="Ellipse"
-                width={354}
-                height={276}
-                className="hidden xl:flex absolute top-[2650px] left-[300px] object-cover blur-xl"
-              />
-              <Image
-                src="/images/vector7.svg"
-                alt="Ellipse"
-                width={290}
-                height={306}
-                className="hidden xl:flex absolute top-[2650px] left-[200px] object-cover blur-xl"
-              />
-              <Image
-                src="/images/vector6.svg"
-                alt="Ellipse"
-                width={354}
-                height={276}
-                className="hidden xl:flex absolute top-[2650px] left-[830px] object-cover blur-xl"
-              />
-              <Image
-                src="/images/vector7.svg"
-                alt="Ellipse"
-                width={290}
-                height={306}
-                className="hidden xl:flex absolute top-[2650px] left-[700px] object-cover blur-xl"
-              />
-            </>
-          }
-
-          {/* Hero */}
-          {isUser === null ? (
-            <Skeleton className="h-[116px] w-full rounded-full mt-10" />
-          ) : isUser ? (
-            <UserBanner name={name} lastname={lastname} email={email} />
-          ) : (
-            <Hero />
-          )}
-          {/* Recommended Events */}
-          <RecommendedEvents isUser={isUser} userInfo={userInfo} />
-          {/* SignUp*/}
-          <SignUpForFree isUser={isUser} setIsUser={setIsUser} />
-          {/* Categories */}
-          {!isUser &&
-            <PopularCategories />
-          }
-          {/* User Reviews */}
-          <div className='h-auto w-full mb-[100px] flex flex-col items-center'>
-            {isUser && userInfo ? (
-              <ScheduledEvents userInfo={userInfo} />
-            ) : (
-              <UserReviews />
-            )}
-          </div>
-        </>
-      )}
+    <div className='relative w-full h-[100vh]'>
+      <MapGrid2 />
     </div>
   )
 }

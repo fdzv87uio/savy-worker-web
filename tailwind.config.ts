@@ -1,107 +1,78 @@
-//@ts-ignore
-import type { Config } from "tailwindcss";
-const plugin = require('tailwindcss/plugin');
-
-const config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
-  prefix: "",
   theme: {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
       colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          1: "#32A852",
-          2: "#288E44",
-          3: "#3EC663"
+          DEFAULT: "#7acec4",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          1: "#3772AD",
-          2: "#306295"
+          DEFAULT: "#5e388f",
+          foreground: "hsl(var(--secondary-foreground))",
         },
-        white: {
-          1: "#EBEBEB",
-          2: "#FFFFFF",
+        destructive: {
+          DEFAULT: "#141437",
+          foreground: "hsl(var(--destructive-foreground))",
         },
-        black: {
-          1: "#00030F",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
-        orange: {
-          1: "#F97535",
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
-        gray: {
-          1: "#E9E9E9",
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
-        green: {
-          1: "#44D464",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
-        blue: {
-          1: "#030614",
-          2: "#00030F",
-          3: "#0D0A2C"
-        },
-        neutral: {
-          1: "#8B8B8B",
-          2: "#D8D8D8"
-        }
       },
-      backgroundImage: {
-        "nav-focus": "linear-gradient(270deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      },
-      textShadow: {
-        sm: '0 1px 2px var(--tw-shadow-color)',
-        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
-        lg: '0 8px 16px var(--tw-shadow-color)',
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
+          from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          to: { height: 0 },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      h_auto: {
-        "hauto": { height: "100px" }
+      fontFamily: {
+        'sans': ['"Archivo Black"'],
+        'mono': ['sans-serif'],
       },
-      boxShadow: {
-        'custom-primary': '3px 3px 1px 1px #306295',
-        'custom-secondary': '3px 3px 1px 1px #288E44'
-      }
     },
+
   },
-  plugins: [
-    require("tailwindcss-animate"),
-
-    plugin(function ({ matchUtilities, theme }: { matchUtilities: any, theme: any }) {
-      matchUtilities(
-        {
-          'text-shadow': (value: any) => ({
-            textShadow: value,
-          }),
-        },
-        { values: theme('textShadow') }
-      )
-    }),
-  ],
-} satisfies Config;
-
-export default config;
+  plugins: [require("tailwindcss-animate")],
+}

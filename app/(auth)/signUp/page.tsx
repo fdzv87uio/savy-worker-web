@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Inter } from "next/font/google";
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 const inter = Inter({ subsets: ["latin"] });
@@ -18,33 +18,41 @@ import platform from 'platform';
 import { TransactionType } from '@/interfaces/transactionInterfaces';
 import { getIpData } from '@/utils/ipUtils';
 import { createTransaction } from '@/utils/transactionUtils';
+import { motion } from 'framer-motion';
 import { Progress } from '@/components/ui/progress';
 import StepOne from './forms/StepOne';
 import StepTwo from './forms/StepTwo';
 import { getAllPreferences, getAllPreferencesByCategory } from '@/utils/preferencesUtils';
 import StepThree from './forms/StepThree';
+import Link from 'next/link';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import Footer from '@/components/Footer';
+import { cn } from '@/lib/utils';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
-  const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
-  // Navigation Props 
-  const [progress, setProgress] = useState(10);
-  const [step, setStep] = useState(1);
   // Form props
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [idNumber, setIdNumber] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("USA");
-  const [preferences, setPreferences] = useState('');
-  const [prefOptions, setPrefOptions] = useState<any>({})
-  const [prefList, setPrefList] = useState<any[]>([])
+
+
+  // Yup validation rules
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .matches(emailRegex, "Invalid email")
+      .email('Email is invalid'),
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 characters long')
+      .required('Password is required'),
+  });
+  //Form options
+  const formOptions: any = {
+    resolver: yupResolver(validationSchema),
+    mode: 'onChange',
+  };
+  //react-hook-forms 
+  const { handleSubmit, register, formState: { errors } } = useForm<any>(formOptions);
+
 
   const [ip, setIp] = useState('');
   const router = useRouter();
@@ -57,46 +65,18 @@ const SignUp = () => {
   async function getData() {
     const ipData = await getIpData();
     setIp(ipData.ip)
-    const allPrefs: any = await getAllPreferencesByCategory();
-    const allPrefsList: any = await getAllPreferences();
-    if (allPrefs?.status === "success" && allPrefsList?.status === "success") {
-      console.log("prefs:");
-      console.log(allPrefs.data);
-      setPrefOptions(allPrefs.data);
-      setPrefList(allPrefsList.data);
-    }
+
   }
 
 
   // Submission handler
-  async function onSubmit(event: any) {
-    event.preventDefault(); // Here's the hero!
+  async function onSubmit(info: any) {
     const data: any = {
-      name: name,
-      lastname: lastname,
-      email: email,
-      password: password,
-      birthDate: birthDate,
-      address: address,
-      addressDetails: addressDetails,
-      idNumber: idNumber,
-      postalCode: postalCode,
-      city: city,
-      country: country,
+      email: info.email,
+      password: info.password,
     };
-    const prefArray = preferences.split(',');
-    const prefIdArray: any = [];
-    prefArray.forEach((x: any) => {
-      const filtered = prefList.filter((y: any) => y.name === x)[0];
-      if (filtered) {
-        prefIdArray.push(filtered._id);
-      }
-    })
-    data.preferences = prefIdArray;
-    data.documentType = 'Driver Licenses';
-    console.log(data);
     setLoading(true);
-    if (email && password) {
+    if (data.email && data.password) {
       // Set Info for new Transaction
       const os = platform.os?.family ? platform.os?.family : "n/a";
       const browser = platform.name ? platform.name : "n/a";
@@ -117,7 +97,7 @@ const SignUp = () => {
       }
       const salt = bcrypt.genSaltSync(12);
       const hashedPassword = bcrypt.hashSync(data.password, salt);
-      const res: any = await createAccount(data.name, data.lastname, data.email, hashedPassword, data.address, data.addressDetails, data.postalCode, data.city, data.idNumber, data.birthDate, data.documentType, data.preferences);
+      const res: any = await createAccount(data.email, hashedPassword);
       if (res.status === 'error') {
         setLoading(false);
         const msg = res.error.response.data.message ? res.error.response.data.message : 'Invalid Credentials';
@@ -126,11 +106,11 @@ const SignUp = () => {
         // Create User Register Transaction
         await createTransaction(newData);
         const newToken = res.data.dataAuthRegister.accessToken;
-        setCookie('curcle-auth-token', newToken, {
+        setCookie('savy-auth-token', newToken, {
           maxAge: 604800,
           path: '/',
         });
-        setCookie('curcle-user-email', data.email, {
+        setCookie('savy-user-email', data.email, {
           maxAge: 604800,
           path: '/',
         });
@@ -144,45 +124,92 @@ const SignUp = () => {
     }
   }
 
+  const variants = {
+    hidden: { opacity: 0, x: -200, y: 0 },
+    enter: { opacity: 1, x: 0, y: 0 },
+  }
+
 
   return (
-    <div className='flex flex-col justify-center items-center relative'>
-      <Image
-        src="/images/vector7.2.svg"
-        alt="Ellipse"
-        width={800}
-        height={429}
-        className="hidden xl:flex absolute top-[40px] left-[450px] object-cover blur-xl"
-      />
-      <Image
-        src="/images/vector5.2.svg"
-        alt="Ellipse"
-        width={300}
-        height={250}
-        className="absolute top-[400px] left-[60px] object-cover blur-md"
-      />
-      <div className="flex flex-col xl:flex-row justify-center items-center gap-5 text-white-1 mt-10 mb-4 md:mt-3 md:mb-20 w-[350px] md:w-[750px] xl:w-[1123px] md:min-h-[637px] z-10">
-        <div className='flex flex-col'>
-          <h2 className="text-2xl md:text-5xl font-normal text-center md:text-start">Create Your Account</h2>
-          <p className={`text-lg md:text-2xl text-center md:text-start ${inter.className} mt-3`}>Join exciting sporting events and meetings with gamers</p>
-        </div>
-        <div className='w-[350px] md:min-w-[543px] h-auto border relative rounded-2xl border-[rgba(255,255,255,0.2)] bg-[#ffffff]/10'>
-          <div className="flex items-center bg-[url('/images/card-bg.png')] bg-cover bg-left-bottom opacity-10 min-h-[670px] h-auto object-cover ">
+    <div>
+      <motion.main
+        variants={variants}
+        initial="hidden"
+        animate="enter"
+        transition={{ type: "linear" }}
+      >
+        <div className='container overflow-visible z-[99] h-screen relative flex flex-col items-center lg:px-0'>
+          <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
+            <div className='flex flex-col items-center text-center'>
+              <h1 className='text-2xl font-semibold tracking-tight'>
+                Register Your Account
+              </h1>
+
+              <Link
+                className={`${buttonVariants({
+                  variant: 'link',
+                  className: 'gap-1.5',
+                })} font-mono text-normal`}
+                href='/sign-in'>
+                Already Have an Account? LOGIN
+                <ArrowRight className='h-4 w-4' />
+              </Link>
+            </div>
+
+            <div className='grid gap-3'>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className='grid gap-2'>
+                  <div className='grid gap-1 py-1'>
+                    <Label htmlFor='email'>Email</Label>
+                    <Input
+                      {...register('email')}
+                      className={cn({
+                        'focus-visible:ring-red-500':
+                          errors.email,
+                      })}
+                      placeholder='example@email.com'
+                    />
+                    {errors?.email && (
+                      <p className='text-sm text-red-500 font-mono text-normal'>
+                        {errors.email.message?.toString()}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className='grid gap-1 py-1'>
+                    <Label htmlFor='password'>Password</Label>
+                    <Input
+                      {...register('password')}
+                      type='password'
+                      className={cn({
+                        'focus-visible:ring-red-500':
+                          errors.password,
+                      })}
+                      placeholder='Password'
+                    />
+                    {errors?.password && (
+                      <p className='text-sm text-red-500 font-mono text-normal'>
+                        {errors.password.message?.toString()}
+                      </p>
+                    )}
+                  </div>
+                  <div className='w-full text-xs font-mono text-normal mb-3'>
+                    By creating this account, you accept out <a className='text-blue-600' href='/terms-and-conditions'>Terms and Conditions</a>, as well as our <a className='text-blue-600' href="/privacy-policy">Privacy Policy</a>.
+                  </div>
+
+                  <Button className='bg-secondary' disabled={loading}>
+                    {loading && (
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    )}
+                    Register
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div className='absolute w-[270px] md:w-[450px] top-10 left-10 flex flex-col'>
-            <Progress value={progress} max={100} className='z-[99]' id="progress" />
-            {step === 1 && (
-              <StepOne step={step} setStep={setStep} setProgress={setProgress} name={name} setName={setName} lastname={lastname} setLastname={setLastname} birthDate={birthDate} setBirthDate={setBirthDate} email={email} setEmail={setEmail} setPassword={setPassword} idNumber={idNumber} setIdNumber={setIdNumber} />
-            )}
-            {step === 2 && (
-              <StepTwo step={step} setStep={setStep} setProgress={setProgress} address={address} setAddress={setAddress} addressDetails={addressDetails} setAddressDetails={setAddressDetails} postalCode={postalCode} setPostalCode={setPostalCode} city={city} setCity={setCity} />
-            )}
-            {step === 3 && (
-              <StepThree loading={loading} step={step} prefOptions={prefOptions} setStep={setStep} setProgress={setProgress} setPreferences={setPreferences} preferences={preferences} handleSubmit={onSubmit} />
-            )}
-          </div>
+          <Footer />
         </div>
-      </div>
+      </motion.main>
     </div>
   )
 }
