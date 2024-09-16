@@ -5,6 +5,13 @@ interface ApiResponseCreateEvent {
   error?: any;
 }
 
+interface ApiResponseCreateTask {
+  success: boolean;
+  statusCode: string;
+  data?: EventData;
+  error?: any;
+}
+
 interface EventData {
   title: string;
   slug: string;

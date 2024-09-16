@@ -33,7 +33,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
       </head>
-      <body className={`relative h-[100vh] m-2 lg:m-0 top-[240px] md:top-60 ${pathname === "/task" || pathname === "/submit-answer" || pathname === "/" || pathname === '/control-panel' || pathname === "/improve-your-account" ? 'lg:top-[60px] lg:h-[100vh]' : 'lg:top-[160px] lg:h-[100vh]'} font-sans antialiased overflow-y-hidden`}>
+      <body className={`relative h-[100vh] m-2 lg:m-0 top-[240px] md:top-60 ${pathname === "/task" || pathname === "/submit-answer" || pathname === "/" || pathname === '/control-panel' || pathname.includes("/answers/create-answer/") || pathname === "/tasks/create-task" || pathname === "/improve-your-account" ? 'lg:top-[100px] lg:h-[100vh]' : 'lg:top-[160px] lg:h-[100vh]'} font-sans antialiased overflow-y-hidden`}>
         {/* <RecoilRoot>
           <Providers>
             <Navbar />

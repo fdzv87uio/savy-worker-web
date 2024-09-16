@@ -131,6 +131,63 @@ export async function createEvent(eventData: any, accessToken: string): Promise<
     }
 }
 
+export async function createTask(taskData: any, accessToken: string): Promise<ApiResponseCreateTask> {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/tasks/new";
+
+        const response = await axios.post(apiUrl, taskData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res: ApiResponseCreateEvent = {
+            success: true,
+            statusCode: 'success upload',
+            data: response.data,
+        };
+        return res;
+    } catch (error) {
+        const res: ApiResponseCreateEvent = {
+            success: false,
+            statusCode: 'error',
+            error: error,
+        };
+        return res;
+    }
+}
+
+export async function createAnswer(answerData: any, accessToken: string): Promise<any> {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/answers/new";
+
+        const response = await axios.post(apiUrl, answerData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res: ApiResponseCreateEvent = {
+            success: true,
+            statusCode: 'Answer Created',
+            data: response.data,
+        };
+        return res;
+    } catch (error) {
+        const res: ApiResponseCreateEvent = {
+            success: false,
+            statusCode: 'error',
+            error: error,
+        };
+        return res;
+    }
+}
+
+
 export async function updateEvent(eventId: string, eventData: any, accessToken: string) {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + `/events/${eventId}`;
@@ -157,7 +214,59 @@ export async function updateEvent(eventId: string, eventData: any, accessToken: 
     }
 };
 
-export async function getEventsByUserId(id: string,token:string) {
+export async function updateTask(taskId: string, taskData: any, accessToken: string) {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + `/tasks/${taskId}`;
+
+        const response = await axios.put(apiUrl, taskData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res = {
+            status: 'success',
+            data: response.data,
+        }
+        return res;
+    } catch (error) {
+        const res = {
+            status: 'error',
+            error: error,
+        }
+        return res;
+    }
+};
+
+export async function updateAnswer(answerId: string, answerData: any, accessToken: string) {
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + `/answers/${answerId}`;
+
+        const response = await axios.put(apiUrl, answerData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'accept': '*/*'
+            },
+        });
+
+        const res = {
+            status: 'success',
+            data: response.data,
+        }
+        return res;
+    } catch (error) {
+        const res = {
+            status: 'error',
+            error: error,
+        }
+        return res;
+    }
+};
+
+export async function getEventsByUserId(id: string, token: string) {
     try {
         const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/events/getAllByUserId/" + id;
 

@@ -114,7 +114,7 @@ const SignUp = () => {
         setAuthToken(newToken);
         setLoading(false);
         toast.success("Login Successful!");
-        router.push('/');
+        router.push('/control-panel');
       }
     }
   }

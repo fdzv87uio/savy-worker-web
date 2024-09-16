@@ -134,7 +134,7 @@ const SignIn = () => {
             });
             setCAuth(newToken);
             toast.success("Login Successful!");
-            router.push('/');
+            router.push('/control-panel');
           } else {
             setLoading(false);
             toast.error("Error: Failed to create transaction");
@@ -174,7 +174,7 @@ const SignIn = () => {
               setCAuth(newToken);
               setLoading(false);
               toast.success("Login Successful!");
-              router.push('/');
+              router.push('/control-panel');
             } else {
               setLoading(false);
               toast.error("Error: Failed to create transaction");
@@ -218,7 +218,7 @@ const SignIn = () => {
         setModalOpen(false);
         setCAuth(newToken);
         toast.success("Login Successful!");
-        router.push('/');
+        router.push('/control-panel');
       } else {
         setLoading(false);
         setModalOpen(false);

@@ -13,13 +13,13 @@ interface UploadData {
 }
 
 
-export async function uploadImage(file: File, eventId: string, token: string): Promise<ApiResponseUpload> {
+export async function uploadImage(file: File, id: string, token: string): Promise<ApiResponseUpload> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_CURCLE_API_URL + "/upload/image";
 
     const formData = new FormData();
     formData.append('file', file, file.name);
-    formData.append('eventId', eventId);
+    formData.append('id', id);
 
     const response = await axios.post(apiUrl, formData, {
       headers: {
@@ -31,8 +31,8 @@ export async function uploadImage(file: File, eventId: string, token: string): P
 
     const res: ApiResponseUpload = {
       success: true,
-      statusCode: 'success upload',
-      data: response.data.data as UploadData,
+      statusCode: 'upload successful',
+      data: response.data as UploadData,
     };
     return res;
   } catch (error: any) {
