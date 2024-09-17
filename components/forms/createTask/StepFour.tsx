@@ -249,7 +249,7 @@ export default function StepFour() {
 
     return (
         <CustomFormCard>
-            <Progress value={inputs.progress} max={100} className='z-[99]' id="progress" />
+            <Progress value={inputs.progress} max={100} className='z-[20]' id="progress" />
             <form className={`w-[250px] md:w-full h-auto mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
                 {/* File upload for images */}
                 <div className="flex flex-col items-left gap-[5px]">
