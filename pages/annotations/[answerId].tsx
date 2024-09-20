@@ -16,7 +16,7 @@ const Home = () => {
         }
     }, [])
     return (
-        <div className="w-full h-full mt-[40px] ">
+        <div className="w-full h-full mt-[50px] ">
             {loading && (
                 <p>Loading...</p>
             )}
