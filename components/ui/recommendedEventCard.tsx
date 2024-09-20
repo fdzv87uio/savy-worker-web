@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { getSignedImageUrl } from "@/utils/imageFetchUtils";
 import { useRouter } from "next/navigation";
-const inter = Inter({ subsets: ["latin"] });
 
 interface RecommendedEventCardProps {
     event: any;
@@ -54,13 +52,13 @@ export default function RecommendedEventCard({ event, isUser }: RecommendedEvent
                 <div className="text-center mt-4">
                     {event.eventMode !== "online" && (
                         <>
-                            <p className={`${inter.className} text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
-                            <p className={`${inter.className} text-black-1 text-sm md:text-base`}>{event.city}, USA</p>
+                            <p className={`font-mono text-black-1 text-sm md:text-base`}>Location: {event.location}</p>
+                            <p className={`font-mono text-black-1 text-sm md:text-base`}>{event.city}, USA</p>
                         </>
                     )}
                     {event.eventMode === "online" && (
                         <>
-                            <p className={`${inter.className} text-black-1 font-bold text-lg md:text-base`}>Online Event</p>
+                            <p className={`font-mono text-black-1 font-bold text-lg md:text-base`}>Online Event</p>
                         </>
                     )}
                 </div>

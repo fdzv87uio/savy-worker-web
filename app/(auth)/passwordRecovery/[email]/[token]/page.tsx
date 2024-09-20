@@ -2,8 +2,6 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import { Button } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +18,7 @@ import BlueBlobMobile2 from '@/public/svgs/blue-blob-mobile-2.svg';
 import GrayBlobMobile from '@/public/svgs/gray-blob-mobile.svg';
 import Image from 'next/image';
 import { toast } from 'sonner';
-import { useParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 import { resetPassword } from '@/utils/authUtils';
 
@@ -30,7 +28,7 @@ const PasswordRecovery = () => {
     const [loading, setLoading] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
-    const params = useParams<{ email: string; token: string }>()
+    const params = usePathname();
     const router = useRouter();
 
     // Yup validation rules
@@ -63,8 +61,9 @@ const PasswordRecovery = () => {
             const salt = bcrypt.genSaltSync(12);
             const password = bcrypt.hashSync(data.newPassword, salt);
             const confirmPassword = bcrypt.hashSync(data.repeatPassword, salt);
-            const email = params.email.replace("%40", "@");
-            const token = params.token;
+            const paramArray: any = params?.split("/");
+            const email = paramArray[2].replace("%40", "@");
+            const token = paramArray[3];
             const res: any = await resetPassword(email, token, password, confirmPassword);
             if (res.status === "success") {
                 setLoading(false);
@@ -88,7 +87,7 @@ const PasswordRecovery = () => {
                     <div className='flex flex-col xl:flex-row gap-[40px] md:gap-[40px] xl:gap-[80px] z-[90] w-[350px] md:w-[80vw]  xl:w-full '>
                         <div className='w-full flex flex-col xl:items-left xl:w-[40vw] gap-5'>
                             <h1 className='text-2xl md:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Reset Password</h1>
-                            <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Please, enter a new password.</p>
+                            <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal font-mono`} >Please, enter a new password.</p>
                         </div>
                         <div
                             style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
@@ -109,10 +108,10 @@ const PasswordRecovery = () => {
                                             autoComplete='off'
                                         />
                                         {!errors.newPassword && (
-                                            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter a New Password</p>
+                                            <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter a New Password</p>
                                         )}
                                         {errors.newPassword && errors.newPassword.message && (
-                                            <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.newPassword.message}`}</p>
+                                            <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.newPassword.message}`}</p>
                                         )}
                                     </div>
                                     <div className="flex flex-col items-left gap-[5px]">
@@ -128,13 +127,13 @@ const PasswordRecovery = () => {
                                             autoComplete='off'
                                         />
                                         {!errors.repeatPassword && (
-                                            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Repeat your New Password</p>
+                                            <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Repeat your New Password</p>
                                         )}
                                         {errors.repeatPassword && errors.repeatPassword.message && (
-                                            <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.repeatPassword.message}`}</p>
+                                            <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.repeatPassword.message}`}</p>
                                         )}
                                     </div>
-                                    <Button disabled={!newPassword || !repeatPassword || errors.repeatPassword || errors.newPassword ? true : false} type="submit" variant='default' size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                                    <Button disabled={!newPassword || !repeatPassword || errors.repeatPassword || errors.newPassword ? true : false} type="submit" variant='default' size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal font-mono`}>
                                         {loading ? "..." : "Submit"}
                                     </Button>
                                 </form>

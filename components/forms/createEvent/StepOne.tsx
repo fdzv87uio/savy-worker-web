@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,6 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from "next/image";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     eventType: string;
@@ -91,7 +89,7 @@ export default function StepOne() {
 
             {/* type */}
             <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Event type</Label>
+                <Label className={`font-mono text-base`}>Event type</Label>
                 <Controller
                     name="eventType"
                     control={control}
@@ -99,11 +97,11 @@ export default function StepOne() {
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="private" />
-                                <Label className={inter.className}>Private</Label>
+                                <Label className={'font-mono'}>Private</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="public" />
-                                <Label className={inter.className}>Public</Label>
+                                <Label className={'font-mono'}>Public</Label>
                             </div>
                         </RadioGroup>
                     )}
@@ -125,16 +123,16 @@ export default function StepOne() {
                     )}
                 />
                 {!errors.title && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your event title</p>
+                    <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your event title</p>
                 )}
                 {errors.title && errors.title.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.title.message}</p>
+                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.title.message}</p>
                 )}
             </div>
 
             {/* description */}
             <div className="flex flex-col items-left gap-[5px]">
-                <Label className={`${inter.className} text-base`}>Description</Label>
+                <Label className={`font-mono text-base`}>Description</Label>
                 <Controller
                     control={control}
                     name="description"
@@ -142,21 +140,21 @@ export default function StepOne() {
                         <Textarea
                             {...field}
                             placeholder="Event description"
-                            className={`pl-2 text-white-1 font-normal ${inter.className} text-base bg-transparent`}
+                            className={`pl-2 text-white-1 font-normal font-mono text-base bg-transparent`}
                         />
                     )}
                 />
                 {!errors.description && (
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your event description</p>
+                    <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your event description</p>
                 )}
                 {errors.description && errors.description.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.description.message}</p>
+                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.description.message}</p>
                 )}
             </div>
 
             {/* event Mode */}
             <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Event Mode:</Label>
+                <Label className={`font-mono text-base`}>Event Mode:</Label>
                 <Controller
                     name="mode"
                     control={control}
@@ -164,11 +162,11 @@ export default function StepOne() {
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="in-person" />
-                                <Label className={inter.className}>In-Person</Label>
+                                <Label className={'font-mono'}>In-Person</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="online" />
-                                <Label className={inter.className}>Online</Label>
+                                <Label className={'font-mono'}>Online</Label>
                             </div>
                         </RadioGroup>
                     )}
@@ -195,7 +193,7 @@ export default function StepOne() {
             {/* attendees */}
             <div className="flex flex-col items-left gap-[5px]">
                 <div className="flex">
-                    <Label className={`${inter.className} text-base w-[200px]`}>Limit attendees:</Label>
+                    <Label className={`font-mono text-base w-[200px]`}>Limit attendees:</Label>
                     <Controller
                         control={control}
                         name="attendees"
@@ -210,11 +208,11 @@ export default function StepOne() {
                     />
                 </div>
                 {errors.attendees && errors.attendees.message && (
-                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.attendees.message}</p>
+                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.attendees.message}</p>
                 )}
             </div>
 
-            <Button type="submit" variant="default" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+            <Button type="submit" variant="default" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                 Next
             </Button>
         </form>

@@ -5,14 +5,12 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import { deleteCookie, getCookie } from 'cookies-next';
 import { useAuthTokenStore } from '@/stores/authTokenStore'
 import { findUserByEmail } from '@/utils/authUtils';
 
 const SideBar = () => {
-  const pathname = usePathname();
+  const pathname: any = usePathname();
   const router = useRouter();
   const { clearAuthToken } = useAuthTokenStore();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
@@ -56,7 +54,7 @@ const SideBar = () => {
             {userInfo && (
               <>
                 <h3 className='text-xl'>Hello, {userInfo.name}</h3>
-                <span className={`text-xs bg-primary-1 rounded-full px-3 text-center text-white-1 ${inter.className}`}>{userInfo.roles[0]}</span>
+                <span className={`text-xs bg-primary-1 rounded-full px-3 text-center text-white-1 font-mono`}>{userInfo.roles[0]}</span>
               </>
             )}
           </div>
@@ -99,7 +97,7 @@ const SideBar = () => {
                           <Link href={subRoute} className={cn("flex gap-3 items-center py-2 w-[158px] text-white-2/40 h-[36px]", {
                             'bg-gradient-radial from-[#B86E9F1F] to-[#6625255F] rounded-lg text-white-2 ': isSubActive
                           })}>
-                            <p className={`text-xs ${inter.className} px-3`}>{subLabel}</p>
+                            <p className={`text-xs font-mono px-3`}>{subLabel}</p>
                           </Link>
                         </div>
                       );

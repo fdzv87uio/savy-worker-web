@@ -6,14 +6,12 @@ import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CustomCarouselNext, CustomCarouselPrevious } from '@/components/ui/carousel';
 import { getSignedImageUrl } from '@/utils/imageFetchUtils';
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import { getAllPreferences, getPreferenceName } from '@/utils/preferencesUtils';
 import QrModal from '@/components/ui/qrModal';
-const inter = Inter({ subsets: ["latin"] });
 
 const EventDetails = ({ params }: { params: { slug: string } }) => {
   const initiallySelectedDate = new Date();
@@ -121,7 +119,7 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
             <div className='hidden w-full h-auto md:grid grid-cols-2 z-[20]'>
               <div className=' w-full col-span-1 flex flex-col items-left mt-16 gap-6'>
                 <h2 className="text-[#ffffff] text-2xl md:text-5xl font-normal text-center md:text-start">{event.title}</h2>
-                <p className={`${inter.className} text-[#ffffff]`}>{event.description}</p>
+                <p className={`font-mono text-[#ffffff]`}>{event.description}</p>
                 <div className='w-full h-auto flex flex-row gap-5'>
                   {isUser && (
                     <>
@@ -207,7 +205,7 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
               </div>
               <div className=' w-full col-span-1 flex flex-col items-center mt-7 gap-2.5'>
                 <h2 className="text-[#ffffff] text-[28px] font-normal text-center md:text-start">{event.title}</h2>
-                <p className={`${inter.className} text-[12px] text-[#ffffff]`}>{event.description}</p>
+                <p className={`font-mono text-[12px] text-[#ffffff]`}>{event.description}</p>
               </div>
             </div>
             <img src="/images/event-separator-large.png" className='flex mt-4 md:mt-7' />
@@ -226,7 +224,7 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                         Event type
                       </h3>
                     </div>
-                    <p className={`${inter.className} text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
+                    <p className={`font-mono text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
                       {event.eventType}
                     </p>
                     <img src="/images/event-separator-small.png" className='mt-2.5  md:pt-2' />
@@ -238,10 +236,10 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                         Event Date
                       </h3>
                     </div>
-                    <p className={`${inter.className} text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
+                    <p className={`font-mono text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
                       {event.startDate.split("T")[0]}
                     </p>
-                    <p className={`${inter.className} text-[14px] md:text-[18px] text-white`}>
+                    <p className={`font-mono text-[14px] md:text-[18px] text-white`}>
                       {event.startTime.split(".")[0]} - {event.endTime.split(".")[0]}
                     </p>
                     <img src="/images/event-separator-small.png" className='mt-2.5  md:pt-2' />
@@ -253,10 +251,10 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                         Event Location
                       </h3>
                     </div>
-                    <p className={`${inter.className} text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
+                    <p className={`font-mono text-[14px] md:text-[18px] text-white mt-1 md:mt-[14px]`}>
                       {event.location}
                     </p>
-                    <p className={`${inter.className} text-[14px] md:text-[18px] text-white`}>
+                    <p className={`font-mono text-[14px] md:text-[18px] text-white`}>
                       {event.address}
                     </p>
                     <img src="/images/event-separator-small.png" className='mt-2.5  md:pt-2' />
@@ -268,7 +266,7 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                         Hosted by
                       </h3>
                     </div>
-                    <p className={`${inter.className} text-[18px] text-white mt-1 md:mt-[14px]`}>
+                    <p className={`font-mono text-[18px] text-white mt-1 md:mt-[14px]`}>
                       {event.author}
                     </p>
                     <img src="/images/event-separator-small.png" className='mt-2.5  md:pt-2' />
@@ -283,7 +281,7 @@ const EventDetails = ({ params }: { params: { slug: string } }) => {
                     <div className='w-full h-auto flex justify-center  md:justify-left flex-row gap-1 mt-5 md:mt-[14px]'>
                       {event.preferenceListIds.map((y: any, key: number) => {
                         return (
-                          <span key={`pref_${key}`} className={` ${inter.className} bg-primary-1 rounded-xl text-[12px] md:text-[16px] px-2`}>
+                          <span key={`pref_${key}`} className={` font-mono bg-primary-1 rounded-xl text-[12px] md:text-[16px] px-2`}>
                             {getPreferenceName(preferences, y)}
                           </span>
                         )

@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/carousel"
 import Image from 'next/image';
 
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 
 const profileData = [
   {
@@ -85,7 +83,7 @@ const UserReviews = () => {
                           <h3 className="text-lg md:text-2xl">{profile.name}</h3>
                           <Image src="/icons/check.svg" alt="check" width={14} height={14} />
                         </div>
-                        <p className={`text-neutral-1 ${inter.className}`}>{profile.username}</p>
+                        <p className={`text-neutral-1 font-mono`}>{profile.username}</p>
                         <div className='flex'>
                           <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
                           <Image src="/icons/star.svg" alt="start" className='w-[12px] h-[12px]' width={12} height={12} />
@@ -96,7 +94,7 @@ const UserReviews = () => {
                       </div>
                     </div>
                     <div className="mt-4 max-w-[440px]">
-                      <p className={`text-neutral-2 ${inter.className}`}>{profile.description}</p>
+                      <p className={`text-neutral-2 font-mono`}>{profile.description}</p>
                     </div>
                   </CardContent>
                 </Card>

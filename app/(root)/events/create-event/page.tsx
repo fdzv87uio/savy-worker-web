@@ -1,8 +1,6 @@
 'use client'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import { Progress } from '@/components/ui/progress';
 import StepOne from '@/components/forms/createEvent/StepOne';
 import StepTwo from '@/components/forms/createEvent/StepTwo';

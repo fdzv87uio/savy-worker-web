@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Inter } from "next/font/google";
 import { Calendar } from "@/components/ui/calendar";
 import { getCookie } from 'cookies-next';
 import { getProfile } from '@/utils/profileUtils';
 import { getEventsByUserId } from '@/utils/eventsUtils';
 
-const inter = Inter({ subsets: ["latin"] });
 
 const Profile = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -95,7 +93,7 @@ const Profile = () => {
                 <Image src="/icons/username.svg" alt="username icon" width={45} height={45} />
                 <div>
                   <h3>Username</h3>
-                  <p className={`${inter.className} text-[#768192]`}>{name}</p>
+                  <p className={`font-mono text-[#768192]`}>{name}</p>
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
@@ -104,7 +102,7 @@ const Profile = () => {
                 <Image src="/icons/mail.svg" alt="mail icon" width={45} height={45} />
                 <div>
                   <h3>Email</h3>
-                  <p className={`${inter.className} text-[#768192]`}>{email}</p>
+                  <p className={`font-mono text-[#768192]`}>{email}</p>
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
@@ -113,7 +111,7 @@ const Profile = () => {
                 <Image src="/icons/address.svg" alt="mail icon" width={45} height={45} />
                 <div>
                   <h3>Address</h3>
-                  <p className={`${inter.className} text-[#768192]`}>{address}</p>
+                  <p className={`font-mono text-[#768192]`}>{address}</p>
                 </div>
               </div>
               <div className='h-[1px] w-full bg-gradient-to-r from-[#3772AD00] via-[#9BAEC0] to-[#3772AD00] opacity-60'></div>
@@ -124,7 +122,7 @@ const Profile = () => {
                   <h3>Preferences</h3>
                   <div className='flex gap-3'>
                     {preferences && preferences.map((preference: any) => (
-                      <p key={preference._id} className={`bg-primary-1 rounded-full ${inter.className} text-center px-3 text-sm`}>{preference.name}</p>
+                      <p key={preference._id} className={`bg-primary-1 rounded-full font-mono text-center px-3 text-sm`}>{preference.name}</p>
                     ))}
                   </div>
                 </div>
@@ -149,19 +147,19 @@ const Profile = () => {
             <div className='flex flex-col xl:flex-row gap-5 my-5 xl:mt-0'>
               <div className='flex gap-2 justify-center items-center'>
                 <div className='w-[18px] h-[18px] bg-primary-1 rounded-full'></div>
-                <p className={`${inter.className}`}>
+                <p className={`font-mono`}>
                   Attended event
                 </p>
               </div>
               <div className='flex gap-2 justify-center items-center'>
                 <div className='w-[18px] h-[18px] bg-[#E8B126] rounded-full'></div>
-                <p className={`${inter.className}`}>
+                <p className={`font-mono`}>
                   Hosted event
                 </p>
               </div>
               <div className='flex gap-2 justify-center items-center'>
                 <div className='w-[18px] h-[18px] bg-secondary-1 rounded-full'></div>
-                <p className={`${inter.className}`}>
+                <p className={`font-mono`}>
                   Upcoming event
                 </p>
               </div>

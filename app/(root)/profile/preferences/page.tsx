@@ -1,7 +1,6 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -15,8 +14,6 @@ import Image from "next/image";
 import { getCookie } from "cookies-next";
 import { Spinner } from '@/components/ui/spinner';
 import { toast } from 'sonner';
-
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
   eventType: string;
@@ -154,7 +151,7 @@ const Preference = () => {
                         {Prefs.map((item: any, k: number) => {
                           return (
                             < div key={`pref_${k}`}>
-                              <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
+                              <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] font-mono w-auto rounded-2xl ${currentPrefs.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>{item.name}</div>
                             </div>
                           )
                         })}
@@ -165,7 +162,7 @@ const Preference = () => {
                 })}
               </div>
               <div className='w-full flex'>
-                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                   Save
                   {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                 </Button>

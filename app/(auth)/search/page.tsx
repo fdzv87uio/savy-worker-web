@@ -3,7 +3,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { getAllEvents } from '@/utils/eventsUtils';
 import { getAllPreferences, getPreferenceId, getPreferenceName } from '@/utils/preferencesUtils';
-import { Inter } from "next/font/google";
 import { Input } from '@/components/ui/input';
 import CustomDropdown from '@/components/ui/customDropdown';
 import ScheduledEventCard from '@/components/ui/scheduledEventCard';
@@ -12,7 +11,6 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { usePagination } from '@/hooks/usePagination';
 import Paginator from '@/components/ui/paginator';
-const inter = Inter({ subsets: ["latin"] });
 
 
 const Page = () => {

@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { Inter } from 'next/font/google';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
@@ -13,8 +12,6 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Spinner } from '@/components/ui/spinner';
 import { toast } from 'sonner';
-
-const inter = Inter({ subsets: ['latin'] });
 
 type Inputs = {
   profileType: string;
@@ -142,7 +139,7 @@ const PersonalInformation = () => {
             <form className='absolute w-[250px] md:w-[450px] flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
               {/* Profile type */}
               <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Profile type</Label>
+                <Label className={`font-mono text-base`}>Profile type</Label>
                 <Controller
                   name="profileType"
                   control={control}
@@ -150,11 +147,11 @@ const PersonalInformation = () => {
                     <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="private" />
-                        <Label className={inter.className}>Private</Label>
+                        <Label className={"font-mono"}>Private</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="public" />
-                        <Label className={inter.className}>Public</Label>
+                        <Label className={"font-mono"}>Public</Label>
                       </div>
                     </RadioGroup>
                   )}
@@ -175,10 +172,10 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.name && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your name</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your name</p>
                 )}
                 {errors.name && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.name.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.name.message}</p>
                 )}
               </div>
 
@@ -195,10 +192,10 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.lastname && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your lastname</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your lastname</p>
                 )}
                 {errors.lastname && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.lastname.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.lastname.message}</p>
                 )}
               </div>
 
@@ -215,10 +212,10 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.id && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your ID</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your ID</p>
                 )}
                 {errors.id && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.id.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.id.message}</p>
                 )}
               </div> */}
 
@@ -237,10 +234,10 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.birthDate && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your Date of Birth</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your Date of Birth</p>
                 )}
                 {errors.birthDate && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.birthDate.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.birthDate.message}</p>
                 )}
               </div>
 
@@ -257,10 +254,10 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.email && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email address</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your email address</p>
                 )}
                 {errors.email && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.email.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.email.message}</p>
                 )}
               </div>
 
@@ -277,18 +274,18 @@ const PersonalInformation = () => {
                   )}
                 />
                 {!errors.password && (
-                  <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Your password must be at least 8 characters</p>
+                  <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Your password must be at least 8 characters</p>
                 )}
                 {errors.password && (
-                  <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.password.message}</p>
+                  <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.password.message}</p>
                 )}
               </div> */}
 
-              {/* <Button type="submit" variant="default" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+              {/* <Button type="submit" variant="default" size="sm" className={`w-[95px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                 Save
               </Button> */}
               <div className='w-full flex'>
-                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                   Save
                   {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                 </Button>

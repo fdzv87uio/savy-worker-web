@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
 import { getAllEvents } from '@/utils/eventsUtils';
 import { getAllPreferences, getPreferenceName } from '@/utils/preferencesUtils';
 import ScheduledEventCard from './ui/scheduledEventCard';
-const inter = Inter({ subsets: ["latin"] });
 
 
 interface ScheduledEventsProps {

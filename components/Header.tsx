@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCookie, deleteCookie } from 'cookies-next';
@@ -115,13 +113,13 @@ const Header = () => {
                 ) : (
                   <>
                     <Link href="/signUp">
-                      <Button variant="default" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      <Button variant="default" size="sm" className={`uppercase text-sm font-normal font-mono gap-3`}>
                         <Image src="/icons/signUp.svg" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
                         Sign Up
                       </Button>
                     </Link>
                     <Link href="/signIn">
-                      <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal ${inter.className} gap-3`}>
+                      <Button variant="secondary" size="sm" className={`uppercase text-sm font-normal font-mono gap-3`}>
                         Sign In
                         <Image src="/icons/signIn.svg" alt='icon' width={20} height={20} className='w-[20px] h-[20px]' />
                       </Button>
@@ -146,13 +144,13 @@ const Header = () => {
                 ) : (
                   <>
                     <Link href="/signUp">
-                      <Button variant="default" size="sm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      <Button variant="default" size="sm" className={`text-xs font-normal font-mono gap-1 px-2 py-1`}>
                         <Image src="/icons/signUp.svg" alt='icon' width={15} height={15} className='w-[15px] h-[15px]' />
                         Sign Up
                       </Button>
                     </Link>
                     <Link href="/signIn">
-                      <Button variant="secondary" size="sm" className={`text-xs font-normal ${inter.className} gap-1 px-2 py-1`}>
+                      <Button variant="secondary" size="sm" className={`text-xs font-normal font-mono gap-1 px-2 py-1`}>
                         Sign In
                         <Image src="/icons/signIn.svg" alt='icon' width={15} height={15} className='w-[15px] h-[15px]' />
                       </Button>

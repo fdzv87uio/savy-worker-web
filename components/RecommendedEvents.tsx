@@ -1,13 +1,11 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import { Inter } from "next/font/google";
 import Image from 'next/image';
 import { getAllEvents } from '@/utils/eventsUtils';
 import RecommendedEventCard from './ui/recommendedEventCard';
 import { usePagination } from '@/hooks/usePagination';
 import Paginator from './ui/paginator';
-const inter = Inter({ subsets: ["latin"] });
 
 interface RecommendedEventsProps {
   isUser?: boolean;

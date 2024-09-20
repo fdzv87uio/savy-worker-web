@@ -1,4 +1,3 @@
-import { Audiowide, Inter } from "next/font/google";
 import {
     Dialog,
     DialogContent,
@@ -7,8 +6,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./dialog";
-const inter = Inter({ subsets: ["latin"] });
-const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
 import QRCode from "react-qr-code";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "./button";
@@ -29,10 +26,10 @@ export default function QrModal({ url }: QrModalProps) {
                 <div className="w-full h-auto flex flex-col">
                     <div className="w-full h-auto flex flex-col md:grid md:grid-cols-2 items-center gap-5">
                         <div className="w-full h-auto flex flex-col items-center md:items-left col-span-1" >
-                            <h3 className={`text-[#ffffff] w-full text-center md:text-left text-[24px] ${audiowide.className}`}>
+                            <h3 className={`text-[#ffffff] w-full text-center md:text-left text-[24px] font-mono`}>
                                 Share Event
                             </h3>
-                            <p className={`${inter.className} text-[14px] text-center md:text-left md:text-[18px] text-[#ffffff] mt-[14px]`}>
+                            <p className={`font-mono text-[14px] text-center md:text-left md:text-[18px] text-[#ffffff] mt-[14px]`}>
                                 Generate QR code and share links
                             </p>
                         </div>
@@ -60,7 +57,7 @@ export default function QrModal({ url }: QrModalProps) {
                             <div className='cursor-pointer w-[74px] h-[74px] flex flex-col justify-center items-center rounded-full bg-[#EBEBEB] hover:bg-[#EBEBEB]/50'>
                                 <img src="/icons/share-icon.svg" width={45} height={49} />
                             </div>
-                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] ${audiowide.className}`}>
+                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] font-mono`}>
                                 Share Event
                             </h6>
                         </div>
@@ -68,7 +65,7 @@ export default function QrModal({ url }: QrModalProps) {
                             <div className='cursor-pointer w-[74px] h-[74px] flex flex-col justify-center items-center rounded-full bg-[#EBEBEB] hover:bg-[#EBEBEB]/50'>
                                 <img src="/icons/link-icon.svg" width={45} height={49} />
                             </div>
-                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] ${audiowide.className}`}>
+                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] font-mono`}>
                                 Share Link
                             </h6>
                         </div>
@@ -76,7 +73,7 @@ export default function QrModal({ url }: QrModalProps) {
                             <div className='cursor-pointer w-[74px] h-[74px] flex flex-col justify-center items-center rounded-full bg-[#EBEBEB] hover:bg-[#EBEBEB]/50'>
                                 <img src="/icons/download-icon.svg" width={45} height={49} />
                             </div>
-                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] ${audiowide.className}`}>
+                            <h6 className={`text-[#ffffff] text-[14px] md:text-[17px] font-mono`}>
                                 Download
                             </h6>
                         </div>

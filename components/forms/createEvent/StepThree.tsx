@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,6 @@ import { createEventFormStore } from '@/stores/createEventFormStore'
 import { useEffect, useState } from "react";
 import { getAllPreferences, getAllPreferencesByCategory } from "@/utils/preferencesUtils";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     eventType: string;
@@ -125,7 +123,7 @@ export default function StepThree() {
                             <div className='w-full h-auto flex flex-row border border-[#C4C4C4] rounded-lg gap-[10px] py-[17px] px-[10px]'>
                                 {Prefs.map((item: any, k: number) => (
                                     <div key={`pref_${k}`}>
-                                        <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] ${inter.className} w-auto rounded-2xl ${inputs.prefe && inputs.prefe.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>
+                                        <div onClick={() => handlePreferenceClick(item.name, item.id)} className={`cursor-pointer h-[25px] px-[10px] font-mono w-auto rounded-2xl ${inputs.prefe && inputs.prefe.includes(item.name) ? "bg-secondary-1" : "bg-primary-1"}`}>
                                             {item.name}
                                         </div>
                                     </div>
@@ -135,10 +133,10 @@ export default function StepThree() {
                     );
                 })}
                 <div className='w-full flex flex-row justify-between'>
-                    <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
+                    <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`} onClick={handleBackClick}>
                         Back
                     </Button>
-                    <Button type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                    <Button type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                         Next
                     </Button>
                 </div>

@@ -1,6 +1,5 @@
 'use client'
 
-import { Audiowide, Inter } from "next/font/google";
 import {
     Dialog,
     DialogContent,
@@ -9,8 +8,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./dialog";
-const inter = Inter({ subsets: ["latin"] });
-const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
 import QRCode from "react-qr-code";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "./button";
@@ -58,7 +55,7 @@ export default function LocationModal({ onChange, value }: LocationModalProps) {
             <DialogTrigger>
                 <div className="w-full h-[38px] relative mb-2">
                     <div
-                        className={`placeholder-[#ffffff] flex flex-col justify-center p-2.5 w-full z-[90] h-[38px] hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] text-sm`}
+                        className={`placeholder-[#ffffff] flex flex-col justify-center p-2.5 w-full z-[90] h-[38px] hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl font-mono font-normal text-[#ffffff] text-sm`}
                     >
                         <span className="w-full text-left">{selection ? selection : "Select Location"}</span>
                     </div>
@@ -83,7 +80,7 @@ export default function LocationModal({ onChange, value }: LocationModalProps) {
                             const detail = labelArray.slice(1).join(",");
                             return (
                                 <DialogClose onClick={() => handleSelect(label)} key={`location_${key}`} className="flex flex-col w-full">
-                                    <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#ffffff] hover:text-[#32A852]`}>
+                                    <div className={`cursor-pointer flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[80px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-[#ffffff] hover:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl font-mono font-normal text-[#ffffff] hover:text-[#32A852]`}>
                                         <div className="flex flex-row items-center px-2.5 gap-2">
                                             <img src={"/icons/event-location-icon.svg"} alt="" width={37} height={37} />
                                             <div className="flex flex-col items-left gap-1">

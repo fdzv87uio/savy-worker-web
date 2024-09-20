@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from "next/image";
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     startDate: Date;
@@ -152,7 +150,7 @@ export default function StepTwo() {
 
             {/* recurring */}
             <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Is this event recurring?</Label>
+                <Label className={`font-mono text-base`}>Is this event recurring?</Label>
                 <Controller
                     name="recurring"
                     control={control}
@@ -160,11 +158,11 @@ export default function StepTwo() {
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="yes" />
-                                <Label className={inter.className}>Yes</Label>
+                                <Label className={"font-mono"}>Yes</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="no" />
-                                <Label className={inter.className}>No</Label>
+                                <Label className={"font-mono"}>No</Label>
                             </div>
                         </RadioGroup>
                     )}
@@ -174,7 +172,7 @@ export default function StepTwo() {
 
             {/* frequency */}
             {/* <div className='flex flex-col gap-[5px]'>
-                <Label className={`${inter.className} text-base`}>Frequency</Label>
+                <Label className={`font-mono text-base`}>Frequency</Label>
                 <Controller
                     name="frequency"
                     control={control}
@@ -182,19 +180,19 @@ export default function StepTwo() {
                         <RadioGroup {...field} onValueChange={field.onChange} className='flex'>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Day" id="r1" />
-                                <Label className={inter.className}>Day</Label>
+                                <Label className={"font-mono"}>Day</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Weekly" id="r1" />
-                                <Label className={inter.className}>Weekly</Label>
+                                <Label className={"font-mono"}>Weekly</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Monthly" id="r2" />
-                                <Label className={inter.className}>Monthly</Label>
+                                <Label className={"font-mono"}>Monthly</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="Anually" id="r1" />
-                                <Label className={inter.className}>Annually</Label>
+                                <Label className={"font-mono"}>Annually</Label>
                             </div>
                         </RadioGroup>
                     )}
@@ -205,9 +203,9 @@ export default function StepTwo() {
             {/* repeat group */}
             {recurringValue === "yes" && (
                 <div className="flex flex-col gap-3">
-                    <Label className={`${inter.className} text-base`}>Frequency</Label>
+                    <Label className={`font-mono text-base`}>Frequency</Label>
                     <div className="flex gap-3">
-                        <Label className={`${inter.className} text-base`}>Repeat every</Label>
+                        <Label className={`font-mono text-base`}>Repeat every</Label>
                         {/* repeatNumber */}
                         <div className="flex flex-col items-left gap-[5px]">
                             <Controller
@@ -224,7 +222,7 @@ export default function StepTwo() {
                                 )}
                             />
                             {errors.repeatNumber && errors.repeatNumber.message && (
-                                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.repeatNumber.message}</p>
+                                <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.repeatNumber.message}</p>
                             )}
                         </div>
 
@@ -235,7 +233,7 @@ export default function StepTwo() {
                                 control={control}
                                 render={({ field }) => (
                                     <Select value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger className={`w-[100px] text-white-1 ${inter.className}`}>
+                                        <SelectTrigger className={`w-[100px] text-white-1 font-mono`}>
                                             <SelectValue placeholder="Day" />
                                         </SelectTrigger>
                                         <SelectContent className="text-white-1 bg-black-1">
@@ -250,7 +248,7 @@ export default function StepTwo() {
                                 )}
                             />
                             {errors.repeatType && errors.repeatType.message && (
-                                <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.repeatType.message}</p>
+                                <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.repeatType.message}</p>
                             )}
                         </div>
                     </div>
@@ -260,7 +258,7 @@ export default function StepTwo() {
             {/* repeatOn */}
             {(recurringValue === "yes" && repeatTypeValue === "Week") && (
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Repeat on</Label>
+                    <Label className={`font-mono text-base`}>Repeat on</Label>
                     <div className='flex gap-2'>
                         {daysOfWeek.map((day) => (
                             <Controller
@@ -268,7 +266,7 @@ export default function StepTwo() {
                                 name="repeatOn"
                                 control={control}
                                 render={({ field }) => (
-                                    <div className={`flex items-center space-x-2 ${inter.className}`}>
+                                    <div className={`flex items-center space-x-2 font-mono`}>
                                         <Checkbox
                                             id={day.value}
                                             checked={field.value?.includes(day.value) ?? false}
@@ -295,7 +293,7 @@ export default function StepTwo() {
             {recurringValue === "yes" && (
 
                 <div className='flex flex-col gap-[5px]'>
-                    <Label className={`${inter.className} text-base`}>Events Ends {repeatTypeValue}</Label>
+                    <Label className={`font-mono text-base`}>Events Ends {repeatTypeValue}</Label>
                     <div className="flex">
                         <Controller
                             name="eventEnds"
@@ -304,15 +302,15 @@ export default function StepTwo() {
                                 <RadioGroup {...field} onValueChange={field.onChange} className='flex flex-col gap-[35px] mt-[20px]'>
                                     {/* <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="never" />
-                                    <Label className={inter.className}>Never</Label>
+                                    <Label className={"font-mono"}>Never</Label>
                                 </div> */}
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="on" />
-                                        <Label className={inter.className}>On</Label>
+                                        <Label className={"font-mono"}>On</Label>
                                     </div>
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="after" />
-                                        <Label className={inter.className}>After</Label>
+                                        <Label className={"font-mono"}>After</Label>
                                     </div>
                                 </RadioGroup>
                             )}
@@ -335,17 +333,17 @@ export default function StepTwo() {
                                                 >
                                                     <CalendarIcon className="mr-2 h-4 w-4" />
                                                     {field.value ?
-                                                        <span className={`${inter.className}`}>{format(field.value, "PPP")}</span>
-                                                        : <span className={`${inter.className}`}>Pick a date</span>}
+                                                        <span className={`font-mono`}>{format(field.value, "PPP")}</span>
+                                                        : <span className={`font-mono`}>Pick a date</span>}
                                                 </Button>
                                             </PopoverTrigger>
-                                            <PopoverContent className={`${inter.className} w-auto p-0`}>
+                                            <PopoverContent className={`font-mono w-auto p-0`}>
                                                 <Calendar
                                                     mode="single"
                                                     selected={field.value}
                                                     onSelect={field.onChange}
                                                     initialFocus
-                                                    className={`${inter.className} bg-white-1`}
+                                                    className={`font-mono bg-white-1`}
                                                 />
                                             </PopoverContent>
                                         </Popover>
@@ -383,7 +381,7 @@ export default function StepTwo() {
 
                     {/* start date */}
                     <div className="flex flex-col items-left gap-[5px]">
-                        <Label className={`${inter.className} text-base`}>Event start date</Label>
+                        <Label className={`font-mono text-base`}>Event start date</Label>
                         <Controller
                             control={control}
                             name="startDate"
@@ -399,33 +397,33 @@ export default function StepTwo() {
                                         >
                                             <CalendarIcon className="mr-2 h-4 w-4" />
                                             {field.value ?
-                                                <span className={`${inter.className}`}>{format(field.value, "PPP")}</span>
-                                                : <span className={`${inter.className}`}>Pick a date</span>}
+                                                <span className={`font-mono`}>{format(field.value, "PPP")}</span>
+                                                : <span className={`font-mono`}>Pick a date</span>}
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent className={`${inter.className} w-auto p-0`}>
+                                    <PopoverContent className={`font-mono w-auto p-0`}>
                                         <Calendar
                                             mode="single"
                                             selected={field.value}
                                             onSelect={field.onChange}
                                             initialFocus
-                                            className={`${inter.className} bg-white-1`}
+                                            className={`font-mono bg-white-1`}
                                         />
                                     </PopoverContent>
                                 </Popover>
                             )}
                         />
                         {/* {!errors.startDate && (
-                            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Select start date and time</p>
+                            <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Select start date and time</p>
                         )} */}
                         {errors.startDate && errors.startDate.message && (
-                            <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.startDate.message}`}</p>
+                            <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.startDate.message}`}</p>
                         )}
                     </div>
 
                     {/* start time */}
                     <div className="flex flex-col items-left gap-[5px] mt-3">
-                        <Label className={`${inter.className} text-base`}>Event start time</Label>
+                        <Label className={`font-mono text-base`}>Event start time</Label>
                         <div className="flex gap-3">
                             {/* hours */}
                             <div className="flex flex-col items-left gap-[5px]">
@@ -444,7 +442,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.startHours && errors.startHours.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.startHours.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.startHours.message}</p>
                                 )}
                             </div>
 
@@ -467,7 +465,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.startMinutes && errors.startMinutes.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.startMinutes.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.startMinutes.message}</p>
                                 )}
                             </div>
 
@@ -478,7 +476,7 @@ export default function StepTwo() {
                                     control={control}
                                     render={({ field }) => (
                                         <Select>
-                                            <SelectTrigger className={`w-[60px] text-white-1 ${inter.className}`}>
+                                            <SelectTrigger className={`w-[60px] text-white-1 font-mono`}>
                                                 <SelectValue placeholder="am" />
                                             </SelectTrigger>
                                             <SelectContent className="text-white-1 bg-black-1">
@@ -491,7 +489,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.startAmPm && errors.startAmPm.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.startAmPm.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.startAmPm.message}</p>
                                 )}
                             </div>
                         </div>
@@ -501,7 +499,7 @@ export default function StepTwo() {
 
                     {/* finish date */}
                     <div className="flex flex-col items-left gap-[5px]">
-                        <Label className={`${inter.className} text-base`}>Event finish date</Label>
+                        <Label className={`font-mono text-base`}>Event finish date</Label>
                         <Controller
                             control={control}
                             name="finishDate"
@@ -517,33 +515,33 @@ export default function StepTwo() {
                                         >
                                             <CalendarIcon className="mr-2 h-4 w-4" />
                                             {field.value ?
-                                                <span className={`${inter.className}`}>{format(field.value, "PPP")}</span>
-                                                : <span className={`${inter.className}`}>Pick a date</span>}
+                                                <span className={`font-mono`}>{format(field.value, "PPP")}</span>
+                                                : <span className={`font-mono`}>Pick a date</span>}
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent className={`${inter.className} w-auto p-0`}>
+                                    <PopoverContent className={`font-mono w-auto p-0`}>
                                         <Calendar
                                             mode="single"
                                             selected={field.value}
                                             onSelect={field.onChange}
                                             initialFocus
-                                            className={`${inter.className} bg-white-1`}
+                                            className={`font-mono bg-white-1`}
                                         />
                                     </PopoverContent>
                                 </Popover>
                             )}
                         />
                         {/* {!errors.startDate && (
-                            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Select start date and time</p>
+                            <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Select start date and time</p>
                         )} */}
                         {errors.startDate && errors.startDate.message && (
-                            <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.startDate.message}`}</p>
+                            <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.startDate.message}`}</p>
                         )}
                     </div>
 
                     {/* finish time */}
                     <div className="flex flex-col items-left gap-[5px] mt-3">
-                        <Label className={`${inter.className} text-base`}>Event finish time</Label>
+                        <Label className={`font-mono text-base`}>Event finish time</Label>
                         <div className="flex gap-3">
                             {/* hours */}
                             <div className="flex flex-col items-left gap-[5px]">
@@ -562,7 +560,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.finishHours && errors.finishHours.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.finishHours.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.finishHours.message}</p>
                                 )}
                             </div>
 
@@ -585,7 +583,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.finishMinutes && errors.finishMinutes.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.finishMinutes.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.finishMinutes.message}</p>
                                 )}
                             </div>
 
@@ -596,7 +594,7 @@ export default function StepTwo() {
                                     control={control}
                                     render={({ field }) => (
                                         <Select>
-                                            <SelectTrigger className={`w-[60px] text-white-1 ${inter.className}`}>
+                                            <SelectTrigger className={`w-[60px] text-white-1 font-mono`}>
                                                 <SelectValue placeholder="am" />
                                             </SelectTrigger>
                                             <SelectContent className="text-white-1 bg-black-1">
@@ -609,7 +607,7 @@ export default function StepTwo() {
                                     )}
                                 />
                                 {errors.finishAmPm && errors.finishAmPm.message && (
-                                    <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.finishAmPm.message}</p>
+                                    <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.finishAmPm.message}</p>
                                 )}
                             </div>
                         </div>
@@ -619,10 +617,10 @@ export default function StepTwo() {
 
 
             <div className='w-full flex flex-row justify-between'>
-                <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
+                <Button variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`} onClick={handleBackClick}>
                     Back
                 </Button>
-                <Button type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                <Button type="submit" variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                     Next
                 </Button>
             </div>

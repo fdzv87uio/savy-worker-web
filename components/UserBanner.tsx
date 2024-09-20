@@ -1,9 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { Inter } from "next/font/google";
 import Link from 'next/link';
-const inter = Inter({ subsets: ["latin"] });
-
 interface UserBannerProps {
   name: string;
   lastname: string;
@@ -25,9 +22,9 @@ function UserBanner({ name, lastname, email }: UserBannerProps) {
           <div className='flex flex-col justify-start items-start gap-1'>
             <h1 className="text-xl md:text-2xl text-white-1">Hello, {name} {lastname}</h1>
             <div className=' bg-primary-1 px-3 rounded-full'>
-              <p className={`${inter.className} text-sm text-white-1 `}>{email}</p>
+              <p className={`font-mono text-sm text-white-1 `}>{email}</p>
             </div>
-            <p className={`${inter.className} text-white-1 text-sm md:text-base`}>Welcome back to our platform</p>
+            <p className={`font-mono text-white-1 text-sm md:text-base`}>Welcome back to our platform</p>
           </div>
         </div>
       </div>

@@ -1,10 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
-import { Inter } from "next/font/google";
 import Image from 'next/image';
 import { Input } from './ui/input';
-const inter = Inter({ subsets: ["latin"] });
 import { getCookie, setCookie } from 'cookies-next';
 import platform from 'platform';
 import { TransactionType } from '@/interfaces/transactionInterfaces';
@@ -220,11 +218,11 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
             </div>
             <div className='absolute w-[350px] md:w-[543px] md:h-[331px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
               <h1 className='text-3xl md:text-4xl'>Find an Event</h1>
-              <h3 className={`text-xl md:text-2xl ${inter.className}`}>Fill in the details to find an event</h3>
+              <h3 className={`text-xl md:text-2xl font-mono`}>Fill in the details to find an event</h3>
               <div className='flex flex-col gap-3 mt-3'>
                 <Input value={query} type='text' onChange={(e: any) => setQuery(e.target.value)} placeholder={'Search'} />
-                <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Search by name or preference</p>
-                <Button disabled={!query} onClick={() => router.push(`/search?search=${query}`)} variant="default" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal ${inter.className}`}>
+                <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Search by name or preference</p>
+                <Button disabled={!query} onClick={() => router.push(`/search?search=${query}`)} variant="default" size="sm" className={`w-[95px] z-[90] h-[36px] px-4 mt-5 text-sm font-normal font-mono`}>
                   Search
                 </Button>
               </div>
@@ -236,7 +234,7 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
             </div>
             <div className='absolute w-[350px] md:w-[543px] h-[450px] md:h-[420px] top-0 flex flex-col pt-[46px] pb-[49px] pl-[21px] pr-[60px] gap-[20px] text-white-1'>
               <h1 className='text-3xl md:text-4xl'>Sign In</h1>
-              <h3 className={`text-sm md:text-base ${inter.className}`}>You don&apos;t have an account? <span onClick={() => router.push('/signUp')} className='text-primary-1 hover:text-primary-2 cursor-pointer'><u>Sign Up Here!</u></span></h3>
+              <h3 className={`text-sm md:text-base font-mono`}>You don&apos;t have an account? <span onClick={() => router.push('/signUp')} className='text-primary-1 hover:text-primary-2 cursor-pointer'><u>Sign Up Here!</u></span></h3>
               <div className='flex flex-col mt-3'>
                 <form className='w-full flex flex-col h-auto z-[90] gap-[20px]' onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex flex-col items-left gap-[5px]">
@@ -252,10 +250,10 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
                       )}
                     />
                     {!errors.email && (
-                      <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your email</p>
+                      <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your email</p>
                     )}
                     {errors.email && errors.email.message && (
-                      <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
+                      <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.email.message}`}</p>
                     )}
                   </div>
                   <div className="flex flex-col items-left gap-[5px]">
@@ -271,13 +269,13 @@ function SignUpForFree({ isUser, setIsUser }: SignUpForFreeProps) {
                       )}
                     />
                     {!errors.password && (
-                      <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your password</p>
+                      <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your password</p>
                     )}
                     {errors.password && errors.password.message && (
-                      <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.password.message}`}</p>
+                      <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.password.message}`}</p>
                     )}
                   </div>
-                  <Button type="submit" variant="default" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                  <Button type="submit" variant="default" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal font-mono`}>
                     {loading ? "..." : "Log In"}
                   </Button>
                 </form>

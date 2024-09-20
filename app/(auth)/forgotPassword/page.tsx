@@ -2,8 +2,6 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import { Button } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -69,7 +67,7 @@ const ForgotPassword = () => {
                     <div className='flex flex-col xl:flex-row gap-[40px] md:gap-[40px] xl:gap-[80px] z-[90] w-[350px] md:w-[80vw]  xl:w-full '>
                         <div className='w-full flex flex-col xl:items-left xl:w-[40vw] gap-5'>
                             <h1 className='text-2xl md:text-5xl font-normal text-center xl:text-left text-[#ffffff]'>Forgot Password</h1>
-                            <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal ${inter.className}`} >Please, enter your registered email. <br /> We will send you a link for you to reset your password</p>
+                            <p className={`text-[#ffffff] text-base md:text-2xl text-center xl:text-left font-normal font-mono`} >Please, enter your registered email. <br /> We will send you a link for you to reset your password</p>
                         </div>
                         <div
                             style={{ boxShadow: "0px 4px 10px -1px #000000 !important" }}
@@ -90,13 +88,13 @@ const ForgotPassword = () => {
                                             autoComplete='off'
                                         />
                                         {!errors.email && (
-                                            <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Enter your registered email</p>
+                                            <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Enter your registered email</p>
                                         )}
                                         {errors.email && errors.email.message && (
-                                            <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{`${errors.email.message}`}</p>
+                                            <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{`${errors.email.message}`}</p>
                                         )}
                                     </div>
-                                    <Button disabled={!email || errors.email ? true : false} type="submit" variant="default" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                                    <Button disabled={!email || errors.email ? true : false} type="submit" variant="default" size="sm" className={`z-[90] w-full xl:w-[95px] h-[36px] px-4 py-2 text-sm font-normal font-mono`}>
                                         {loading ? "..." : "Send Email"}
                                     </Button>
                                 </form>
