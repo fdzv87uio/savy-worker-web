@@ -1,6 +1,5 @@
 'use client'
 
-import { Audiowide, Inter } from "next/font/google";
 import {
     Dialog,
     DialogContent,
@@ -9,8 +8,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./dialog";
-const inter = Inter({ subsets: ["latin"] });
-const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
 import QRCode from "react-qr-code";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "./button";
@@ -102,7 +99,7 @@ export default function AttendeeModal({ onChange, token }: AttendeeModalProps) {
             <DialogTrigger>
                 <div className="w-full h-[38px] relative mb-2">
                     <div
-                        className={`flex h-10 w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${inter.className} font-normal text-[#000000] text-sm`}
+                        className={`flex h-10 w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono font-normal text-[#000000] text-sm`}
                     >
                         <span className="w-full text-left">{selection.length > 0 ? `${selection.length} Users Selected` : "Select Users"}</span>
                     </div>
@@ -126,7 +123,7 @@ export default function AttendeeModal({ onChange, token }: AttendeeModalProps) {
                             const detail = x.email;
                             return (
                                 <div onClick={() => handleSelect(x)} key={`location_${key}`} className="flex flex-col w-full">
-                                    <div className={`cursor-pointer py-2 flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[60px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-primary bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#000000]`}>
+                                    <div className={`cursor-pointer py-2 flex flex-col justify-center items-left p-1 w-[95%] m-1 min-h-[60px] h-auto hover:outline hover:outline-offset-2 hover:outline-2 hover:outline-primary bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl font-mono font-normal text-[#000000]`}>
                                         <div className="flex flex-row items-center px-2.5 gap-2">
                                             <img src={"/images/user-icon.png"} alt="" width={17} height={17} />
                                             <div className="flex flex-col md:flex-row items-left mr-4 md:mr-0 md:items-center items-left gap-1 md:gap-2">

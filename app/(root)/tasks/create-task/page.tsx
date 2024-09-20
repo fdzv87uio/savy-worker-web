@@ -1,6 +1,5 @@
 'use client'
 import React, { createRef, useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
 import { Progress } from '@/components/ui/progress';
 import { createTaskFormStore } from '@/stores/createTaskFormStore'
 import Footer from '@/components/Footer';

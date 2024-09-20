@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import Image from "next/image";
@@ -23,7 +22,6 @@ import { Progress } from "@/components/ui/progress";
 import { createTaskFormStore } from "@/stores/createTaskFormStore";
 import CustomFormCard from "@/components/ui/CustomFormCard";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     file: {
@@ -253,7 +251,7 @@ export default function StepFour() {
             <form className={`w-[250px] md:w-full h-auto mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
                 {/* File upload for images */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <p className={`pl-2 text-[#000000] font-normal ${inter.className} text-sm`}>Upload images {eventId}</p>
+                    <p className={`pl-2 text-[#000000] font-normal font-mono text-sm`}>Upload images {eventId}</p>
                     <ImageUploading
                         multiple
                         value={images}
@@ -273,7 +271,7 @@ export default function StepFour() {
                                     style={isDragging ? { color: "black" } : undefined}
                                     {...dragProps}
                                     type="button"
-                                    className={`flex h-[80px] w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${inter.className} font-normal text-[#000000] text-sm flex items-center justify-center bg-white-1 gap-3`}
+                                    className={`flex h-[80px] w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono font-normal text-[#000000] text-sm flex items-center justify-center bg-white-1 gap-3`}
                                     onClick={onImageUpload}
                                 >
                                     <Image src="/icons/round.svg" alt='icon' width={15} height={15} className='w-[48px] h-[48px]' />
@@ -290,7 +288,7 @@ export default function StepFour() {
                                     ))}
                                 </div>
                                 {imageList.length > 0 && (
-                                    <button onClick={onImageRemoveAll} className={`pl-2 text-[#ffffff] font-normal ${inter.className}`}>
+                                    <button onClick={onImageRemoveAll} className={`pl-2 text-[#ffffff] font-normal font-mono`}>
                                         Remove all images
                                     </button>
                                 )}
@@ -301,13 +299,13 @@ export default function StepFour() {
 
                 {/* File upload for videos */}
                 {/* <div className="flex flex-col items-left gap-[5px]">
-                    <p className={`pl-2 text-[#000000] font-normal ${inter.className} text-sm`}>Upload videos</p>
-                    <div {...getRootProps({ className: 'dropzone' })} className={`placeholder-[#ffffff] p-2 w-full h-full z-[90] focus:outline focus:outline-offset-2 focus:outline-2 focus:outline-[#ffffff] focus:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl ${inter.className} font-normal text-[#9E9E9E] text-sm flex items-center justify-center bg-white-1 gap-3 cursor-pointer`}>
+                    <p className={`pl-2 text-[#000000] font-normal font-mono text-sm`}>Upload videos</p>
+                    <div {...getRootProps({ className: 'dropzone' })} className={`placeholder-[#ffffff] p-2 w-full h-full z-[90] focus:outline focus:outline-offset-2 focus:outline-2 focus:outline-[#ffffff] focus:border-[#32A852] bg-transparent border-spacing-[2px] border-[2px] border-[#C4C4C4] rounded-xl font-mono font-normal text-[#9E9E9E] text-sm flex items-center justify-center bg-white-1 gap-3 cursor-pointer`}>
                         <input {...getInputProps()} />
                         <Image src="/icons/round.svg" alt='icon' width={15} height={15} className='w-[48px] h-[48px]' />
                         Share any relevant documents or media
                     </div>
-                    <p className={`pl-2 text-[#ffffff] font-normal ${inter.className} text-sm`}>Share any relevant documents or media</p>
+                    <p className={`pl-2 text-[#ffffff] font-normal font-mono text-sm`}>Share any relevant documents or media</p>
 
                     <div className="flex  justify-start items-start gap-3">
                         {uploadedFiles.map(file => (
@@ -322,20 +320,20 @@ export default function StepFour() {
                 </div> */}
                 {/* Participants */}
                 <div className="w-full h-auto flex flex-col items-left gap-5">
-                    <p className={`pl-2 text-[#000000] font-normal ${inter.className} text-sm`}>Participants</p>
+                    <p className={`pl-2 text-[#000000] font-normal font-mono text-sm`}>Participants</p>
                     <AttendeeModal token={token} onChange={setAttendees} />
                 </div>
 
                 {/* Blacklist */}
                 <div className="w-full h-auto flex flex-col items-left gap-5">
-                    <p className={`pl-2 text-[#000000] font-normal ${inter.className} text-sm`}>Blacklist</p>
+                    <p className={`pl-2 text-[#000000] font-normal font-mono text-sm`}>Blacklist</p>
                     <AttendeeModal token={token} onChange={setBlackList} />
                 </div>
                 <div className='w-full mt-[5px] flex flex-row pb-7 justify-between'>
-                    <Button disabled={isUploading || isGettingUserInfo} variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`} onClick={handleBackClick}>
+                    <Button disabled={isUploading || isGettingUserInfo} variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono`} onClick={handleBackClick}>
                         Back
                     </Button>
-                    <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                    <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono`}>
                         Next
                         {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                     </Button>

@@ -1,6 +1,5 @@
 'use client'
 import React, { createRef, useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
 import { Progress } from '@/components/ui/progress';
 import { createTaskFormStore } from '@/stores/createTaskFormStore'
 import Footer from '@/components/Footer';
@@ -11,17 +10,23 @@ import StepOne from '@/components/forms/createAnswer/StepOne';
 import StepTwo from '@/components/forms/createAnswer/StepTwo';
 import StepThree from '@/components/forms/createAnswer/StepThree';
 import { createAnswerFormStore } from '@/stores/createAnswerFormStore';
-import { useParams } from 'next/navigation';
+// import { useParams } from 'next/navigation';
 import { getTaskById } from '@/utils/taskUtils';
+import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 const CreateAnswer = () => {
   const { inputs } = createAnswerFormStore();
-  const params: any = useParams();
+
+  const pathname = usePathname();
+  console.log(pathname);
   const [currentTitle, setCurrentTitle] = useState();
 
   useEffect(() => {
-    if (params) {
-      getTaskData(params.taskId)
+    if (pathname) {
+      const pathArray = pathname.split("/");
+      const taskId = pathArray[3];
+      getTaskData(taskId)
     }
   }, [])
 

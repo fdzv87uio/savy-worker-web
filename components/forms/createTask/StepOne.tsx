@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
+
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,6 @@ import { Progress } from "@/components/ui/progress";
 import CustomFormCard from "@/components/ui/CustomFormCard";
 import { createRef, useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     title: string;
@@ -65,7 +64,7 @@ export default function StepOne() {
 
                 {/* title */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Title</Label>
+                    <Label className={`font-mono text-base`}>Title</Label>
                     <Controller
                         control={control}
                         name="title"
@@ -78,16 +77,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.title && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your task title</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your task title</p>
                     )}
                     {errors.title && errors.title.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.title.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.title.message}</p>
                     )}
                 </div>
 
                 {/* description */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Description</Label>
+                    <Label className={`font-mono text-base`}>Description</Label>
                     <Controller
                         control={control}
                         name="description"
@@ -96,21 +95,21 @@ export default function StepOne() {
                                 {...field}
                                 placeholder="Event description"
                                 rows={7}
-                                className={`${inter.className} flex h-auto w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
+                                className={`font-mono flex h-auto w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
                             />
                         )}
                     />
                     {!errors.description && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your event description</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your event description</p>
                     )}
                     {errors.description && errors.description.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.description.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.description.message}</p>
                     )}
                 </div>
 
                 {/* instructions */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Instructions</Label>
+                    <Label className={`font-mono text-base`}>Instructions</Label>
                     <Controller
                         control={control}
                         name="instructions"
@@ -119,15 +118,15 @@ export default function StepOne() {
                                 {...field}
                                 placeholder="Event Instructions"
                                 rows={7}
-                                className={`${inter.className} flex h-auto w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
+                                className={`font-mono flex h-auto w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
                             />
                         )}
                     />
                     {!errors.instructions && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter a list of instructions for the task</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter a list of instructions for the task</p>
                     )}
                     {errors.instructions && errors.instructions.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.instructions.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.instructions.message}</p>
                     )}
                 </div>
 
@@ -135,7 +134,7 @@ export default function StepOne() {
                 {/* reward */}
                 <div className="flex flex-col items-left gap-[5px]">
                     <div className="flex flex-col items-left gap-[5px]">
-                        <Label className={`${inter.className} text-base w-[200px]`}>Reward (USD)</Label>
+                        <Label className={`font-mono text-base w-[200px]`}>Reward (USD)</Label>
                         <Controller
                             control={control}
                             name="reward"
@@ -150,11 +149,11 @@ export default function StepOne() {
                         />
                     </div>
                     {errors.reward && errors.reward.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.reward.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.reward.message}</p>
                     )}
                 </div>
 
-                <Button type="submit" variant="secondary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 mb-5 text-sm font-normal ${inter.className} mt-3`}>
+                <Button type="submit" variant="secondary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 mb-5 text-sm font-normal font-mono mt-3`}>
                     Next
                 </Button>
             </form>

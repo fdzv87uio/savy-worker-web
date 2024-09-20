@@ -1,6 +1,8 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 //@ts-ignore
-import ReactImageAnnotate from 'react-image-annotate';
+const ReactImageAnnotate: any = dynamic(() => import('react-image-annotate'), { ssr: false });
+
 
 const Annotation = () => {
     const [annotations, setAnnotations] = useState<any>([]);

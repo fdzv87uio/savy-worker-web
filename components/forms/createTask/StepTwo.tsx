@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,6 @@ import Image from "next/image";
 import { createTaskFormStore } from "@/stores/createTaskFormStore";
 import { Progress } from "@/components/ui/progress";
 import CustomFormCard from "@/components/ui/CustomFormCard";
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     location: string;
@@ -88,7 +86,7 @@ export default function StepTwo() {
 
                 {/* location */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Location</Label>
+                    <Label className={`font-mono text-base`}>Location</Label>
                     <Controller
                         control={control}
                         name="location"
@@ -101,16 +99,16 @@ export default function StepTwo() {
                         )}
                     />
                     {!errors.location && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current location</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current location</p>
                     )}
                     {errors.location && errors.location.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.location.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.location.message}</p>
                     )}
                 </div>
 
                 {/* address */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Address</Label>
+                    <Label className={`font-mono text-base`}>Address</Label>
                     <Controller
                         control={control}
                         name="address"
@@ -123,16 +121,16 @@ export default function StepTwo() {
                         )}
                     />
                     {!errors.location && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current location</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current location</p>
                     )}
                     {errors.location && errors.location.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.location.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.location.message}</p>
                     )}
                 </div>
 
                 {/* city */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>City</Label>
+                    <Label className={`font-mono text-base`}>City</Label>
                     <Controller
                         control={control}
                         name="city"
@@ -145,16 +143,16 @@ export default function StepTwo() {
                         )}
                     />
                     {!errors.city && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current city</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current city</p>
                     )}
                     {errors.city && errors.city.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.city.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.city.message}</p>
                     )}
                 </div>
 
                 {/* country */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Country</Label>
+                    <Label className={`font-mono text-base`}>Country</Label>
                     <Controller
                         control={control}
                         name="country"
@@ -167,18 +165,18 @@ export default function StepTwo() {
                         )}
                     />
                     {!errors.country && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current country</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current country</p>
                     )}
                     {errors.country && errors.country.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.country.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.country.message}</p>
                     )}
                 </div>
 
                 <div className='w-full flex flex-row mb-[30px] justify-between'>
-                    <Button variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`} onClick={handleBackClick}>
+                    <Button variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`} onClick={handleBackClick}>
                         Back
                     </Button>
-                    <Button type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className} mt-3`}>
+                    <Button type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono mt-3`}>
                         Next
                     </Button>
                 </div>

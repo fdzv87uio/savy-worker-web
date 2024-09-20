@@ -2,11 +2,9 @@
 import { Input } from '@/components/ui/input';
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-const inter = Inter({ subsets: ["latin"] });
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { toast } from 'sonner';

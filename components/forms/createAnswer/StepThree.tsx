@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import Image from "next/image";
@@ -16,7 +15,7 @@ import { eventNames, title } from "process";
 import { description } from "platform";
 import { getProfile } from "@/utils/profileUtils";
 import { toast } from 'sonner';
-import { useParams, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Input } from "@/components/ui/input";
 import AttendeeModal from "@/components/ui/attendeeModal";
 import { Progress } from "@/components/ui/progress";
@@ -24,7 +23,6 @@ import { createTaskFormStore } from "@/stores/createTaskFormStore";
 import CustomFormCard from "@/components/ui/CustomFormCard";
 import { createAnswerFormStore } from "@/stores/createAnswerFormStore";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     file: {
@@ -42,6 +40,9 @@ const defaultValues: Inputs = {
 
 
 export default function StepThree({ title }: { title?: string }) {
+    const params: any = usePathname();
+    const pathArray: any = params?.split("/");
+    console.log(pathArray);
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({ defaultValues });
     const [images, setImages] = React.useState<ImageListType>([]);
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -57,8 +58,8 @@ export default function StepThree({ title }: { title?: string }) {
     const [attendeeInput, setAttendeeInput] = useState<any>("");
     const [attendeeError, setAttendeeError] = useState<any>("");
     const router = useRouter();
-    const params = useParams<{ userId: string; taskId: string }>();
-    console.log(params)
+    // const params = useParams<{ userId: string; taskId: string }>();
+    // console.log(params)
 
 
     const token = getCookie('savy-auth-token') as string;
@@ -127,9 +128,11 @@ export default function StepThree({ title }: { title?: string }) {
             // Create new answer
             const urlsImages: string[] = [];
 
+
+
             const answerData = {
-                userId: params.userId,
-                taskId: params.taskId,
+                userId: userId,
+                taskId: pathArray[4],
                 taskTitle: title,
                 captureDatetime: inputs.captureDatetime,
                 longitude: inputs.longitude,
@@ -224,7 +227,7 @@ export default function StepThree({ title }: { title?: string }) {
             <form className={`w-[250px] md:w-full h-auto mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit)}>
                 {/* File upload for images */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <p className={`pl-2 text-[#000000] font-normal ${inter.className} text-sm`}>Upload images {eventId}</p>
+                    <p className={`pl-2 text-[#000000] font-normal font-mono text-sm`}>Upload images {eventId}</p>
                     <ImageUploading
                         multiple
                         value={images}
@@ -244,7 +247,7 @@ export default function StepThree({ title }: { title?: string }) {
                                     style={isDragging ? { color: "black" } : undefined}
                                     {...dragProps}
                                     type="button"
-                                    className={`flex h-[80px] w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${inter.className} font-normal text-[#000000] text-sm flex items-center justify-center bg-white-1 gap-3`}
+                                    className={`flex h-[80px] w-full rounded-md border border-[2px] border-primary bg-background px-3 py-2 font-mono text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono font-normal text-[#000000] text-sm flex items-center justify-center bg-white-1 gap-3`}
                                     onClick={onImageUpload}
                                 >
                                     <Image src="/icons/round.svg" alt='icon' width={15} height={15} className='w-[48px] h-[48px]' />
@@ -261,7 +264,7 @@ export default function StepThree({ title }: { title?: string }) {
                                     ))}
                                 </div>
                                 {imageList.length > 0 && (
-                                    <button onClick={onImageRemoveAll} className={`pl-2 text-[#ffffff] font-normal ${inter.className}`}>
+                                    <button onClick={onImageRemoveAll} className={`pl-2 text-[#ffffff] font-normal font-mono`}>
                                         Remove all images
                                     </button>
                                 )}
@@ -270,10 +273,10 @@ export default function StepThree({ title }: { title?: string }) {
                     </ImageUploading>
                 </div>
                 <div className='w-full mt-[5px] flex flex-row pb-7 justify-between'>
-                    <Button disabled={isUploading || isGettingUserInfo} variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`} onClick={handleBackClick}>
+                    <Button disabled={isUploading || isGettingUserInfo} variant="default" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono`} onClick={handleBackClick}>
                         Back
                     </Button>
-                    <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal ${inter.className}`}>
+                    <Button disabled={isUploading || isGettingUserInfo} type="submit" variant="secondary" size="sm" className={`w-[200px] h-[36px] px-4 py-2 text-sm font-normal font-mono`}>
                         Next
                         {isUploading && <Spinner className="ml-3 w-5 h-5" />}
                     </Button>

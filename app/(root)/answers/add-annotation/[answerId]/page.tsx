@@ -1,31 +1,36 @@
 'use client'
 
-import { useParams } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
+import { usePathname } from "next/navigation";
 
-const DynamicComponent = dynamic(() => import('./annotation'), { ssr: false });
+//@ts-ignore
+const Annotation = dynamic(() => import('./annotation'), { ssr: false });
+
 
 function AddAnnotation() {
-    const params = useParams();
-    console.log(params.answerId);
+    const pathname = usePathname();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
+        if (typeof window !== "undefined" && typeof document !== "undefined") {
+            console.log("current window and document")
+            console.log(window);
+            console.log(document);
             setLoading(false);
         }
-    }, [])
+    }, [window, document])
 
     return (
-        <>
+        <div>
             {!loading && (
-                <DynamicComponent />
+                <Annotation />
             )}
             {loading && (
-                <p>LOADING...</p>
+                <p>Loading...</p>
             )}
-        </>
+        </div>
     )
 
 };

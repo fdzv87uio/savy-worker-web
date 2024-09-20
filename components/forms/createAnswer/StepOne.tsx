@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +10,6 @@ import CustomFormCard from "@/components/ui/CustomFormCard";
 import { createRef, useEffect } from "react";
 import { createAnswerFormStore } from "@/stores/createAnswerFormStore";
 
-const inter = Inter({ subsets: ["latin"] });
 
 type Inputs = {
     captureDatetime?: string;
@@ -79,7 +77,7 @@ export default function StepOne() {
 
                 {/* Capture Datetime */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Capture Datetime</Label>
+                    <Label className={`font-mono text-base`}>Capture Datetime</Label>
                     <Controller
                         control={control}
                         name="captureDatetime"
@@ -92,16 +90,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.captureDatetime && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your task captureDatetime</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your task captureDatetime</p>
                     )}
                     {errors.captureDatetime && errors.captureDatetime.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.captureDatetime.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.captureDatetime.message}</p>
                     )}
                 </div>
 
                 {/* Latitude */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Latitude</Label>
+                    <Label className={`font-mono text-base`}>Latitude</Label>
                     <Controller
                         control={control}
                         name="latitude"
@@ -114,16 +112,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.latitude && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter the latitude of your capture</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter the latitude of your capture</p>
                     )}
                     {errors.latitude && errors.latitude.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.latitude.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.latitude.message}</p>
                     )}
                 </div>
 
                 {/* Longitude */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Longitude</Label>
+                    <Label className={`font-mono text-base`}>Longitude</Label>
                     <Controller
                         control={control}
                         name="longitude"
@@ -136,16 +134,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.longitude && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter the longitude of your capture</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter the longitude of your capture</p>
                     )}
                     {errors.longitude && errors.longitude.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.longitude.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.longitude.message}</p>
                     )}
                 </div>
 
                 {/* location */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Location</Label>
+                    <Label className={`font-mono text-base`}>Location</Label>
                     <Controller
                         control={control}
                         name="location"
@@ -158,16 +156,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.location && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current location</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current location</p>
                     )}
                     {errors.location && errors.location.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.location.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.location.message}</p>
                     )}
                 </div>
 
                 {/* address */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Address</Label>
+                    <Label className={`font-mono text-base`}>Address</Label>
                     <Controller
                         control={control}
                         name="address"
@@ -180,16 +178,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.location && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current location</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current location</p>
                     )}
                     {errors.location && errors.location.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.location.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.location.message}</p>
                     )}
                 </div>
 
                 {/* city */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>City</Label>
+                    <Label className={`font-mono text-base`}>City</Label>
                     <Controller
                         control={control}
                         name="city"
@@ -202,16 +200,16 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.city && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current city</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current city</p>
                     )}
                     {errors.city && errors.city.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.city.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.city.message}</p>
                     )}
                 </div>
 
                 {/* country */}
                 <div className="flex flex-col items-left gap-[5px]">
-                    <Label className={`${inter.className} text-base`}>Country</Label>
+                    <Label className={`font-mono text-base`}>Country</Label>
                     <Controller
                         control={control}
                         name="country"
@@ -224,14 +222,14 @@ export default function StepOne() {
                         )}
                     />
                     {!errors.country && (
-                        <p className={`pl-2 text-[#000000]/30 font-normal ${inter.className} text-sm`}>Enter your current country</p>
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your current country</p>
                     )}
                     {errors.country && errors.country.message && (
-                        <p className={`pl-2 text-red-300 font-bold ${inter.className} text-sm`}>{errors.country.message}</p>
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.country.message}</p>
                     )}
                 </div>
 
-                <Button type="submit" variant="secondary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 mb-5 text-sm font-normal ${inter.className} mt-3`}>
+                <Button type="submit" variant="secondary" size="sm" className={`w-[95px] h-[36px] px-4 py-2 mb-5 text-sm font-normal font-mono mt-3`}>
                     Next
                 </Button>
             </form>

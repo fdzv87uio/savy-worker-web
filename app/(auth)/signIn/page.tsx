@@ -2,8 +2,6 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

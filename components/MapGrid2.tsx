@@ -19,6 +19,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import SendIcon from '@mui/icons-material/Send';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import Image from "next/image"
 
 function MapGrid2(): React.JSX.Element {
     const parallaxRef: any = useRef();
@@ -32,7 +33,7 @@ function MapGrid2(): React.JSX.Element {
     return (
         <div className='h-[100%] relative'>
             <>
-                <Parallax ref={parallaxRef} pages={9} className='relative pt-[5px] lg:pt-[65px] lg:mt-[0px] left-0 flex'>
+                <Parallax ref={parallaxRef} pages={9} className='relative left-0 flex'>
                     <ParallaxLayer factor={1} style={{ width: '100%', position: 'relative' }} offset={0} speed={1}>
                         <MaxWidthWrapper>
                             <motion.div
@@ -46,8 +47,8 @@ function MapGrid2(): React.JSX.Element {
                                 }}
                             >
                                 <div className='relative h-[58vh] xl:h-[80vh] z-[1] bg-secondary border rounded-xl relative w-[100%] mx-0 my-0'>
-                                    <img src="/img/bg-shapes.png" className='z-[5] absolute top-0 left-0 h-[80vh] w-full' style={{ objectFit: "cover" }} />
-                                    <img src="/img/camera-girl.png" className='z-[5] absolute bottom-0 md:right-[230px] lg:right-32 h-[75vh] w-auto' style={{ objectFit: "cover" }} />
+                                    <Image alt="" width={500} height={400} src="/img/bg-shapes.png" className='z-[5] absolute top-0 left-0 h-[80vh] w-full' style={{ objectFit: "cover" }} />
+                                    <Image alt="" width={300} height={600} src="/img/camera-girl.png" className='z-[5] absolute bottom-0 md:right-[230px] lg:right-32 h-[75vh] w-auto' style={{ objectFit: "cover" }} />
                                     <div className='absolute left-[200px] top-[150px] w-[40%] h-auto flex flex-col items-left'>
                                         <h1 className='text-white text-5xl'>Earn Easy Money In A Zap</h1>
                                         <h1 className='text-primary text-5xl'>Collecting Visual Data</h1>
@@ -352,7 +353,7 @@ function MapGrid2(): React.JSX.Element {
                                 </div>
                             </div>
                         </MaxWidthWrapper>
-                        <div className='absolute left-[0px] bottom-[0px] bottom-[20px] w-full'>
+                        <div className='absolute left-[0px] h-[70px] bottom-[70px] w-full'>
                             <Footer relative />
                         </div>
                     </ParallaxLayer>
