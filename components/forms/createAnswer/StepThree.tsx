@@ -39,7 +39,7 @@ const defaultValues: Inputs = {
 };
 
 
-export default function StepThree({ title, classes }: { title?: string, classes: any[] }) {
+export default function StepThree({ title, classes }: { title?: string, classes?: any[] }) {
     const params: any = usePathname();
     const pathArray: any = params?.split("/");
     console.log(pathArray);
