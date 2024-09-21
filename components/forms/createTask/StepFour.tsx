@@ -137,6 +137,13 @@ export default function StepFour() {
             // Crear nuevo evento
             const urlsImages: string[] = [];
             const urlsVideos: string[] = [];
+            // creating class array
+            const classArr = inputs.classes?.split(',');
+            const formattedClassArr: string[] = [];
+            classArr?.forEach((x: any) => {
+                const formatted = x.trim();
+                formattedClassArr.push(formatted);
+            })
 
             const taskData = {
                 title: inputs.title,
@@ -155,6 +162,7 @@ export default function StepFour() {
                 videos: [],
                 participants: attendees,
                 blacklist: blacklist,
+                classes: formattedClassArr,
                 status: "active",
             };
             console.log("Creating new Task:");

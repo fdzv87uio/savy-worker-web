@@ -39,7 +39,7 @@ const defaultValues: Inputs = {
 };
 
 
-export default function StepThree({ title }: { title?: string }) {
+export default function StepThree({ title, classes }: { title?: string, classes: any[] }) {
     const params: any = usePathname();
     const pathArray: any = params?.split("/");
     console.log(pathArray);
@@ -144,6 +144,7 @@ export default function StepThree({ title }: { title?: string }) {
                 description: inputs.description,
                 images: [],
                 status: "annotations pending",
+                classes: classes,
             };
             console.log("Creating new Answer:");
             console.log(answerData);

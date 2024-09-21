@@ -41,10 +41,11 @@ const query = {
 function ControlPanel(): React.JSX.Element {
     // const { signOut } = useAuth()
     const router = useRouter()
+    const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState<any>(null);
     const [userProductos, setUserProductos] = useState<any>();
-    const [userAnswers, setUserAnswers] = useState<any>([]);
-    const [userTasks, setUserTasks] = useState<any>([])
+    const [userAnswers, setUserAnswers] = useState<any>(null);
+    const [userTasks, setUserTasks] = useState<any>(null)
     const [userToken, setUserToken] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [uploads, setUploads] = useState([]);
@@ -91,16 +92,17 @@ function ControlPanel(): React.JSX.Element {
             const taskList: any = await getAllAvailableTaskByEmail(res.data.email, token);
             console.log("Tasks:");
             console.log(taskList);
-            if (taskList.status === "success") {
-                setUserTasks(taskList.data);
-            }
 
             //get all answers
             const answerList: any = await getAllAnswersByUserId(res.data._id, token);
             console.log("Answers:");
             console.log(answerList);
-            if (answerList.status === "success") {
+
+            // update state
+            if (answerList.status === "success" && taskList.status === "success") {
                 setUserAnswers(answerList.data);
+                setUserTasks(taskList.data);
+                setLoading(false);
             }
         }
     }
@@ -152,7 +154,7 @@ function ControlPanel(): React.JSX.Element {
         <div className='h-[89vh] mt-[20px] overflow-scroll hidden mb-[200px] lg:flex w-full flex-col items-center'>
             <MaxWidthWrapper>
                 <div className='w-full h-auto px-[30px] mb-[40px]'>
-                    {userData && (
+                    {!loading && (
                         <>
                             <div className='w-full flex flex-row  align-center justify-center'>
                                 <h1 className='text-primary text-4xl mb-5 font-bold'>Control Panel</h1>
@@ -324,7 +326,7 @@ function ControlPanel(): React.JSX.Element {
                             <Footer relative />
                         </>
                     )}
-                    {!userData && (
+                    {loading && (
                         <div className='mt-[40px]' style={{ width: "100%", height: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center', position: "relative" }}>
                             <motion.div transition={{ ease: "linear", duration: 1, type: 'spring', repeatType: 'loop', repeat: Infinity }} style={{ rotate: 0 }} animate={{ rotate: 360, speed: 1 }}>
                                 <img alt="" src={'/img/marker-pro.jpg'} width={200} height={200} />

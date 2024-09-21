@@ -17,6 +17,7 @@ type Inputs = {
     step?: number;
     progress?: number;
     status: string;
+    classes?: string;
 };
 
 type InputsStore = {
@@ -41,6 +42,7 @@ export const createTaskFormStore = create<InputsStore>((set) => ({
         step: 1,
         progress: 10,
         status: '',
+        classes: '',
     },
     setInputs: (inputs: Inputs) => set({ inputs }),
 }));

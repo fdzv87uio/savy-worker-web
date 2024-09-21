@@ -17,6 +17,7 @@ type Inputs = {
     description: string;
     instructions: string;
     reward: number;
+    classes: string;
 }
 
 const validationSchema: Yup.ObjectSchema<Inputs> = Yup.object({
@@ -27,9 +28,10 @@ const validationSchema: Yup.ObjectSchema<Inputs> = Yup.object({
     instructions: Yup.string()
         .required('Description is required'),
     reward: Yup.number()
-        .required('Reward is required')
+        .required('Reward is required'),
+    classes: Yup.string()
+        .required('Classess is required'),
 });
-
 
 export default function StepOne() {
 
@@ -41,6 +43,7 @@ export default function StepOne() {
         description: inputs.description || "",
         instructions: inputs.instructions || "",
         reward: inputs.reward || 0,
+        classes: inputs.classes || "",
     };
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({
@@ -127,6 +130,28 @@ export default function StepOne() {
                     )}
                     {errors.instructions && errors.instructions.message && (
                         <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.instructions.message}</p>
+                    )}
+                </div>
+
+                {/* classes */}
+                <div className="flex flex-col items-left gap-[5px]">
+                    <Label className={`font-mono text-base`}>Classes</Label>
+                    <Controller
+                        control={control}
+                        name="classes"
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                type="text"
+                                placeholder='Task classes'
+                            />
+                        )}
+                    />
+                    {!errors.classes && (
+                        <p className={`pl-2 text-[#000000]/30 font-normal font-mono text-sm`}>Enter your class names followed by a comma</p>
+                    )}
+                    {errors.classes && errors.classes.message && (
+                        <p className={`pl-2 text-red-300 font-bold font-mono text-sm`}>{errors.classes.message}</p>
                     )}
                 </div>
 

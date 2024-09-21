@@ -20,7 +20,8 @@ const CreateAnswer = () => {
 
     const pathname = usePathname();
     console.log(pathname);
-    const [currentTitle, setCurrentTitle] = useState();
+    const [currentTitle, setCurrentTitle] = useState("");
+    const [currentClasses, setCurrentClasses] = useState([]);
 
     useEffect(() => {
         if (pathname) {
@@ -35,6 +36,7 @@ const CreateAnswer = () => {
         if (res.status === "success") {
             console.log(res.data);
             setCurrentTitle(res.data.title);
+            setCurrentClasses(res.data.classes);
         }
     }
 
@@ -63,7 +65,7 @@ const CreateAnswer = () => {
                         <StepTwo />
                     )}
                     {inputs.step === 3 && (
-                        <StepThree title={currentTitle} />
+                        <StepThree title={currentTitle} classes={currentClasses} />
                     )}
                 </div>
             </div>
