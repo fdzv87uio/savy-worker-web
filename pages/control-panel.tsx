@@ -187,7 +187,7 @@ function ControlPanel(): React.JSX.Element {
                                         <>
                                             <button
                                                 style={{ width: "100%", marginTop: "10px" }}
-                                                onClick={() => { router.push('/tasks/create-task') }}
+                                                onClick={() => { router.push('/create-task') }}
                                                 className={buttonVariants({
                                                     variant: 'default',
                                                 })}>

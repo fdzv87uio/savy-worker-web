@@ -34,7 +34,7 @@ const CreateTask = () => {
                         )}
                     </div>
                 </div>
-                <div className='w-full col-span-1 flex flex-col items-center overflow-scroll mb-[100px] md:min-w-[543px] flex-grow h-auto'>
+                <div className='w-full col-span-1 flex flex-col items-center overflox-x-hidden overflow-y-scroll mb-[100px] md:min-w-[543px] flex-grow h-auto'>
                     {inputs.step === 1 && (
                         <StepOne />
                     )}
