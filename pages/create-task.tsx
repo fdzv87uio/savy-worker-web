@@ -15,8 +15,8 @@ const CreateTask = () => {
     const { inputs } = createTaskFormStore();
 
     return (
-        <div id='top' className='flex flex-col h-full py-[40px] w-full justify-center relative'>
-            <div className="grid grid-cols-2 w-full h-[100vh]">
+        <div id='top' className='flex flex-col h-screen relative w-full justify-center relative'>
+            <div className="grid grid-cols-2 w-full h-screen">
                 <div className='flex flex-col col-span-1 w-full relative justify-center item-center'>
                     <div className="flex flex-col mt-[5rem] items-left h-[400px] ml-[12rem] text-secondary md:text-5xl relative font-normal">
                         <h3 className='text-2xl text-[#000000]/30'>Create Task</h3>
@@ -34,7 +34,7 @@ const CreateTask = () => {
                         )}
                     </div>
                 </div>
-                <div className='w-full col-span-1 flex flex-col items-center overflox-x-hidden overflow-y-scroll mb-[100px] md:min-w-[543px] flex-grow h-auto'>
+                <div className='w-full col-span-1 flex flex-col items-center overflox-x-hidden overflow-y-scroll pt-[50px] pb-[100px] md:min-w-[543px] flex-grow h-auto'>
                     {inputs.step === 1 && (
                         <StepOne />
                     )}
