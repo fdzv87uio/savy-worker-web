@@ -24,7 +24,7 @@ import { getAllAnswersByUserId } from '@/utils/answerUtils'
 import SendIcon from '@mui/icons-material/Send';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import GeneralLayout from '@/components/GeneralLayout'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 const query = {
     collection: 'tasks',
@@ -40,7 +40,7 @@ const query = {
 
 function ControlPanel(): React.JSX.Element {
     // const { signOut } = useAuth()
-    const router = useRouter()
+    const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState<any>(null);
     const [userProductos, setUserProductos] = useState<any>();
@@ -187,7 +187,10 @@ function ControlPanel(): React.JSX.Element {
                                         <>
                                             <button
                                                 style={{ width: "100%", marginTop: "10px" }}
-                                                onClick={() => { router.push('/create-task') }}
+                                                onClick={(e: any) => {
+                                                    e.preventDefault();
+                                                    router.push('/create-task')
+                                                }}
                                                 className={buttonVariants({
                                                     variant: 'default',
                                                 })}>
