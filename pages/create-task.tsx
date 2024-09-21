@@ -15,7 +15,7 @@ const CreateTask = () => {
     const { inputs } = createTaskFormStore();
 
     return (
-        <div id='top' className='flex flex-col h-screen relative w-full justify-center relative'>
+        <div id='top' className='flex flex-col pt-[60px] h-screen relative w-full justify-center relative'>
             <div className="grid grid-cols-2 w-full h-screen">
                 <div className='flex flex-col col-span-1 w-full relative justify-center item-center'>
                     <div className="flex flex-col mt-[5rem] items-left h-[400px] ml-[12rem] text-secondary md:text-5xl relative font-normal">

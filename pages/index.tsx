@@ -26,9 +26,10 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const { authToken, setAuthToken } = useAuthTokenStore();
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.scrollTo(0, 0)
-        }
+        // if (typeof window !== "undefined") {
+        //     window.scrollTo(0, 0)
+        // }
+        window.scrollTo(0, 0)
         const token = getCookie('curcle-auth-token')
         const userEmail = getCookie('curcle-user-email')
         if (authToken) {

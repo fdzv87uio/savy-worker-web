@@ -46,7 +46,7 @@ const Home = () => {
         }
     }, [])
     return (
-        <div className="w-full relative h-[100vh] flex flex-col">
+        <div className="w-full pt-[30px] relative h-[100vh] flex flex-col">
             {loading && (
                 <p>Loading...</p>
             )}
