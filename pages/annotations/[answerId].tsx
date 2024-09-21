@@ -16,13 +16,12 @@ const Home = () => {
         }
     }, [])
     return (
-        <div className="w-full h-full mt-[50px] ">
+        <div className="relative min-w-[100vw] min-h-[100vh] top-[50px]">
             {loading && (
                 <p>Loading...</p>
             )}
             {!loading && (
                 <ReactImageAnnotate
-                    className={{ width: "100%" }}
                     labelImages
                     regionClsList={["Alpha", "Beta", "Charlie", "Delta"]}
                     images={[
