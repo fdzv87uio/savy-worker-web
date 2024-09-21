@@ -130,7 +130,8 @@ export default function StepFour() {
     };
 
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    async function onSubmit(event: any) {
+        event.preventDefault();
         setIsUploading(true);
 
         try {

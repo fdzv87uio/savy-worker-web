@@ -58,7 +58,8 @@ export default function StepThree() {
     });
 
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    function onSubmit(data: any, event: any) {
+        event.preventDefault();
         console.log('data:');
         console.log(data);
         const updatedData = { ...inputs, ...data, step: 4, progress: 80 };

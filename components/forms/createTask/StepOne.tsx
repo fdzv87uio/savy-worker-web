@@ -51,7 +51,8 @@ export default function StepOne() {
         resolver: yupResolver(validationSchema),
         mode: 'onChange',
     });
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    function onSubmit(data: any, event: any) {
+        event.preventDefault();
         const updatedData: any = { ...data, step: 2, progress: 40 };
         setInputs(updatedData);
 
