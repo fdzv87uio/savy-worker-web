@@ -130,10 +130,8 @@ export default function StepFour() {
     };
 
 
-    async function onSubmit(event: any) {
-        event.preventDefault();
+    async function onSubmit() {
         setIsUploading(true);
-
         try {
             // Crear nuevo evento
             const urlsImages: string[] = [];
