@@ -5,7 +5,6 @@ import { buttonVariants } from '@/components/ui/button'
 // import { useAuth } from '@/hooks/use-auth'
 import { Button, Card, CardContent, CircularProgress, Divider, Tooltip, Typography } from '@mui/material'
 import { deleteCookie, getCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { motion } from "framer-motion"
@@ -25,6 +24,7 @@ import { getAllAnswersByUserId } from '@/utils/answerUtils'
 import SendIcon from '@mui/icons-material/Send';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import GeneralLayout from '@/components/GeneralLayout'
+import { useRouter } from 'next/router'
 
 const query = {
     collection: 'tasks',
