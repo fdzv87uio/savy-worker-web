@@ -72,7 +72,7 @@ export default function StepOne() {
 
     return (
         <CustomFormCard>
-            <Progress value={inputs.progress} max={100} className='z-[99]' id="progress" />
+            <Progress value={inputs.progress} max={100} className='z-[20]' id="progress" />
             <form className={`h-auto w-[250px] md:w-full mt-12 flex flex-col gap-4`} onSubmit={handleSubmit(onSubmit, onInvalid)}>
 
                 {/* Capture Datetime */}
