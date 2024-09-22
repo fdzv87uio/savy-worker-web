@@ -41,7 +41,7 @@ const CreateAnswer = () => {
     }
 
     return (
-        <div id='top' className='flex flex-col h-full w-full pt-[30px] justify-center relative'>
+        <div id='top' className='flex flex-col h-full w-full pt-[60px] justify-center relative'>
             <div className="grid grid-cols-2 w-full h-[100vh]">
                 <div className='flex flex-col col-span-1 w-full relative justify-center item-center'>
                     <div className="flex flex-col mt-[5rem] items-left h-[400px] ml-[12rem] text-secondary md:text-5xl relative font-normal">
