@@ -24,7 +24,7 @@ import { getAllAnswersByUserId } from '@/utils/answerUtils'
 import SendIcon from '@mui/icons-material/Send';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import GeneralLayout from '@/components/GeneralLayout'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/dist/client/router'
 
 const query = {
     collection: 'tasks',

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { getAnswerById } from "@/utils/answerUtils";
+import { motion } from "framer-motion";
 //@ts-ignore
 const ReactImageAnnotate: any = dynamic(() => import("react-image-annotate"), {
     ssr: false,
@@ -34,21 +35,22 @@ const Home = () => {
             };
             setCurrentImages([currentSample]);
             setCurrentClasses(res.data.classes);
+            setLoading(false);
 
         }
     }
 
-
-
-    useEffect(() => {
-        if (typeof window !== "undefined" && typeof document !== "undefined") {
-            setLoading(false);
-        }
-    }, [])
     return (
         <div className="w-full pt-[30px] relative h-[100vh] flex flex-col">
             {loading && (
-                <p>Loading...</p>
+                <div className='mt-[40px]' style={{ width: "100%", height: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center', position: "relative" }}>
+                    <motion.div transition={{ ease: "linear", duration: 1, type: 'spring', repeatType: 'loop', repeat: Infinity }} style={{ rotate: 0 }} animate={{ rotate: 360, speed: 1 }}>
+                        <img alt="" src={'/img/marker-pro.jpg'} width={200} height={200} />
+                    </motion.div>
+                    <p className='text-center text-secondary mt-[35px] text-3xl'>
+                        Loading
+                    </p>
+                </div>
             )}
             {!loading && (
                 <div className="absolute top-0 left-0 w-full h-auto flex flex-col justify-start">
@@ -57,7 +59,6 @@ const Home = () => {
                         regionClsList={currentClasses}
                         images={currentImages}
                         onExit={(data: any) => {
-                            console.log("El Papi did it");
                             console.log(data);
                         }}
                     />
