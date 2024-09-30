@@ -53,7 +53,7 @@ const Home = () => {
                 </div>
             )}
             {!loading && (
-                <div className="absolute top-0 left-0 w-full h-auto flex flex-col justify-start">
+                <div className="absolute top-[20px] left-0 w-full pt- h-auto flex flex-col justify-start">
                     <ReactImageAnnotate
                         labelImages
                         regionClsList={currentClasses}

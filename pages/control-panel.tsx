@@ -25,6 +25,11 @@ import SendIcon from '@mui/icons-material/Send';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import GeneralLayout from '@/components/GeneralLayout'
 import { useRouter } from 'next/dist/client/router'
+import dynamic from 'next/dynamic'
+//@ts-ignore
+const ReactImageAnnotate: any = dynamic(() => import("react-image-annotate"), {
+    ssr: false,
+});
 
 const query = {
     collection: 'tasks',
@@ -202,62 +207,9 @@ function ControlPanel(): React.JSX.Element {
                                     </div>
                                 </div>
                             </div>
-                            {/* Available tasks */}
-                            <div className='w-full h-auto mt-11 mb-9 flex flex-col items-center justify-center'>
-                                <h1 className='text-[#000] text-2xl text-left pl-[26px] w-full mb-5 font-bold'>Available Tasks</h1>
-                                <div className='w-full flex flex-col gap-[10px] lg:gap-7'>
-                                    {userTasks && userTasks.length === 0 && (
-                                        <div className='flex flex-col justify-center items-center gap-[10px]'>
-                                            <p className='text-center text-xl font-mono font-bold'>No Tasks Available.</p>
-                                        </div>
-                                    )}
-                                    {userTasks && userTasks.length > 0 && userTasks?.map((x: any, index: number) => {
-
-
-                                        return (
-                                            <>
-                                                <div key={`anuncio_${index}`} className='w-full h-auto overflow-hidden rounded-md border border-[#ececec] border-[1px] relative px-[20px] py-[20px] shadow-md'>
-                                                    <div className='w-full sm:flex sm:flex-col-1 lg:flex lg:flex-row gap-2 lg:gap-7 justify-between' >
-                                                        <div className='w-full sm:flex sm:flex-col-1 lg:grid lg:grid-cols-7 gap-2 lg:gap-7 justify-center'>
-                                                            <div className='text-[17px] font-mono col-span-1 flex flex-row gap-4 justify-center'>
-                                                                <p className=' mt-3'>No: <br /><span className='font-sans text-secondary font-bolder'>{index + 1}</span></p>
-                                                                <img alt="" onClick={() => { router.push(`/task?id=${x.id}`) }} src={x.images[0]} width={90} height={90} className='rounded-lg border cursor-pointer hover:outline hover:outline-[2px] hover:outline-secondary border-white object-fit' />
-                                                            </div>
-                                                            <div className='text-[17px] font-mono col-span-3  mt-3'>
-                                                                Title:<br /><span onClick={() => { router.push(`/task?id=${x.id}`) }} className='cursor-pointer hover:underline font-sans font-lg text-secondary font-bolder'>{x.title.toUpperCase()}</span>
-                                                            </div>
-                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
-                                                                Reward:<br /> <span className='font-sans text-[17px] font-lg text-black font-bolder'>USD ${x.reward}.00</span>
-                                                            </div>
-                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
-                                                                Deadline: <br /> <span className='font-sans text-[17px] font-lg text-black font-bolder'>{x.endDate.split('T')[0]}</span>
-                                                            </div>
-                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
-                                                                Status: <br /> <span className='font-sans text-[17px] font-lg text-black font-bolder'>{x.status}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className='flex flex-row gap-2 mt-3'>
-                                                            {/* <button onClick={() => { router.push(`/`) }} className='bg-primary hover:bg-primary/50 text-black w-[40px] h-[40px] rounded-[50%]'>
-                                                                <Tooltip title="Go to Task">
-                                                                    <VisibilityIcon sx={{ color: 'white', fontSize: "30px" }} />
-                                                                </Tooltip>
-                                                            </button> */}
-                                                            <button onClick={() => { router.push(`/answers/create-answer/${userData._id}/${x._id}`) }} className='bg-secondary hover:bg-secondary/50 text-black w-[40px] h-[40px] rounded-[50%]'>
-                                                                <Tooltip title="Submit Answer">
-                                                                    <SendIcon sx={{ color: 'white', fontSize: "22.5px" }} />
-                                                                </Tooltip>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div >
-                                            </>
-                                        )
-                                    })}
-                                </div>
-                            </div>
                             {/* User Answers */}
                             <div className='w-full h-auto mt-11 mb-9 flex flex-col items-center justify-center'>
-                                <h1 className='text-[#000] text-2xl text-left pl-[26px] w-full mb-5 font-bold'>Submitted Answers</h1>
+                                <h1 className='text-primary text-3xl text-left pl-[26px] w-full mb-6 font-bold'>Submitted Answers</h1>
                                 <div className='w-full flex flex-col gap-[10px] lg:gap-7'>
                                     {userAnswers.length === 0 && (
                                         <div className='flex flex-col justify-center items-center gap-[10px]'>
@@ -273,26 +225,24 @@ function ControlPanel(): React.JSX.Element {
 
                                         return (
                                             <>
-                                                <div key={`anuncio_${index}`} className='w-full h-auto bg-secondary/10 overflow-hidden rounded-md border border-secondary border-[2px] relative px-[20px] py-[20px] shadow-md'>
+                                                <div key={`anuncio_${index}`} className='w-full  h-auto bg-secondary/10 overflow-hidden rounded-md border border-secondary border-[1px] relative px-[20px] py-[20px] shadow-md'>
                                                     <div className='w-full sm:flex sm:flex-col-1 lg:flex lg:flex-row gap-2 lg:gap-7 justify-between' >
                                                         <div className='w-full sm:flex sm:flex-col-1 lg:flex lg:flex-row gap-2 lg:gap-7'>
                                                             <div className='text-[17px]'>
-                                                                <strong className='font-mono text-sm'>No: </strong><br /><span className='font-normal'>{index + 1}</span>
+                                                                <strong className='font-mono text-sm'>No: </strong><br /><span className='font-mono'>{index + 1}</span>
                                                             </div>
                                                             <div className='text-[17px]'>
-                                                                <strong className='font-mono text-sm'>id: </strong><br /><span className='font-normal'>{x._id}</span>
+                                                                <strong className='font-mono text-sm'>Task Title: </strong><br /><span className=' font-mono font-bold'>{x.taskTitle.length > 40 ? x.taskTitle.slice(0, 40) + "..." : x.taskTitle}</span>
                                                             </div>
                                                             <div className='text-[17px]'>
-                                                                <strong className='font-mono text-sm'>Task Title: </strong><br /><span className=' font-normal'>{x.taskTitle}</span>
-                                                            </div>
-                                                            <div className='text-[17px]'>
-                                                                <strong className='font-mono text-sm'>Last Update: </strong><br /> <span className=' font-normal'>{x.updatedAt.split("T")[0]}</span>
+                                                                <strong className='font-mono text-sm'>Last Update: </strong><br /> <span className=' font-mono'>{`${x.updatedAt.split("T")[0]} - ${x.updatedAt.split("T")[1].split(".")[0]}`}</span>
                                                             </div>
 
                                                         </div>
                                                         <div className='flex flex-row gap-2'>
-                                                            <div className='text-[17px]'>
-                                                                <strong className='font-mono text-sm'>Status: </strong><br /> <span className='font-normal'>{x.status}</span>
+                                                            <div className='text-[17px] w-[200px]'>
+                                                                <div><strong className='font-mono text-sm'>Status: </strong></div>
+                                                                <div className='font-mono'>{x.status}</div>
                                                             </div>
                                                             <div className='flex flex-row gap-2 mt-3'>
                                                                 {/* <button onClick={() => { router.push(`/task?id=${x.id}`) }} className='bg-primary hover:bg-primary/50 text-black w-[40px] h-[40px] rounded-[50%]'>
@@ -314,6 +264,60 @@ function ControlPanel(): React.JSX.Element {
                                     })}
                                 </div>
                             </div>
+                            {/* Available tasks */}
+                            <div className='w-full h-auto mt-11 mb-9 flex flex-col items-center justify-center'>
+                                <h1 className='text-primary text-3xl text-left pl-[26px] w-full mb-6 font-bold'>Available Tasks</h1>
+                                <div className='w-full flex flex-col gap-[10px] lg:gap-7'>
+                                    {userTasks && userTasks.length === 0 && (
+                                        <div className='flex flex-col justify-center items-center gap-[10px]'>
+                                            <p className='text-center text-xl font-mono font-bold'>No Tasks Available.</p>
+                                        </div>
+                                    )}
+                                    {userTasks && userTasks.length > 0 && userTasks?.map((x: any, index: number) => {
+
+
+                                        return (
+                                            <>
+                                                <div key={`anuncio_${index}`} className='w-full h-auto overflow-hidden rounded-md border border-[#ececec] border-[1px] relative px-[20px] py-[20px] shadow-md'>
+                                                    <div className='w-full sm:flex sm:flex-col-1 lg:flex lg:flex-row gap-2 lg:gap-7 justify-between' >
+                                                        <div className='w-full sm:flex sm:flex-col-1 lg:grid lg:grid-cols-7 gap-2 lg:gap-7 justify-center'>
+                                                            <div className='text-[17px] font-mono col-span-1 flex flex-row gap-4 justify-center'>
+                                                                <p className=' mt-3'>No: <br /><span className='font-mono text-secondary font-bolder'>{index + 1}</span></p>
+                                                                <img alt="" onClick={() => { router.push(`/task?id=${x.id}`) }} src={x.images[0]} width={90} height={90} className='rounded-lg border cursor-pointer hover:outline hover:outline-[2px] hover:outline-secondary border-white object-fit' />
+                                                            </div>
+                                                            <div className='text-[17px] font-mono col-span-3  mt-3'>
+                                                                Title:<br /><span onClick={() => { router.push(`/task?id=${x.id}`) }} className='cursor-pointer hover:underline font-mono font-lg text-secondary font-bold'>{x.title.length > 40 ? x.title.slice(0, 40) + "..." : x.title}</span>
+                                                            </div>
+                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
+                                                                Reward:<br /> <span className='font-mono text-[17px] font-lg text-black font-bolder'>USD ${x.reward}.00</span>
+                                                            </div>
+                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
+                                                                Deadline: <br /> <span className='font-mono text-[17px] font-lg text-black font-bolder'>{x.endDate.split('T')[0]}</span>
+                                                            </div>
+                                                            <div className='text-[17px] font-mono col-span-1  mt-3'>
+                                                                Status: <br /> <span className='font-mono text-[17px] font-lg text-black font-bold'>{x.status}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className='flex flex-row gap-2 mt-3'>
+                                                            <button onClick={() => { router.push(`/`) }} className='bg-primary hover:bg-primary/50 text-black w-[40px] h-[40px] rounded-[50%]'>
+                                                                <Tooltip title="Go to Task">
+                                                                    <VisibilityIcon sx={{ color: 'white', fontSize: "30px" }} />
+                                                                </Tooltip>
+                                                            </button>
+                                                            <button onClick={() => { router.push(`/answers/create-answer/${userData._id}/${x._id}`) }} className='bg-secondary hover:bg-secondary/50 text-black w-[40px] h-[40px] rounded-[50%]'>
+                                                                <Tooltip title="Submit Answer">
+                                                                    <SendIcon sx={{ color: 'white', fontSize: "22.5px" }} />
+                                                                </Tooltip>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div >
+                                            </>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+
                             {/* User Actions*/}
                             {/* <div className='rounded-md shadow-lg border border-[#ececec] border-[1px] flex flex-col mt-[10px] mb-[30px] rounder-lg bg-white px-[20px] py-[20px] w-full h-auto'>
                                 <div className='flex flex-row justify-between gap-[30px]'>
@@ -345,6 +349,21 @@ function ControlPanel(): React.JSX.Element {
                 <UserDeletionModal modalOpen={userDeletionOpen} setModalOpen={setUserDeletionOpen} userId={userData.id} />
             )
             } */}
+            {/* This code is to pre load RIM and it is hidden */}
+            <div className="hidden top-[20px] left-0 w-full pt- h-auto flex flex-col justify-start">
+                <ReactImageAnnotate
+                    labelImages
+                    regionClsList={["Alpha", "Beta", "Charlie", "Delta"]}
+                    regionTagList={["tag1", "tag2", "tag3"]}
+                    images={[
+                        {
+                            src: "https://dummyimage.com/800x600/ff0000/fff",
+                            name: "Image 1",
+                            regions: []
+                        }
+                    ]}
+                />
+            </div>
         </div >
     )
 }

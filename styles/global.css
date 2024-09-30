@@ -367,11 +367,11 @@ div.flip-3d figure:after {
   display: none !important;
 }
 
-/* annotation editor f */
+/* annotation editor */
 
-/* .div-root-3 .div-root-4 {
-  display: none !important;
-} */
+.div-root-3 .div-root-4 {
+  width: 100% !important;
+}
 
 .makeStyles-container-1:hover {
   border: none;
